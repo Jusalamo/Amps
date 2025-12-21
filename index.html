@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#000000">
-    <title>Mingl | Meet People at Events in Real Time</title>
+    <title>Amps | Amplify Your Connections at Live Events</title>
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -13,7 +13,7 @@
     <link rel="manifest" id="manifest">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="SparkPlug">
+    <meta name="apple-mobile-web-app-title" content="Amps">
     
     <style>
         /* ===== BASE STYLES ===== */
@@ -21,23 +21,43 @@
             --bg-primary: #000000;
             --bg-secondary: #0a0a0a;
             --bg-tertiary: #161616;
-            --bg-card: rgba(30, 30, 30, 0.9);
+            --bg-card: rgba(30, 30, 30, 0.7);
             --bg-glass: rgba(255, 255, 255, 0.05);
-            --primary: #871af4;
-            --primary-light: #a855f7;
-            --primary-dark: #6a0dad;
-            --primary-glow: rgba(135, 26, 244, 0.3);
-            --accent-green: #10b981;
-            --accent-red: #ef4444;
-            --accent-yellow: #f59e0b;
-            --accent-pink: #ffc0d9;
-            --accent-gold: #f5deb3;
-            --pro-gradient: linear-gradient(135deg, #871af4, #ff6b6b);
             
-            --white: #ffffff;
-            --gray-100: #f1f5f9;
-            --gray-200: #e2e8f0;
-            --gray-300: #cbd5e1;
+            /* Profile Card Colors */
+            --card-purple: #8B5CF6;
+            --card-pink: #EC4899;
+            --card-blue: #3B82F6;
+            --card-green: #10B981;
+            --card-yellow: #F59E0B;
+            --card-orange: #F97316;
+            --card-red: #EF4444;
+            --card-teal: #14B8A6;
+            --card-indigo: #6366F1;
+            --card-lavender: #C4B5FD;
+            --card-pastel-pink: #FFC0D9;
+            --card-pastel-blue: #BAE6FD;
+            --card-mint: #BBF7D0;
+            --card-peach: #FECACA;
+            
+            --primary: #8B5CF6;
+            --primary-light: #A78BFA;
+            --primary-dark: #7C3AED;
+            --primary-glow: rgba(139, 92, 246, 0.3);
+            
+            --accent-green: #10B981;
+            --accent-red: #EF4444;
+            --accent-yellow: #F59E0B;
+            --accent-blue: #3B82F6;
+            --accent-gold: #F5DEB3;
+            
+            --pro-gradient: linear-gradient(135deg, #8B5CF6, #EC4899, #F59E0B);
+            --pro-plus-gradient: linear-gradient(135deg, #F59E0B, #8B5CF6, #EC4899);
+            
+            --white: #FFFFFF;
+            --gray-100: #F1F5F9;
+            --gray-200: #E2E8F0;
+            --gray-300: #CBD5E1;
             --gray-400: #8E8E93;
             --gray-500: #64748b;
             --gray-600: #475569;
@@ -49,16 +69,24 @@
             --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
             --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
             --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
-            --shadow-glow: 0 0 30px rgba(135, 26, 244, 0.4);
-            --shadow-card: 0 20px 60px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.3);
+            --shadow-glow: 0 0 30px rgba(139, 92, 246, 0.4);
+            --shadow-card-stack: 0 20px 60px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.3);
+            --shadow-gold: 0 8px 24px rgba(245, 222, 179, 0.3);
             
+            /* Border Radius System */
             --radius-sm: 8px;
             --radius: 12px;
             --radius-md: 16px;
             --radius-lg: 20px;
             --radius-xl: 24px;
-            --radius-2xl: 28px;
+            --radius-2xl: 32px;
             --radius-full: 9999px;
+            
+            /* Notched Corners */
+            --notch-tl: 32px 32px 8px 8px;
+            --notch-tr: 8px 32px 32px 8px;
+            --notch-bl: 8px 8px 32px 32px;
+            --notch-br: 32px 8px 8px 32px;
             
             --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
             --transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -77,7 +105,7 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Roboto, Oxygen, Ubuntu, sans-serif;
             background: var(--bg-primary);
             color: var(--white);
             line-height: 1.5;
@@ -104,6 +132,8 @@
             opacity: 0.08;
             pointer-events: none;
             z-index: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
         }
         
         .for-you-bg {
@@ -129,19 +159,12 @@
         
         h1 {
             font-size: 2.5rem;
-            background: linear-gradient(135deg, var(--white) 0%, var(--primary-light) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--white);
         }
         
-        h2 {
-            font-size: 1.875rem;
-        }
-        
-        h3 {
-            font-size: 1.25rem;
-        }
+        h2 { font-size: 1.875rem; }
+        h3 { font-size: 1.5rem; }
+        h4 { font-size: 1.25rem; }
         
         .text-gradient {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
@@ -152,6 +175,13 @@
         
         .pro-gradient {
             background: var(--pro-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .pro-plus-gradient {
+            background: var(--pro-plus-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -185,18 +215,26 @@
         .btn-primary:hover {
             background: var(--primary-light);
             transform: translateY(-2px);
-            box-shadow: var(--shadow-glow), 0 8px 25px rgba(135, 26, 244, 0.3);
+            box-shadow: var(--shadow-glow), 0 8px 25px rgba(139, 92, 246, 0.3);
         }
         
         .btn-pro {
             background: var(--pro-gradient);
             color: var(--white);
-            box-shadow: 0 0 30px rgba(255, 107, 107, 0.3);
+            background-size: 200% 200%;
+            animation: gradientMove 3s ease infinite;
+            box-shadow: 0 0 30px rgba(236, 72, 153, 0.3);
         }
         
         .btn-pro:hover {
             transform: translateY(-2px);
-            box-shadow: 0 0 40px rgba(255, 107, 107, 0.4);
+            box-shadow: 0 0 40px rgba(236, 72, 153, 0.4);
+        }
+        
+        .btn-pro-plus {
+            background: var(--pro-plus-gradient);
+            color: var(--white);
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.3);
         }
         
         .btn-outline {
@@ -246,6 +284,23 @@
             font-size: 20px;
         }
         
+        /* ===== NOTCHED ELEMENTS ===== */
+        .notched-tl {
+            border-radius: var(--notch-tl);
+        }
+        
+        .notched-tr {
+            border-radius: var(--notch-tr);
+        }
+        
+        .notched-bl {
+            border-radius: var(--notch-bl);
+        }
+        
+        .notched-br {
+            border-radius: var(--notch-br);
+        }
+        
         /* ===== NAVIGATION ===== */
         .navbar {
             position: fixed;
@@ -274,11 +329,14 @@
             cursor: pointer;
         }
         
-        .nav-brand .spark {
-            color: var(--primary-light);
+        .nav-brand .amp {
+            background: var(--pro-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
-        .nav-brand .plug {
+        .nav-brand .s {
             color: var(--white);
         }
         
@@ -376,9 +434,21 @@
             backdrop-filter: blur(20px);
         }
         
-        /* ===== PRO BADGES ===== */
+        /* ===== BADGES ===== */
         .pro-badge {
             background: var(--pro-gradient);
+            color: white;
+            padding: 6px 16px;
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .pro-plus-badge {
+            background: var(--pro-plus-gradient);
             color: white;
             padding: 6px 16px;
             border-radius: var(--radius-full);
@@ -399,6 +469,19 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
+        }
+        
+        .live-badge {
+            background: var(--accent-green);
+            color: white;
+            padding: 6px 12px;
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            animation: pulse 2s infinite;
         }
         
         /* ===== LANDING PAGE ===== */
@@ -449,7 +532,7 @@
         .feature-icon {
             width: 56px;
             height: 56px;
-            background: rgba(135, 26, 244, 0.2);
+            background: rgba(139, 92, 246, 0.2);
             border-radius: var(--radius-lg);
             display: flex;
             align-items: center;
@@ -466,11 +549,263 @@
             margin: 40px 0;
         }
         
-        /* ===== EVENTS SECTION ===== */
-        .events-section {
-            padding: 60px 0;
+        /* ===== PROFILE CARDS ===== */
+        .card-stack {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
         }
         
+        .card-container {
+            width: 100%;
+            max-width: 280px;
+            aspect-ratio: 3/4;
+            position: relative;
+        }
+        
+        .profile-card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s;
+            cursor: grab;
+            z-index: 1;
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+        }
+        
+        .profile-card:active {
+            cursor: grabbing;
+        }
+        
+        .card-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-card-stack);
+        }
+        
+        .card-frame {
+            position: absolute;
+            width: 110%;
+            height: 110%;
+            top: -8%;
+            left: -5%;
+            background: var(--accent-gold);
+            border-radius: var(--radius-xl);
+            transform: rotate(-3deg);
+            z-index: -1;
+            box-shadow: var(--shadow-gold);
+        }
+        
+        .profile-image {
+            width: 85%;
+            aspect-ratio: 1/1;
+            margin: 24px auto 0;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .profile-info {
+            padding: 20px 24px;
+            text-align: center;
+        }
+        
+        .profile-info h2 {
+            font-size: 1.5rem;
+            margin-bottom: 4px;
+            color: var(--gray-800);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+        
+        .profile-info p {
+            font-size: 13px;
+            color: var(--gray-600);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        
+        .interests {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .interest-tag {
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            background: rgba(28, 28, 30, 0.08);
+            color: var(--gray-600);
+            font-weight: 600;
+        }
+        
+        /* ===== SWIPE OVERLAYS ===== */
+        .swipe-overlay {
+            position: absolute;
+            top: 50px;
+            right: -40px;
+            width: 120px;
+            height: 50px;
+            border: 4px solid var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 24px;
+            border-radius: 12px;
+            z-index: 100;
+            transform: rotate(12deg);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .swipe-overlay.like {
+            background: var(--accent-green);
+            left: -40px;
+            right: auto;
+            transform: rotate(-12deg);
+        }
+        
+        .swipe-overlay.nope {
+            background: var(--accent-red);
+            transform: rotate(12deg);
+        }
+        
+        .swipe-overlay.super {
+            background: var(--accent-blue);
+            top: 80px;
+            transform: rotate(0deg);
+        }
+        
+        /* ===== SWIPE ACTIONS ===== */
+        .swipe-actions {
+            padding: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            z-index: 50;
+        }
+        
+        .action-button {
+            width: 72px;
+            height: 72px;
+            border-radius: var(--radius-full);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            background: var(--gray-900);
+            color: var(--white);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+        
+        .action-button:hover {
+            transform: scale(1.05);
+        }
+        
+        .action-button:active {
+            transform: scale(0.95);
+        }
+        
+        .action-button.undo {
+            width: 64px;
+            height: 64px;
+            font-size: 20px;
+            background: var(--gray-400);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
+        
+        .action-button.like {
+            width: 80px;
+            height: 80px;
+            background: var(--card-pink);
+            color: var(--white);
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(236, 72, 153, 0.5);
+        }
+        
+        .action-button.like:hover {
+            transform: scale(1.1);
+        }
+        
+        /* ===== STATS CARDS ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: var(--gray-400);
+        }
+        
+        /* ===== QUICK ACTIONS ===== */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin: 32px 0;
+        }
+        
+        .action-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-2xl);
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+        
+        .action-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-glow);
+        }
+        
+        .action-card i {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+        
+        .action-card.primary i { color: var(--primary); }
+        .action-card.blue i { color: var(--card-blue); }
+        .action-card.pink i { color: var(--card-pink); }
+        .action-card.gold i { color: var(--accent-gold); }
+        
+        /* ===== EVENT CARDS ===== */
         .events-grid {
             display: grid;
             gap: 16px;
@@ -479,16 +814,30 @@
         
         .event-card {
             background: rgba(255, 255, 255, 0.05);
-            border-radius: var(--radius-2xl);
-            padding: 24px;
+            border-radius: var(--notch-tl);
+            padding: 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all var(--transition);
+            position: relative;
+            overflow: hidden;
         }
         
         .event-card:hover {
             border-color: var(--primary);
             transform: translateY(-2px);
             box-shadow: var(--shadow-glow);
+        }
+        
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            border-radius: 0 0 32px 0;
+            opacity: 0.1;
         }
         
         .event-info {
@@ -561,275 +910,168 @@
             box-shadow: 0 0 0 3px var(--primary-glow);
         }
         
-        /* ===== DASHBOARD ===== */
-        .profile-header {
-            text-align: center;
-            margin-bottom: 32px;
-        }
-        
-        .avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: var(--radius-full);
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            margin: 0 auto 16px;
-            position: relative;
-            overflow: hidden;
-            border: 3px solid var(--bg-primary);
-        }
-        
-        .avatar.pro {
-            border: 3px solid transparent;
-            border-image: var(--pro-gradient) 1;
-        }
-        
-        .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-            margin: 32px 0;
-        }
-        
-        .action-card {
-            background: var(--bg-card);
-            border-radius: var(--radius-2xl);
-            padding: 20px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            cursor: pointer;
-            transition: all var(--transition);
-        }
-        
-        .action-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-glow);
-        }
-        
-        .action-card i {
-            font-size: 32px;
-            color: var(--primary);
-            margin-bottom: 12px;
-        }
-        
-        /* ===== SWIPE INTERFACE ===== */
-        .swipe-interface {
-            min-height: 100vh;
+        /* ===== ATTENDEE LIST ===== */
+        .attendee-list {
             display: flex;
             flex-direction: column;
-            position: relative;
-            overflow: hidden;
+            gap: 12px;
+            margin-top: 20px;
         }
         
-        .swipe-header {
-            padding: 20px;
-            text-align: center;
-            z-index: 50;
-        }
-        
-        .event-badge {
-            display: inline-block;
-            padding: 8px 16px;
-            border-radius: var(--radius-full);
-            font-size: 14px;
-            font-weight: 600;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .card-stack {
-            flex: 1;
+        .attendee-item {
             display: flex;
             align-items: center;
-            justify-content: center;
-            padding: 20px;
-            position: relative;
+            gap: 16px;
+            padding: 16px;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        .card-container {
-            width: 100%;
-            max-width: 280px;
-            aspect-ratio: 3/4;
-            position: relative;
+        .attendee-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            border: 2px solid var(--primary);
         }
         
-        .profile-card {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s;
-            cursor: grab;
-            z-index: 1;
+        .attendee-info {
+            flex: 1;
         }
         
-        .profile-card:active {
-            cursor: grabbing;
-        }
-        
-        .live-photo-badge {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: var(--accent-green);
-            color: white;
-            padding: 8px 16px;
-            border-radius: var(--radius-full);
-            font-size: 12px;
-            font-weight: 600;
+        .attendee-status {
             display: flex;
             align-items: center;
             gap: 6px;
-            z-index: 10;
+            font-size: 12px;
         }
         
-        .card-content {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            border-radius: var(--radius-2xl);
-            overflow: hidden;
-            box-shadow: var(--shadow-card);
+        .status-online {
+            color: var(--accent-green);
         }
         
-        .profile-image {
-            width: 85%;
-            aspect-ratio: 1/1;
-            margin: 24px auto 0;
-            border-radius: var(--radius-xl);
-            background: linear-gradient(45deg, var(--bg-secondary), var(--bg-tertiary));
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        .status-away {
+            color: var(--accent-yellow);
+        }
+        
+        /* ===== CHAT ===== */
+        .chat-container {
+            height: calc(100vh - var(--header-height) - var(--bottom-nav-height));
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-secondary);
+        }
+        
+        .chat-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-full);
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
             background-size: cover;
             background-position: center;
         }
         
-        .profile-info {
-            padding: 24px;
-            text-align: center;
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
         
-        .profile-info h2 {
-            font-size: 1.5rem;
-            margin-bottom: 4px;
+        .message {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            position: relative;
+            animation: messageAppear 0.3s ease;
+        }
+        
+        .message.sent {
+            background: var(--primary);
             color: var(--white);
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+            border-radius: 18px 18px 4px 18px;
         }
         
-        .profile-info p {
-            font-size: 14px;
-            color: var(--gray-300);
-            margin-bottom: 16px;
-            line-height: 1.4;
-        }
-        
-        .interests {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            justify-content: center;
-        }
-        
-        .interest-tag {
-            font-size: 12px;
-            padding: 6px 12px;
-            border-radius: var(--radius-full);
-            background: rgba(255, 255, 255, 0.08);
-            color: var(--gray-300);
-        }
-        
-        .swipe-actions {
-            padding: 24px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 16px;
-            z-index: 50;
-        }
-        
-        .action-button {
-            width: 72px;
-            height: 72px;
-            border-radius: var(--radius-full);
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            cursor: pointer;
-            transition: transform 0.2s;
-            background: var(--gray-900);
+        .message.received {
+            background: var(--bg-tertiary);
             color: var(--white);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+            border-radius: 18px 18px 18px 4px;
         }
         
-        .action-button:hover {
-            transform: scale(1.05);
+        .message-time {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 4px;
+            text-align: right;
         }
         
-        .action-button:active {
-            transform: scale(0.95);
+        .chat-input {
+            padding: 16px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            gap: 12px;
+            background: var(--bg-secondary);
         }
         
-        .action-button.undo {
-            width: 64px;
-            height: 64px;
-            font-size: 20px;
-            background: var(--gray-400);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        /* ===== PRICING CARDS ===== */
+        .pricing-grid {
+            display: grid;
+            gap: 20px;
+            margin: 32px 0;
         }
         
-        .action-button.like {
-            width: 80px;
-            height: 80px;
-            background: var(--accent-pink);
-            color: var(--gray-800);
-            font-weight: bold;
-            box-shadow: 0 10px 30px rgba(255, 192, 217, 0.5);
-        }
-        
-        .action-button.like:hover {
-            transform: scale(1.1);
-        }
-        
-        /* ===== MATCH MODAL ===== */
-        .match-modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.8);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            backdrop-filter: blur(10px);
-        }
-        
-        .match-content {
-            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+        .pricing-card {
+            background: var(--bg-card);
             border-radius: var(--radius-2xl);
-            padding: 48px 32px;
-            text-align: center;
-            max-width: 320px;
-            width: 90%;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            animation: modalAppear 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 32px 24px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            transition: all var(--transition);
         }
         
-        .match-images {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            margin-bottom: 24px;
+        .pricing-card.featured {
+            border: 2px solid var(--primary);
+            transform: scale(1.05);
+            box-shadow: var(--shadow-glow);
         }
         
-        .match-avatar {
-            width: 96px;
-            height: 96px;
-            border-radius: var(--radius-full);
-            border: 4px solid var(--primary);
+        .pricing-card:hover {
+            transform: translateY(-4px);
             box-shadow: var(--shadow-lg);
         }
         
-        /* ===== SCANNER PAGE ===== */
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-4px);
+        }
+        
+        .pricing-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 6px 20px;
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 700;
+        }
+        
+        /* ===== SCANNER ===== */
         .scanner-container {
             text-align: center;
             padding: 20px 0;
@@ -932,99 +1174,8 @@
             color: black;
         }
         
-        /* ===== CHAT PAGE ===== */
-        .chat-container {
-            height: calc(100vh - var(--header-height) - var(--bottom-nav-height));
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .chat-header {
-            padding: 16px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: var(--bg-secondary);
-        }
-        
-        .chat-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: var(--radius-full);
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-        }
-        
-        .chat-messages {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        
-        .message {
-            max-width: 70%;
-            padding: 12px 16px;
-            border-radius: 18px;
-            position: relative;
-            animation: messageAppear 0.3s ease;
-        }
-        
-        .message.sent {
-            background: var(--primary);
-            color: var(--white);
-            align-self: flex-end;
-            border-bottom-right-radius: 4px;
-        }
-        
-        .message.received {
-            background: var(--bg-tertiary);
-            color: var(--white);
-            align-self: flex-start;
-            border-bottom-left-radius: 4px;
-        }
-        
-        .message-time {
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.6);
-            margin-top: 4px;
-            text-align: right;
-        }
-        
-        .chat-input {
-            padding: 16px 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            gap: 12px;
-            background: var(--bg-secondary);
-        }
-        
-        /* ===== CREATE EVENT ===== */
-        .create-form {
-            max-width: 400px;
-            margin: 0 auto;
-        }
-        
-        .qr-code-display {
-            width: 200px;
-            height: 200px;
-            background: var(--white);
-            border-radius: var(--radius);
-            margin: 24px auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            color: var(--bg-primary);
-            font-weight: bold;
-            text-align: center;
-            padding: 20px;
-        }
-        
-        /* ===== PRO UPGRADE MODAL ===== */
-        .pro-modal {
+        /* ===== PRO/MATCH MODALS ===== */
+        .pro-modal, .match-modal {
             position: fixed;
             inset: 0;
             background: rgba(0, 0, 0, 0.9);
@@ -1035,61 +1186,32 @@
             backdrop-filter: blur(10px);
         }
         
-        .pro-content {
-            background: var(--bg-card);
+        .pro-content, .match-content {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
             border-radius: var(--radius-2xl);
-            padding: 32px;
+            padding: 48px 32px;
             text-align: center;
-            max-width: 400px;
+            max-width: 320px;
             width: 90%;
             border: 1px solid rgba(255, 255, 255, 0.1);
             animation: modalAppear 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        /* ===== ATTENDEE LIST ===== */
-        .attendee-list {
+        .match-images {
             display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 20px;
-        }
-        
-        .attendee-item {
-            display: flex;
-            align-items: center;
+            justify-content: center;
             gap: 16px;
-            padding: 16px;
-            background: var(--bg-card);
-            border-radius: var(--radius-lg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 24px;
         }
         
-        .attendee-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
+        .match-avatar {
+            width: 96px;
+            height: 96px;
+            border-radius: var(--radius-full);
+            border: 4px solid var(--primary);
+            box-shadow: var(--shadow-lg);
             background-size: cover;
             background-position: center;
-            border: 2px solid var(--primary);
-        }
-        
-        .attendee-info {
-            flex: 1;
-        }
-        
-        .attendee-status {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
-        }
-        
-        .status-online {
-            color: var(--accent-green);
-        }
-        
-        .status-away {
-            color: var(--accent-yellow);
         }
         
         /* ===== NOTIFICATION ===== */
@@ -1111,9 +1233,15 @@
         }
         
         /* ===== ANIMATIONS ===== */
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
         @keyframes pulse {
             0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+            50% { opacity: 0.7; }
         }
         
         @keyframes scan {
@@ -1155,6 +1283,17 @@
             }
         }
         
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
         /* ===== UTILITY CLASSES ===== */
         .text-center { text-align: center; }
         .mt-1 { margin-top: 4px; }
@@ -1181,6 +1320,64 @@
         .cursor-pointer { cursor: pointer; }
         .relative { position: relative; }
         
+        /* ===== AVATAR ===== */
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: var(--radius-full);
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            margin: 0 auto 16px;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid var(--bg-primary);
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .avatar.pro {
+            border: 3px solid transparent;
+            border-image: var(--pro-gradient) 1;
+        }
+        
+        .avatar.pro-plus {
+            border: 3px solid transparent;
+            border-image: var(--pro-plus-gradient) 1;
+        }
+        
+        /* ===== EVENT BADGE ===== */
+        .event-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: var(--radius-full);
+            font-size: 14px;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* ===== CREATE EVENT ===== */
+        .create-form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .qr-code-display {
+            width: 200px;
+            height: 200px;
+            background: var(--white);
+            border-radius: var(--radius);
+            margin: 24px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: var(--bg-primary);
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+        }
+        
         /* ===== RESPONSIVE ===== */
         @media (max-width: 480px) {
             h1 {
@@ -1201,6 +1398,18 @@
             
             .navbar {
                 padding: 0 16px;
+            }
+            
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
             }
         }
         
@@ -1228,19 +1437,19 @@
             <div class="camera-preview">
                 <video class="camera-video" id="cameraVideo" autoplay playsinline></video>
                 <div class="camera-overlay"></div>
-                <div class="live-photo-badge">
+                <div class="live-badge" style="position: absolute; top: 16px; right: 16px;">
                     <i class="fas fa-camera"></i>
                     <span>LIVE PHOTO</span>
                 </div>
             </div>
             <div class="camera-controls">
-                <button class="btn btn-danger" onclick="closeCamera()">
+                <button class="btn btn-outline" onclick="closeCamera()">
                     <i class="fas fa-times"></i> Cancel
                 </button>
                 <button class="camera-btn" onclick="takePhoto()">
                     <i class="fas fa-camera"></i>
                 </button>
-                <button class="btn btn-glass" onclick="switchCamera()">
+                <button class="btn btn-outline" onclick="switchCamera()">
                     <i class="fas fa-sync-alt"></i> Flip
                 </button>
             </div>
@@ -1253,7 +1462,7 @@
             <div class="text-center mb-6">
                 <div class="pro-badge mb-4" style="font-size: 14px; padding: 8px 16px;">
                     <i class="fas fa-crown"></i>
-                    <span>PRO UPGRADE</span>
+                    <span>UPGRADE TO PRO</span>
                 </div>
                 <h2 class="pro-gradient">Unlock Premium Features</h2>
                 <p class="mt-2">Get unlimited swipes, create events, and more!</p>
@@ -1262,47 +1471,82 @@
             <div class="flex flex-col gap-4 mb-6">
                 <div class="card-glass">
                     <h4 class="mb-2">Unlimited Daily Swipes</h4>
-                    <p class="text-gray-400">Free users limited to 10 swipes/day</p>
+                    <p class="text-gray-400">Free users limited to 30 swipes/day per event</p>
                 </div>
                 
                 <div class="card-glass">
                     <h4 class="mb-2">Create Unlimited Events</h4>
-                    <p class="text-gray-400">Free users cannot create events</p>
+                    <p class="text-gray-400">Free users can create 3 events/month</p>
                 </div>
                 
                 <div class="card-glass">
-                    <h4 class="mb-2">Advanced Analytics</h4>
-                    <p class="text-gray-400">Track event performance in real-time</p>
+                    <h4 class="mb-2">See Who Liked You</h4>
+                    <p class="text-gray-400">Free users can't see who liked them</p>
                 </div>
                 
                 <div class="card-glass">
-                    <h4 class="mb-2">Priority Support</h4>
-                    <p class="text-gray-400">Get help faster with priority support</p>
+                    <h4 class="mb-2">Video Calls & Read Receipts</h4>
+                    <p class="text-gray-400">Pro-exclusive features</p>
                 </div>
             </div>
 
-            <!-- Namibia-friendly payment options -->
             <div class="mb-6">
-                <h4 class="mb-4 text-center">Choose Payment Method</h4>
+                <h4 class="mb-4 text-center">Choose Plan</h4>
                 <div class="flex flex-col gap-3">
-                    <button class="btn btn-outline" onclick="initiatePayPalPayment()">
-                        <i class="fab fa-paypal"></i> PayPal
-                    </button>
-                    <button class="btn btn-outline" onclick="showMobileMoneyOptions()">
-                        <i class="fas fa-mobile-alt"></i> Mobile Money
-                    </button>
-                    <button class="btn btn-outline" onclick="showBankTransfer()">
-                        <i class="fas fa-university"></i> Bank Transfer
-                    </button>
-                    <button class="btn btn-outline" onclick="showCryptoOptions()">
-                        <i class="fas fa-coins"></i> Cryptocurrency
-                    </button>
+                    <div class="pricing-card">
+                        <div class="pro-badge mb-4">PRO</div>
+                        <h3 class="text-center mb-2">$14.99/month</h3>
+                        <p class="text-center text-gray-400 mb-4">or $99.99/year (save 44%)</p>
+                        <div class="flex flex-col gap-2 mb-4">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>Unlimited likes</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>5 super likes/day</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>See who liked you</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>Video calls</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-pro btn-block" onclick="upgradeToPro()">
+                            <i class="fas fa-crown"></i> Upgrade Now
+                        </button>
+                    </div>
+                    
+                    <div class="pricing-card featured">
+                        <div class="pro-plus-badge mb-4">PRO PLUS</div>
+                        <h3 class="text-center mb-2 pro-plus-gradient">$49.99/month</h3>
+                        <p class="text-center text-gray-400 mb-4">or $399.99/year (save 33%)</p>
+                        <div class="flex flex-col gap-2 mb-4">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-yellow-500"></i>
+                                <span>All Pro features</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-yellow-500"></i>
+                                <span>Custom event branding</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-yellow-500"></i>
+                                <span>Advanced analytics</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-yellow-500"></i>
+                                <span>24/7 priority support</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-pro-plus btn-block" onclick="upgradeToProPlus()">
+                            <i class="fas fa-star"></i> Upgrade to Pro Plus
+                        </button>
+                    </div>
                 </div>
-            </div>
-
-            <div class="text-center text-gray-400 text-sm">
-                <p>All payments are secure and encrypted</p>
-                <p class="mt-1">30-day money back guarantee</p>
             </div>
             
             <button class="btn btn-glass btn-block mt-4" onclick="closeProModal()">
@@ -1321,11 +1565,11 @@
                 </div>
                 <div class="match-avatar" id="matchAvatar"></div>
             </div>
-            <h2>It's a Match! ⚡</h2>
+            <h2>It's a Match!</h2>
             <p class="mt-2" id="matchMessage"></p>
             <div class="flex flex-col gap-3 mt-4">
                 <button class="btn btn-primary" onclick="startChat()">
-                    <i class="fas fa-comment"></i> Say Hi
+                    <i class="fas fa-comment"></i> Send Message
                 </button>
                 <button class="btn btn-outline" onclick="closeMatchModal()">
                     Keep Swiping
@@ -1347,6 +1591,7 @@
                 location: 'Main Stage',
                 online: true,
                 verified: true,
+                cardColor: 'var(--card-purple)',
                 livePhoto: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="%23C4B5FD"/><text x="100" y="110" font-size="24" text-anchor="middle" fill="white">Live Photo</text></svg>'
             },
             {
@@ -1359,6 +1604,7 @@
                 location: 'Bar Area',
                 online: true,
                 verified: true,
+                cardColor: 'var(--card-pink)',
                 livePhoto: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="%23FFC0D9"/><text x="100" y="110" font-size="24" text-anchor="middle" fill="white">Live Photo</text></svg>'
             },
             {
@@ -1371,6 +1617,7 @@
                 location: 'Lounge',
                 online: false,
                 verified: true,
+                cardColor: 'var(--card-blue)',
                 livePhoto: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="%23BAE6FD"/><text x="100" y="110" font-size="24" text-anchor="middle" fill="white">Live Photo</text></svg>'
             },
             {
@@ -1383,6 +1630,7 @@
                 location: 'Food Court',
                 online: true,
                 verified: false,
+                cardColor: 'var(--card-green)',
                 livePhoto: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="%23BBF7D0"/><text x="100" y="110" font-size="24" text-anchor="middle" fill="white">Live Photo</text></svg>'
             },
             {
@@ -1395,7 +1643,25 @@
                 location: 'DJ Booth',
                 online: true,
                 verified: true,
+                cardColor: 'var(--card-teal)',
                 livePhoto: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="%23FECACA"/><text x="100" y="110" font-size="24" text-anchor="middle" fill="white">Live Photo</text></svg>'
+            },
+            {
+                id: 6,
+                name: 'Alexandra',
+                age: 24,
+                bio: 'Music producer & DJ. Playing at the main stage tonight. Always looking for creative connections.',
+                occupation: 'Music Producer',
+                company: 'SoundWave Studios',
+                interests: ['Music Production', 'DJing', 'Sound Design', 'Live Performance', 'Electronic Music'],
+                eventId: 1,
+                location: 'Main Stage',
+                online: true,
+                verified: true,
+                cardColor: 'var(--card-indigo)',
+                livePhoto: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="%23C4B5FD"/><text x="100" y="110" font-size="24" text-anchor="middle" fill="white">Live Photo</text></svg>',
+                mutualConnections: 2,
+                distance: '15m away'
             }
         ];
 
@@ -1406,29 +1672,77 @@
                 location: 'The Mill, San Francisco',
                 date: 'Tonight',
                 time: '7:00 PM - 11:00 PM',
-                attendees: 23,
-                maxAttendees: 50,
-                description: 'Tech networking event',
-                qrCode: 'EVENT_TECH_2024',
+                attendees: 156,
+                maxAttendees: 200,
+                description: 'The biggest tech networking event of the year. Connect with founders, engineers, designers, and investors in the heart of Silicon Valley.',
+                category: 'Tech Networking',
+                coverImage: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&h=300&fit=crop',
+                qrCode: 'AMPS_TECH_2024_001',
                 radius: 100,
                 organizerId: 1,
-                coordinates: { lat: 37.7749, lng: -122.4194 }
+                coordinates: { lat: 37.7749, lng: -122.4194 },
+                ageRange: '18-45',
+                genderPreference: 'Everyone',
+                tags: ['Tech', 'Networking', 'Startups', 'AI', 'Blockchain']
             },
             {
                 id: 2,
                 name: 'Art Gallery Opening',
-                location: 'Modern Art Space',
+                location: 'Modern Art Space, SoMa',
                 date: 'Tomorrow',
                 time: '6:00 PM - 10:00 PM',
-                attendees: 15,
-                maxAttendees: 40,
-                description: 'Contemporary art exhibition',
-                qrCode: 'EVENT_ART_2024',
+                attendees: 89,
+                maxAttendees: 150,
+                description: 'Contemporary art exhibition featuring emerging local artists. Wine tasting and artist talks included.',
+                category: 'Art & Culture',
+                coverImage: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&h=300&fit=crop',
+                qrCode: 'AMPS_ART_2024_002',
                 radius: 80,
                 organizerId: 2,
-                coordinates: { lat: 37.7833, lng: -122.4167 }
+                coordinates: { lat: 37.7833, lng: -122.4167 },
+                ageRange: '21+',
+                genderPreference: 'Everyone',
+                tags: ['Art', 'Culture', 'Exhibition', 'Wine Tasting']
+            },
+            {
+                id: 3,
+                name: 'Music Producers Meetup',
+                location: 'SoundBar Lounge',
+                date: 'Friday',
+                time: '9:00 PM - 2:00 AM',
+                attendees: 45,
+                maxAttendees: 80,
+                description: 'Exclusive meetup for music producers, DJs, and sound engineers. Equipment showcase and demo sharing.',
+                category: 'Music & Audio',
+                coverImage: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=600&h=300&fit=crop',
+                qrCode: 'AMPS_MUSIC_2024_003',
+                radius: 50,
+                organizerId: 3,
+                coordinates: { lat: 37.7815, lng: -122.4152 },
+                ageRange: '21-40',
+                genderPreference: 'Everyone',
+                tags: ['Music', 'Producers', 'DJs', 'Audio Engineering']
             }
         ];
+
+        const MOCK_CHAT_MESSAGES = {
+            '2': [
+                {
+                    id: 1,
+                    sender: 'user',
+                    text: 'Hey Marcus! Saw you\'re into AI startups. I\'m working on something similar.',
+                    time: '8:30 PM',
+                    read: true
+                },
+                {
+                    id: 2,
+                    sender: 'match',
+                    text: 'Awesome! What are you building? I\'d love to hear more.',
+                    time: '8:32 PM',
+                    read: true
+                }
+            ]
+        };
 
         // ===== APP STATE =====
         let state = {
@@ -1436,11 +1750,13 @@
             currentPage: 'home',
             currentEvent: null,
             swipeCount: 0,
+            dailyLikes: 30,
             lastSwipeReset: new Date().toDateString(),
             isPro: false,
+            isProPlus: false,
             matches: [],
-            events: [...MOCK_EVENTS],
-            attendees: [...MOCK_PROFILES],
+            events: MOCK_EVENTS,
+            attendees: MOCK_PROFILES,
             cameraStream: null,
             facingMode: 'user',
             history: ['home'],
@@ -1448,8 +1764,20 @@
             swipeHistory: [],
             lastMatch: null,
             notification: null,
-            chatMessages: {},
-            userLivePhoto: null
+            chatMessages: MOCK_CHAT_MESSAGES,
+            userLivePhoto: null,
+            userProfile: {
+                name: 'Demo User',
+                email: 'demo@amps.com',
+                age: 28,
+                occupation: 'Software Engineer',
+                company: 'Tech Corp',
+                bio: 'Passionate about technology and building meaningful connections at events.',
+                interests: ['Technology', 'Music', 'Travel', 'Fitness', 'Photography'],
+                profilePhoto: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="%238B5CF6"/><text x="100" y="120" font-size="24" text-anchor="middle" fill="white">User</text></svg>'
+            },
+            superLikes: 1,
+            rewindCount: 1
         };
 
         // ===== ROUTER =====
@@ -1511,6 +1839,15 @@
                 case 'event-detail':
                     renderEventDetailPage(content);
                     break;
+                case 'pricing':
+                    renderPricingPage(content);
+                    break;
+                case 'edit-profile':
+                    renderEditProfilePage(content);
+                    break;
+                case 'settings':
+                    renderSettingsPage(content);
+                    break;
                 default:
                     renderHomePage(content);
             }
@@ -1523,7 +1860,7 @@
             let navHTML = `
                 <div class="nav-brand" onclick="navigateTo('home')">
                     <i class="fas fa-bolt"></i>
-                    <span class="spark">Spark</span><span class="plug">Plug</span>
+                    <span class="amp">Amp</span><span class="s">s</span>
                 </div>
                 <div class="nav-actions">
             `;
@@ -1532,17 +1869,17 @@
                 if (state.currentUser) {
                     navHTML += `
                         <button class="btn btn-outline btn-small" onclick="showMenuModal()">
-                            Menu
+                            <i class="fas fa-ellipsis-h"></i>
                         </button>
                     `;
                 } else {
                     navHTML += `
                         <button class="btn btn-outline btn-small" onclick="navigateTo('auth')">
-                            Log In
+                            <i class="fas fa-sign-in-alt"></i> Sign In
                         </button>
                     `;
                 }
-            } else if (['dashboard', 'scanner', 'swipe', 'chat', 'create-event', 'auth', 'events', 'matches', 'profile', 'manage-event', 'event-detail'].includes(state.currentPage)) {
+            } else {
                 navHTML += `
                     <button class="back-btn" onclick="goBack()">
                         <i class="fas fa-arrow-left"></i>
@@ -1559,10 +1896,11 @@
             
             // Update bottom nav
             const bottomNav = document.getElementById('bottomNav');
-            if (state.currentUser && ['home', 'events', 'swipe', 'matches', 'profile'].includes(state.currentPage)) {
+            if (state.currentUser && ['dashboard', 'events', 'swipe', 'matches', 'profile'].includes(state.currentPage)) {
+                const unreadCount = state.matches.filter(m => m.unread).length;
                 bottomNav.innerHTML = `
                     <div class="bottom-nav">
-                        <button class="nav-item ${state.currentPage === 'home' ? 'active' : ''}" onclick="navigateTo('home')">
+                        <button class="nav-item ${state.currentPage === 'dashboard' ? 'active' : ''}" onclick="navigateTo('dashboard')">
                             <i class="fas fa-home"></i>
                             <span>Home</span>
                         </button>
@@ -1576,7 +1914,7 @@
                         </button>
                         <button class="nav-item ${state.currentPage === 'matches' ? 'active' : ''}" onclick="navigateTo('matches')">
                             <i class="fas fa-heart"></i>
-                            <span>Matches</span>
+                            <span>Matches${unreadCount > 0 ? ` (${unreadCount})` : ''}</span>
                         </button>
                         <button class="nav-item ${state.currentPage === 'profile' ? 'active' : ''}" onclick="navigateTo('profile')">
                             <i class="fas fa-user"></i>
@@ -1592,24 +1930,19 @@
         // ===== PAGE COMPONENTS =====
         function renderHomePage(container) {
             container.innerHTML = `
-                <div class="hero-bg">
-                    <svg>
-                        <path d="M-100,150 Q200,100 600,250 Q800,300 1000,200" stroke="white" stroke-width="2" fill="none" />
-                        <path d="M-50,400 Q300,350 700,450 Q900,500 1100,400" stroke="white" stroke-width="2" fill="none" />
-                    </svg>
-                </div>
+                <div class="hero-bg"></div>
                 
                 <div class="hero">
-                    <h1>Meet people at events.<br><span class="text-gradient">In real time.</span></h1>
-                    <p class="hero-subtitle">Scan the QR code at any event to see who's there and connect instantly. No more guessing, no more missed connections.</p>
+                    <h1>Amplify Your Connections at Live Events</h1>
+                    <p class="hero-subtitle">Scan the QR code at any event to see who's there and connect instantly with verified attendees.</p>
                     
                     <div class="cta-grid">
                         ${state.currentUser ? 
-                            `<button class="btn btn-primary btn-large" onclick="joinEvent(${state.events[0].id})">
-                                <i class="fas fa-qrcode"></i> Join Event Demo
+                            `<button class="btn btn-primary btn-large" onclick="navigateTo('scanner')">
+                                <i class="fas fa-qrcode"></i> Scan Event QR Code
                             </button>
-                            ${!state.isPro ? `
-                                <button class="btn btn-pro btn-large" onclick="showProModal()">
+                            ${!state.isPro && !state.isProPlus ? `
+                                <button class="btn btn-pro btn-large" onclick="navigateTo('pricing')">
                                     <i class="fas fa-crown"></i> Upgrade to Pro
                                 </button>
                             ` : ''}` :
@@ -1625,10 +1958,10 @@
                 
                 <div class="features-grid">
                     ${[
-                        { icon: 'fa-qrcode', title: 'Scan & Check In', desc: 'Scan the event QR code to check in' },
-                        { icon: 'fa-camera', title: 'Live Photo', desc: 'Verify you\'re really there with a live selfie' },
-                        { icon: 'fa-heart', title: 'Swipe & Match', desc: 'Swipe right on people you like' },
-                        { icon: 'fa-comments', title: 'Chat & Connect', desc: 'Message matches and meet in person' }
+                        { icon: 'fa-qrcode', title: 'Live Event Check-in', desc: 'Scan event QR and take fresh selfie' },
+                        { icon: 'fa-camera', title: 'Verified Attendees', desc: 'Everyone verified with live photos' },
+                        { icon: 'fa-heart', title: 'Smart Matching', desc: 'Connect with people at same event' },
+                        { icon: 'fa-comments', title: 'Real-time Chat', desc: 'Message matches instantly' }
                     ].map(feature => `
                         <div class="feature">
                             <div class="feature-icon">
@@ -1641,13 +1974,16 @@
                 </div>
                 
                 <div class="events-section">
-                    <h2 class="text-center mb-4">Upcoming Events</h2>
-                    <p class="text-center text-gray-400 mb-12">Join an event near you</p>
+                    <h2 class="text-center mb-4">Featured Events</h2>
+                    <p class="text-center text-gray-400 mb-12">Join trending events near you</p>
                     
                     <div class="events-grid">
-                        ${state.events.map(event => `
-                            <div class="event-card" onclick="viewEvent(${event.id})" style="cursor: pointer;">
-                                <h3 class="mb-3">${event.name}</h3>
+                        ${state.events.slice(0, 2).map(event => `
+                            <div class="event-card notched-tl" onclick="viewEvent(${event.id})" style="cursor: pointer;">
+                                <div style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(236, 72, 153, 0.2)); padding: 16px; border-radius: 16px; margin-bottom: 16px;">
+                                    <h3 class="mb-3">${event.name}</h3>
+                                    <p class="text-gray-300">${event.description.substring(0, 100)}...</p>
+                                </div>
                                 <div class="event-info">
                                     <i class="fas fa-map-marker-alt"></i>
                                     <span>${event.location}</span>
@@ -1658,22 +1994,32 @@
                                 </div>
                                 <div class="event-info">
                                     <i class="fas fa-users"></i>
-                                    <span>${event.attendees} / ${event.maxAttendees} attending</span>
+                                    <span>${event.attendees} attending</span>
                                 </div>
                                 <button class="btn btn-primary btn-block mt-4">
-                                    Join Event
+                                    <i class="fas fa-eye"></i> View Details
                                 </button>
                             </div>
                         `).join('')}
                     </div>
                 </div>
+                
+                ${!state.currentUser ? `
+                    <div class="card mt-8 text-center">
+                        <h3 class="mb-4">Ready to Amplify Your Connections?</h3>
+                        <p class="text-gray-400 mb-6">Join thousands who are making meaningful connections at events</p>
+                        <button class="btn btn-primary btn-large" onclick="navigateTo('auth')">
+                            <i class="fas fa-rocket"></i> Start Free
+                        </button>
+                    </div>
+                ` : ''}
             `;
         }
 
         function renderAuthPage(container) {
             container.innerHTML = `
                 <div class="auth-container">
-                    <h2 class="text-center mb-5">Welcome to SparkPlug</h2>
+                    <h2 class="text-center mb-5">Welcome to Amps</h2>
                     
                     <div class="card">
                         <div class="auth-tabs">
@@ -1684,7 +2030,7 @@
                         <form id="authForm" onsubmit="handleAuth(event)">
                             <div class="form-group">
                                 <label class="form-label">Email</label>
-                                <input type="email" class="form-control" placeholder="you@example.com" value="demo@sparkplug.app" required>
+                                <input type="email" class="form-control" placeholder="you@example.com" value="demo@amps.com" required>
                             </div>
                             
                             <div class="form-group">
@@ -1727,61 +2073,517 @@
         }
 
         function renderDashboardPage(container) {
+            const eventsAttended = 12;
+            const totalMatches = state.matches.length;
+            const responseRate = '89%';
+            
             container.innerHTML = `
                 <div class="profile-header">
-                    <div class="avatar ${state.isPro ? 'pro' : ''}"></div>
-                    <h2>${state.currentUser?.name || 'Demo User'}</h2>
-                    <p class="text-gradient">${state.currentUser?.email || 'demo@sparkplug.app'}</p>
+                    <div class="avatar ${state.isPro ? 'pro' : state.isProPlus ? 'pro-plus' : ''}" style="background-image: url('${state.userProfile.profilePhoto}');">
+                        ${state.isPro ? '<div class="pro-badge" style="position: absolute; bottom: -8px; right: -8px; font-size: 10px;"><i class="fas fa-crown"></i></div>' : ''}
+                        ${state.isProPlus ? '<div class="pro-plus-badge" style="position: absolute; bottom: -8px; right: -8px; font-size: 10px;"><i class="fas fa-star"></i></div>' : ''}
+                    </div>
+                    <h2>${state.userProfile.name}</h2>
+                    <p class="text-gradient">${state.userProfile.occupation} at ${state.userProfile.company}</p>
                     ${state.isPro ? 
                         '<div class="pro-badge mt-2"><i class="fas fa-crown"></i> PRO MEMBER</div>' : 
+                        state.isProPlus ?
+                        '<div class="pro-plus-badge mt-2"><i class="fas fa-star"></i> PRO PLUS</div>' :
                         '<div class="free-badge mt-2"><i class="fas fa-user"></i> FREE MEMBER</div>'
                     }
                 </div>
                 
-                <h3 class="mb-3">Quick Actions</h3>
-                <div class="quick-actions">
-                    <div class="action-card" onclick="${state.isPro ? "navigateTo('create-event')" : "showProModal()"}">
-                        <i class="fas fa-plus-circle"></i>
-                        <h4>Create Event</h4>
-                        <p>${state.isPro ? 'Set up a new event' : 'Upgrade to Pro to create events'}</p>
-                        ${!state.isPro ? '<div class="pro-badge mt-2">PRO</div>' : ''}
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">${eventsAttended}</div>
+                        <div class="stat-label">Events Attended</div>
                     </div>
-                    
-                    <div class="action-card" onclick="navigateTo('scanner')">
-                        <i class="fas fa-qrcode"></i>
-                        <h4>Scan QR</h4>
-                        <p>Join an event</p>
+                    <div class="stat-card">
+                        <div class="stat-value">${totalMatches}</div>
+                        <div class="stat-label">Total Matches</div>
                     </div>
-                    
-                    <div class="action-card" onclick="navigateTo('events')">
-                        <i class="fas fa-calendar"></i>
-                        <h4>My Events</h4>
-                        <p>View your events</p>
-                    </div>
-                    
-                    <div class="action-card" onclick="navigateTo('matches')">
-                        <i class="fas fa-heart"></i>
-                        <h4>Matches</h4>
-                        <p>${state.matches.length} matches</p>
+                    <div class="stat-card">
+                        <div class="stat-value">${responseRate}</div>
+                        <div class="stat-label">Response Rate</div>
                     </div>
                 </div>
                 
-                <h3 class="mt-5 mb-3">Active Events Nearby</h3>
+                <h3 class="mt-6 mb-4">Quick Actions</h3>
+                <div class="quick-actions">
+                    <div class="action-card primary" onclick="${state.isPro || state.isProPlus ? "navigateTo('create-event')" : "navigateTo('pricing')"}">
+                        <i class="fas fa-plus-circle"></i>
+                        <h4>Create Event</h4>
+                        <p class="text-gray-400">${state.isPro || state.isProPlus ? 'Set up a new event' : 'Upgrade to create events'}</p>
+                        ${!state.isPro && !state.isProPlus ? '<div class="pro-badge mt-2">PRO</div>' : ''}
+                    </div>
+                    
+                    <div class="action-card blue" onclick="navigateTo('scanner')">
+                        <i class="fas fa-qrcode"></i>
+                        <h4>Scan QR</h4>
+                        <p class="text-gray-400">Join an event</p>
+                    </div>
+                    
+                    <div class="action-card pink" onclick="navigateTo('matches')">
+                        <i class="fas fa-heart"></i>
+                        <h4>My Matches</h4>
+                        <p class="text-gray-400">${state.matches.length} matches</p>
+                    </div>
+                    
+                    <div class="action-card gold" onclick="${state.isPro || state.isProPlus ? "showProfileViews()" : "navigateTo('pricing')"}">
+                        <i class="fas fa-eye"></i>
+                        <h4>Profile Views</h4>
+                        <p class="text-gray-400">${state.isPro || state.isProPlus ? 'See who viewed you' : 'Pro feature'}</p>
+                        ${!state.isPro && !state.isProPlus ? '<div class="pro-badge mt-2">PRO</div>' : ''}
+                    </div>
+                </div>
+                
+                <h3 class="mt-8 mb-4">Active Events Near You</h3>
                 <div id="activeEvents">
                     ${state.events.slice(0, 2).map(event => `
-                        <div class="card mb-3" onclick="viewEvent(${event.id})" style="cursor: pointer;">
+                        <div class="event-card notched-tl mb-4" onclick="viewEvent(${event.id})" style="cursor: pointer;">
                             <div class="flex justify-between items-center">
                                 <div>
                                     <h4>${event.name}</h4>
-                                    <p><i class="fas fa-map-marker-alt"></i> ${event.location}</p>
+                                    <p class="text-gray-400">
+                                        <i class="fas fa-map-marker-alt"></i> ${event.location}
+                                    </p>
                                 </div>
                                 <div class="text-right">
                                     <div class="text-gradient font-bold">${event.attendees} people</div>
                                     <p class="text-sm">${event.date}</p>
                                 </div>
                             </div>
+                            <div class="mt-4">
+                                <div class="w-full bg-gray-800 rounded-full h-2">
+                                    <div class="bg-primary h-2 rounded-full" style="width: ${(event.attendees / event.maxAttendees * 100)}%"></div>
+                                </div>
+                                <div class="flex justify-between text-xs text-gray-400 mt-2">
+                                    <span>${event.attendees} joined</span>
+                                    <span>${event.maxAttendees} capacity</span>
+                                </div>
+                            </div>
                         </div>
                     `).join('')}
+                </div>
+                
+                <div class="card mt-6">
+                    <h4 class="mb-4">Daily Limits</h4>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm">Likes remaining</span>
+                                <span class="text-sm font-semibold">${state.isPro || state.isProPlus ? '∞' : state.dailyLikes - state.swipeCount}</span>
+                            </div>
+                            <div class="w-full bg-gray-800 rounded-full h-2">
+                                <div class="bg-green-500 h-2 rounded-full" style="width: ${state.isPro || state.isProPlus ? '100' : ((state.dailyLikes - state.swipeCount) / state.dailyLikes * 100)}%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm">Super Likes</span>
+                                <span class="text-sm font-semibold">${state.isPro ? '5' : state.isProPlus ? '5' : state.superLikes} left</span>
+                            </div>
+                            <div class="w-full bg-gray-800 rounded-full h-2">
+                                <div class="bg-blue-500 h-2 rounded-full" style="width: ${state.isPro || state.isProPlus ? '100' : (state.superLikes * 100)}%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm">Rewinds</span>
+                                <span class="text-sm font-semibold">${state.isPro || state.isProPlus ? '∞' : state.rewindCount} left</span>
+                            </div>
+                            <div class="w-full bg-gray-800 rounded-full h-2">
+                                <div class="bg-yellow-500 h-2 rounded-full" style="width: ${state.isPro || state.isProPlus ? '100' : (state.rewindCount * 100)}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderSwipePage(container) {
+            if (!state.currentEvent) {
+                container.innerHTML = `
+                    <div class="text-center py-12">
+                        <i class="fas fa-calendar-times" style="font-size: 64px; color: var(--gray-600); margin-bottom: 16px;"></i>
+                        <h3 class="mb-2">No Active Event</h3>
+                        <p class="text-gray-400 mb-6">Join an event first to start connecting with people</p>
+                        <button class="btn btn-primary" onclick="navigateTo('events')">
+                            <i class="fas fa-calendar"></i> Browse Events
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+            
+            const availableProfiles = MOCK_PROFILES.filter(p => 
+                !state.swipeHistory.some(s => s.profile.id === p.id)
+            );
+            
+            if (availableProfiles.length === 0) {
+                container.innerHTML = `
+                    <div class="swipe-interface">
+                        <div class="swipe-header">
+                            <div class="event-badge">
+                                ${state.currentEvent.name} • No more profiles
+                            </div>
+                        </div>
+                        
+                        <div class="card-stack">
+                            <div class="text-center text-white">
+                                <i class="fas fa-users" style="font-size: 64px; color: var(--gray-600); margin-bottom: 16px;"></i>
+                                <h3 class="text-2xl font-bold mb-2">No more profiles</h3>
+                                <p class="text-gray-400 mb-6">Check back soon for new arrivals!</p>
+                                <button class="btn btn-primary" onclick="resetSwipes()">
+                                    <i class="fas fa-redo"></i> Refresh
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            const currentProfile = availableProfiles[0];
+            const nextProfile = availableProfiles[1] || null;
+            const thirdProfile = availableProfiles[2] || null;
+            
+            const likesRemaining = state.isPro || state.isProPlus ? '∞' : state.dailyLikes - state.swipeCount;
+            
+            container.innerHTML = `
+                <div class="swipe-interface">
+                    <div class="for-you-bg">FOR YOU</div>
+                    
+                    <div class="swipe-header">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="event-badge notched-tl">
+                                <i class="fas fa-calendar"></i>
+                                <span>${state.currentEvent.name}</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="btn btn-glass btn-small" onclick="showFilters()">
+                                    <i class="fas fa-filter"></i>
+                                </button>
+                                <button class="btn btn-glass btn-small" onclick="viewFullProfile(${currentProfile.id})">
+                                    <i class="fas fa-info-circle"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="text-center text-gray-400 text-sm mb-4">
+                            <i class="fas fa-user-friends"></i>
+                            <span>${availableProfiles.length} profiles available • ${likesRemaining} likes remaining</span>
+                        </div>
+                    </div>
+                    
+                    <div class="card-stack">
+                        <div class="card-container">
+                            ${thirdProfile ? `
+                                <div class="profile-card" style="z-index: 1; scale: 0.90; translate: -8px -24px; rotate: -2deg; opacity: 0.4;">
+                                    <div class="card-content" style="background: ${thirdProfile.cardColor};">
+                                        <div class="profile-image" style="background-image: url('${thirdProfile.livePhoto}');"></div>
+                                    </div>
+                                </div>
+                            ` : ''}
+                            
+                            ${nextProfile ? `
+                                <div class="profile-card" style="z-index: 2; scale: 0.95; translate: 8px -12px; rotate: 2deg; opacity: 0.7;">
+                                    <div class="card-content" style="background: ${nextProfile.cardColor};">
+                                        <div class="profile-image" style="background-image: url('${nextProfile.livePhoto}');"></div>
+                                    </div>
+                                </div>
+                            ` : ''}
+                            
+                            <div class="profile-card" id="profileCard${currentProfile.id}" style="z-index: 3;">
+                                <div class="card-frame"></div>
+                                <div class="card-content" style="background: ${currentProfile.cardColor};">
+                                    <div class="profile-image" style="background-image: url('${currentProfile.livePhoto}');">
+                                        <div class="live-badge" style="position: absolute; top: 16px; right: 16px;">
+                                            <i class="fas fa-camera"></i>
+                                            <span>LIVE</span>
+                                        </div>
+                                    </div>
+                                    <div class="profile-info">
+                                        <h2>${currentProfile.name}, ${currentProfile.age}</h2>
+                                        <p class="text-gray-600 mb-4">
+                                            <i class="fas fa-map-marker-alt"></i> ${currentProfile.location}
+                                        </p>
+                                        
+                                        <p class="mb-4">${currentProfile.bio}</p>
+                                        
+                                        <div class="interests mb-6">
+                                            ${currentProfile.interests.slice(0, 4).map(interest => `
+                                                <span class="interest-tag">${interest}</span>
+                                            `).join('')}
+                                        </div>
+                                        
+                                        <div class="text-center text-gray-600 text-sm">
+                                            <i class="fas fa-shield-alt"></i>
+                                            <span>Verified attendee at ${state.currentEvent.name}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swipe-overlay like">LIKE</div>
+                                <div class="swipe-overlay nope">NOPE</div>
+                                <div class="swipe-overlay super">SUPER</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="swipe-actions">
+                        <button class="action-button" onclick="swipeLeft()" ${(!state.isPro && !state.isProPlus && state.swipeCount >= state.dailyLikes) ? 'disabled' : ''}>
+                            <i class="fas fa-times"></i>
+                        </button>
+                        
+                        <button class="action-button undo" onclick="undoSwipe()" ${state.swipeHistory.length === 0 || (!state.isPro && !state.isProPlus && state.rewindCount <= 0) ? 'disabled' : ''}>
+                            <i class="fas fa-redo"></i>
+                        </button>
+                        
+                        <button class="action-button like" onclick="swipeRight()" ${(!state.isPro && !state.isProPlus && state.swipeCount >= state.dailyLikes) ? 'disabled' : ''}>
+                            <i class="fas fa-heart"></i>
+                        </button>
+                        
+                        <button class="action-button" onclick="superLike()" ${(!state.isPro && !state.isProPlus && state.superLikes <= 0) ? 'disabled' : ''}>
+                            <i class="fas fa-star"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="text-center text-gray-400 px-4 pb-4">
+                        <div class="flex justify-center gap-6 mb-2">
+                            <div class="text-sm">
+                                <i class="fas fa-heart"></i>
+                                <span>Like</span>
+                            </div>
+                            <div class="text-sm">
+                                <i class="fas fa-times"></i>
+                                <span>Pass</span>
+                            </div>
+                            <div class="text-sm">
+                                <i class="fas fa-star"></i>
+                                <span>Super Like</span>
+                            </div>
+                        </div>
+                        ${(!state.isPro && !state.isProPlus) && (state.swipeCount >= state.dailyLikes - 5 || state.superLikes <= 0) ? `
+                            <button class="btn btn-pro btn-small mt-2" onclick="navigateTo('pricing')">
+                                <i class="fas fa-crown"></i> Upgrade for unlimited
+                            </button>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+            
+            // Initialize drag
+            initializeSwipeGestures();
+        }
+
+        function renderEventsPage(container) {
+            container.innerHTML = `
+                <h2 class="mb-4">Events</h2>
+                
+                ${state.currentUser && (state.isPro || state.isProPlus) ? `
+                    <div class="card mb-4">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h3>Create New Event</h3>
+                                <p class="text-gray-400">Set up a new event with QR code</p>
+                            </div>
+                            <button class="btn btn-primary" onclick="navigateTo('create-event')">
+                                <i class="fas fa-plus"></i> Create
+                            </button>
+                        </div>
+                    </div>
+                ` : ''}
+                
+                <h3 class="mb-3">Active Events</h3>
+                <div class="events-grid">
+                    ${state.events.map(event => `
+                        <div class="event-card notched-tl" onclick="viewEvent(${event.id})" style="cursor: pointer;">
+                            <div style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(236, 72, 153, 0.2)); padding: 16px; border-radius: 16px; margin-bottom: 16px;">
+                                <h3 class="mb-3">${event.name}</h3>
+                                <p class="text-gray-300">${event.description.substring(0, 120)}...</p>
+                            </div>
+                            <div class="event-info">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>${event.location}</span>
+                            </div>
+                            <div class="event-info">
+                                <i class="fas fa-calendar"></i>
+                                <span>${event.date} • ${event.time}</span>
+                            </div>
+                            <div class="event-info">
+                                <i class="fas fa-users"></i>
+                                <span>${event.attendees} / ${event.maxAttendees} attending</span>
+                            </div>
+                            <div class="mt-4">
+                                <div class="flex gap-2">
+                                    ${event.tags.slice(0, 3).map(tag => `
+                                        <span class="text-xs px-3 py-1 bg-gray-800 rounded-full">${tag}</span>
+                                    `).join('')}
+                                </div>
+                            </div>
+                            <button class="btn btn-primary btn-block mt-4">
+                                <i class="fas fa-eye"></i> View Details
+                            </button>
+                        </div>
+                    `).join('')}
+                </div>
+                
+                <h3 class="mt-8 mb-3">Your Events</h3>
+                ${state.currentUser && state.events.filter(e => e.organizerId === state.currentUser.id).length > 0 ? 
+                    state.events.filter(e => e.organizerId === state.currentUser.id).map(event => `
+                        <div class="card mb-3">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <h4>${event.name}</h4>
+                                    <p class="text-gray-400">
+                                        <i class="fas fa-map-marker-alt"></i> ${event.location}
+                                    </p>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button class="btn btn-outline btn-small" onclick="navigateTo('manage-event')">
+                                        <i class="fas fa-chart-line"></i> Manage
+                                    </button>
+                                    <button class="btn btn-glass btn-small">
+                                        <i class="fas fa-share-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('') :
+                    '<p class="text-gray-400 text-center py-4">You haven\'t created any events yet.</p>'
+                }
+            `;
+        }
+
+        function renderMatchesPage(container) {
+            container.innerHTML = `
+                <h2 class="mb-4">Your Matches</h2>
+                
+                ${state.matches.length > 0 ? `
+                    <div class="attendee-list">
+                        ${state.matches.map(match => `
+                            <div class="attendee-item" onclick="openChat('${match.user?.id || match.id}')" style="cursor: pointer;">
+                                <div class="attendee-avatar" style="background-image: url('${match.user?.livePhoto || match.livePhoto}');"></div>
+                                <div class="attendee-info">
+                                    <div class="flex items-center gap-2">
+                                        <h4>${match.user?.name || match.name}, ${match.user?.age || match.age}</h4>
+                                        ${match.unread ? '<span class="w-2 h-2 bg-primary rounded-full"></span>' : ''}
+                                    </div>
+                                    <p class="text-gray-400 text-sm">${match.lastMessage || 'New match!'}</p>
+                                    <div class="text-xs text-gray-500 mt-1">${match.lastMessageTime || 'Just now'} • ${state.currentEvent?.name || 'Event'}</div>
+                                </div>
+                                <div class="attendee-status ${(match.user?.online || match.online) ? 'status-online' : 'status-away'}">
+                                    <i class="fas fa-circle" style="font-size: 8px;"></i>
+                                    <span>${(match.user?.online || match.online) ? 'Online' : 'Away'}</span>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                ` : `
+                    <div class="text-center py-12">
+                        <i class="fas fa-heart" style="font-size: 64px; color: var(--gray-600); margin-bottom: 16px;"></i>
+                        <h3 class="mb-2">No Matches Yet</h3>
+                        <p class="text-gray-400 mb-6">Start swiping at events to make connections!</p>
+                        <button class="btn btn-primary" onclick="navigateTo('events')">
+                            <i class="fas fa-calendar"></i> Find Events
+                        </button>
+                    </div>
+                `}
+                
+                <div class="card mt-6">
+                    <h4 class="mb-4">Match Statistics</h4>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold mb-1">${state.matches.length}</div>
+                            <div class="text-sm text-gray-400">Total Matches</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold mb-1">${state.matches.filter(m => m.unread).length}</div>
+                            <div class="text-sm text-gray-400">Unread</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderProfilePage(container) {
+            const remainingSwipes = state.isPro || state.isProPlus ? '∞' : Math.max(0, state.dailyLikes - state.swipeCount);
+            
+            container.innerHTML = `
+                <div class="profile-header">
+                    <div class="avatar ${state.isPro ? 'pro' : state.isProPlus ? 'pro-plus' : ''}" style="background-image: url('${state.userProfile.profilePhoto}');">
+                        <button class="absolute bottom-0 right-0 bg-primary text-white p-2 rounded-full" onclick="changeProfilePhoto()">
+                            <i class="fas fa-camera"></i>
+                        </button>
+                    </div>
+                    <h2>${state.userProfile.name}, ${state.userProfile.age}</h2>
+                    <p class="text-gradient">${state.userProfile.occupation} • ${state.userProfile.company}</p>
+                    
+                    <div class="flex gap-3 mt-4">
+                        ${state.isPro ? 
+                            '<div class="pro-badge"><i class="fas fa-crown"></i> PRO MEMBER</div>' : 
+                            state.isProPlus ?
+                            '<div class="pro-plus-badge"><i class="fas fa-star"></i> PRO PLUS</div>' :
+                            '<div class="free-badge"><i class="fas fa-user"></i> FREE MEMBER</div>'
+                        }
+                        <div class="pro-badge" style="background: var(--bg-tertiary); color: var(--gray-300);">
+                            <i class="fas fa-heart"></i>
+                            <span>${remainingSwipes} likes today</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mb-4">
+                    <h3 class="mb-4">About</h3>
+                    <p class="text-gray-300 mb-4">${state.userProfile.bio}</p>
+                    <div class="flex flex-wrap gap-2">
+                        ${state.userProfile.interests.map(interest => `
+                            <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">${interest}</span>
+                        `).join('')}
+                    </div>
+                    <button class="btn btn-outline btn-block mt-4" onclick="navigateTo('edit-profile')">
+                        <i class="fas fa-edit"></i> Edit Profile
+                    </button>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">12</div>
+                        <div class="stat-label">Events</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${state.matches.length}</div>
+                        <div class="stat-label">Matches</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">89%</div>
+                        <div class="stat-label">Response</div>
+                    </div>
+                </div>
+                
+                <div class="card mt-4">
+                    <h3 class="mb-4">Account</h3>
+                    <div class="flex flex-col gap-3">
+                        <button class="btn btn-outline" onclick="navigateTo('settings')">
+                            <i class="fas fa-cog"></i> Settings
+                        </button>
+                        ${!state.isPro && !state.isProPlus ? `
+                            <button class="btn btn-pro" onclick="navigateTo('pricing')">
+                                <i class="fas fa-crown"></i> Upgrade to Pro
+                            </button>
+                        ` : ''}
+                        <button class="btn btn-outline" onclick="showPrivacySettings()">
+                            <i class="fas fa-shield-alt"></i> Privacy & Safety
+                        </button>
+                        <button class="btn btn-outline" onclick="showHelp()">
+                            <i class="fas fa-question-circle"></i> Help & Support
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card mt-4">
+                    <button class="btn btn-outline btn-block text-red-400" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Sign Out
+                    </button>
                 </div>
             `;
         }
@@ -1815,311 +2617,14 @@
             `;
         }
 
-        function renderSwipePage(container) {
-            if (!state.currentEvent) {
-                container.innerHTML = `
-                    <div class="text-center py-12">
-                        <i class="fas fa-calendar-times" style="font-size: 64px; color: var(--gray-600); margin-bottom: 16px;"></i>
-                        <h3 class="mb-2">No Active Event</h3>
-                        <p class="text-gray-400 mb-6">Join an event first to start connecting with people</p>
-                        <button class="btn btn-primary" onclick="navigateTo('events')">
-                            <i class="fas fa-calendar"></i> Browse Events
-                        </button>
-                    </div>
-                `;
-                return;
-            }
-            
-            const availableProfiles = MOCK_PROFILES.filter(p => 
-                !state.swipeHistory.some(s => s.profile.id === p.id)
-            );
-            
-            const currentProfile = availableProfiles[0];
-            
-            if (!currentProfile) {
-                container.innerHTML = `
-                    <div class="swipe-interface">
-                        <div class="swipe-header">
-                            <div class="event-badge">
-                                ${state.currentEvent.name} • No more profiles
-                            </div>
-                        </div>
-                        
-                        <div class="card-stack">
-                            <div class="text-center text-white">
-                                <i class="fas fa-users" style="font-size: 64px; color: var(--gray-600); margin-bottom: 16px;"></i>
-                                <h3 class="text-2xl font-bold mb-2">No more profiles</h3>
-                                <p class="text-gray-400 mb-6">Check back soon for new arrivals!</p>
-                                <button class="btn btn-primary" onclick="resetSwipes()">
-                                    <i class="fas fa-redo"></i> Refresh
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                return;
-            }
-            
-            const swipeCountText = state.isPro ? 'Unlimited swipes' : `${10 - state.swipeCount} swipes remaining today`;
-            
-            container.innerHTML = `
-                <div class="swipe-interface">
-                    <div class="for-you-bg">FOR YOU</div>
-                    
-                    <div class="swipe-header">
-                        <div class="event-badge">
-                            ${state.currentEvent.name} • ${availableProfiles.length} left
-                        </div>
-                    </div>
-                    
-                    <div class="card-stack">
-                        <div class="card-container">
-                            <div class="profile-card" id="profileCard${currentProfile.id}">
-                                <div class="card-content">
-                                    <div class="profile-image" style="background-image: url('${currentProfile.livePhoto}');">
-                                        <div class="live-photo-badge">
-                                            <i class="fas fa-camera"></i>
-                                            <span>LIVE PHOTO</span>
-                                        </div>
-                                    </div>
-                                    <div class="profile-info">
-                                        <div class="flex justify-between items-start mb-4">
-                                            <div>
-                                                <h2>${currentProfile.name}, ${currentProfile.age}</h2>
-                                                <p class="text-gray-400">
-                                                    <i class="fas fa-map-marker-alt"></i> ${currentProfile.location}
-                                                </p>
-                                            </div>
-                                            ${currentProfile.online ? `
-                                                <span class="status-online flex items-center gap-1">
-                                                    <i class="fas fa-circle" style="font-size: 10px;"></i>
-                                                    <span>Online</span>
-                                                </span>
-                                            ` : ''}
-                                        </div>
-                                        
-                                        <p class="mb-4">${currentProfile.bio}</p>
-                                        
-                                        <div class="interests mb-6">
-                                            ${currentProfile.interests.map(interest => `
-                                                <span class="interest-tag">${interest}</span>
-                                            `).join('')}
-                                        </div>
-                                        
-                                        <div class="text-center text-gray-400 text-sm">
-                                            <i class="fas fa-shield-alt"></i>
-                                            <span>Verified attendee at ${state.currentEvent.name}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="swipe-actions">
-                        <button class="action-button" onclick="swipeLeft()" ${!state.isPro && state.swipeCount >= 10 ? 'disabled' : ''}>
-                            <i class="fas fa-times"></i>
-                        </button>
-                        
-                        <button class="action-button undo" onclick="undoSwipe()" ${state.swipeHistory.length === 0 ? 'disabled' : ''}>
-                            <i class="fas fa-redo"></i>
-                        </button>
-                        
-                        <button class="action-button like" onclick="swipeRight()" ${!state.isPro && state.swipeCount >= 10 ? 'disabled' : ''}>
-                            <i class="fas fa-heart"></i>
-                        </button>
-                    </div>
-                    
-                    <div class="text-center text-gray-400 px-4 pb-4">
-                        <p>${swipeCountText}</p>
-                        ${!state.isPro && state.swipeCount >= 9 ? `
-                            <button class="btn btn-pro btn-small mt-2" onclick="showProModal()">
-                                <i class="fas fa-crown"></i> Upgrade for unlimited
-                            </button>
-                        ` : ''}
-                    </div>
-                </div>
-            `;
-            
-            // Initialize drag
-            initializeSwipeGestures();
-        }
-
-        function renderEventsPage(container) {
-            container.innerHTML = `
-                <h2 class="mb-4">Events</h2>
-                
-                ${state.currentUser && state.isPro ? `
-                    <div class="card mb-4">
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <h3>Create New Event</h3>
-                                <p class="text-gray-400">Set up a new event with QR code</p>
-                            </div>
-                            <button class="btn btn-primary" onclick="navigateTo('create-event')">
-                                <i class="fas fa-plus"></i> Create
-                            </button>
-                        </div>
-                    </div>
-                ` : ''}
-                
-                <h3 class="mb-3">Active Events</h3>
-                <div class="events-grid">
-                    ${state.events.map(event => `
-                        <div class="event-card" onclick="viewEvent(${event.id})" style="cursor: pointer;">
-                            <h3 class="mb-3">${event.name}</h3>
-                            <div class="event-info">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>${event.location}</span>
-                            </div>
-                            <div class="event-info">
-                                <i class="fas fa-calendar"></i>
-                                <span>${event.date} • ${event.time}</span>
-                            </div>
-                            <div class="event-info">
-                                <i class="fas fa-users"></i>
-                                <span>${event.attendees} / ${event.maxAttendees} attending</span>
-                            </div>
-                            <button class="btn btn-primary btn-block mt-4">
-                                View Details
-                            </button>
-                        </div>
-                    `).join('')}
-                </div>
-                
-                <h3 class="mt-6 mb-3">Your Events</h3>
-                ${state.currentUser && state.events.filter(e => e.organizerId === state.currentUser.id).length > 0 ? 
-                    state.events.filter(e => e.organizerId === state.currentUser.id).map(event => `
-                        <div class="card mb-3">
-                            <div class="flex justify-between items-center">
-                                <div>
-                                    <h4>${event.name}</h4>
-                                    <p class="text-gray-400">
-                                        <i class="fas fa-map-marker-alt"></i> ${event.location}
-                                    </p>
-                                </div>
-                                <button class="btn btn-outline" onclick="navigateTo('manage-event')">
-                                    Manage
-                                </button>
-                            </div>
-                        </div>
-                    `).join('') :
-                    '<p class="text-gray-400 text-center py-4">You haven\'t created any events yet.</p>'
-                }
-            `;
-        }
-
-        function renderMatchesPage(container) {
-            container.innerHTML = `
-                <h2 class="mb-4">Your Matches</h2>
-                
-                ${state.matches.length > 0 ? `
-                    <div class="attendee-list">
-                        ${state.matches.map(match => `
-                            <div class="attendee-item" onclick="openChat('${match.id}')" style="cursor: pointer;">
-                                <div class="attendee-avatar" style="background-image: url('${match.livePhoto}');"></div>
-                                <div class="attendee-info">
-                                    <h4>${match.name}, ${match.age}</h4>
-                                    <p class="text-gray-400">Matched at ${state.currentEvent?.name || 'Event'}</p>
-                                </div>
-                                <div class="attendee-status status-online">
-                                    <i class="fas fa-circle" style="font-size: 8px;"></i>
-                                    <span>Online</span>
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                ` : `
-                    <div class="text-center py-12">
-                        <i class="fas fa-heart" style="font-size: 64px; color: var(--gray-600); margin-bottom: 16px;"></i>
-                        <h3 class="mb-2">No Matches Yet</h3>
-                        <p class="text-gray-400 mb-6">Start swiping at an event to get matches!</p>
-                        <button class="btn btn-primary" onclick="navigateTo('events')">
-                            <i class="fas fa-calendar"></i> Find Events
-                        </button>
-                    </div>
-                `}
-            `;
-        }
-
-        function renderProfilePage(container) {
-            const remainingSwipes = state.isPro ? '∞' : Math.max(0, 10 - state.swipeCount);
-            
-            container.innerHTML = `
-                <div class="profile-header">
-                    <div class="avatar ${state.isPro ? 'pro' : ''}">
-                        ${state.userLivePhoto ? 
-                            `<img src="${state.userLivePhoto}" style="width: 100%; height: 100%; object-fit: cover;">` : 
-                            ''
-                        }
-                    </div>
-                    <h2>${state.currentUser?.name || 'Demo User'}</h2>
-                    <p class="text-gradient">${state.currentUser?.email || 'demo@sparkplug.app'}</p>
-                    
-                    <div class="flex gap-3 mt-4">
-                        ${state.isPro ? 
-                            '<div class="pro-badge"><i class="fas fa-crown"></i> PRO MEMBER</div>' : 
-                            '<div class="free-badge"><i class="fas fa-user"></i> FREE MEMBER</div>'
-                        }
-                        <div class="pro-badge" style="background: var(--bg-tertiary); color: var(--gray-300);">
-                            <i class="fas fa-heart"></i>
-                            <span>${remainingSwipes} swipes today</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card mb-4">
-                    <h3 class="mb-4">Account Settings</h3>
-                    <div class="flex flex-col gap-3">
-                        <button class="btn btn-outline" onclick="editProfile()">
-                            <i class="fas fa-edit"></i> Edit Profile
-                        </button>
-                        <button class="btn btn-outline" onclick="showNotificationSettings()">
-                            <i class="fas fa-bell"></i> Notifications
-                        </button>
-                        <button class="btn btn-outline" onclick="showPrivacySettings()">
-                            <i class="fas fa-shield-alt"></i> Privacy & Security
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <h3 class="mb-4">Subscription</h3>
-                    ${state.isPro ? `
-                        <div class="mb-4">
-                            <div class="pro-badge mb-2"><i class="fas fa-crown"></i> PRO PLAN ACTIVE</div>
-                            <p class="text-gray-400">Your Pro subscription includes unlimited swipes, event creation, and premium features.</p>
-                        </div>
-                        <button class="btn btn-outline btn-block" onclick="manageSubscription()">
-                            <i class="fas fa-cog"></i> Manage Subscription
-                        </button>
-                    ` : `
-                        <div class="mb-4">
-                            <div class="free-badge mb-2"><i class="fas fa-user"></i> FREE PLAN</div>
-                            <p class="text-gray-400 mb-4">Upgrade to Pro for unlimited swipes, event creation, and premium features.</p>
-                            <button class="btn btn-pro btn-block" onclick="showProModal()">
-                                <i class="fas fa-crown"></i> Upgrade to Pro
-                            </button>
-                        </div>
-                    `}
-                </div>
-                
-                <div class="card mt-4">
-                    <button class="btn btn-outline btn-block text-red-400" onclick="logout()">
-                        <i class="fas fa-sign-out-alt"></i> Log Out
-                    </button>
-                </div>
-            `;
-        }
-
         function renderCreateEventPage(container) {
-            if (!state.isPro) {
+            if (!state.isPro && !state.isProPlus) {
                 container.innerHTML = `
                     <div class="text-center py-12">
                         <i class="fas fa-crown" style="font-size: 64px; color: var(--gray-600); margin-bottom: 16px;"></i>
                         <h3 class="mb-2">Pro Feature Required</h3>
                         <p class="text-gray-400 mb-6">Upgrade to Pro to create events</p>
-                        <button class="btn btn-pro" onclick="showProModal()">
+                        <button class="btn btn-pro" onclick="navigateTo('pricing')">
                             <i class="fas fa-crown"></i> Upgrade to Pro
                         </button>
                     </div>
@@ -2185,126 +2690,132 @@
             `;
         }
 
-        function renderManageEventPage(container) {
-            if (!state.currentEvent) {
-                navigateTo('events');
-                return;
-            }
-            
+        function renderPricingPage(container) {
             container.innerHTML = `
-                <div class="mb-6">
-                    <div class="card mb-4">
-                        <div class="flex justify-between items-center mb-4">
-                            <h2>Manage Event</h2>
-                            <span class="pro-badge">${state.currentEvent.attendees} Active</span>
+                <h2 class="text-center mb-2">Upgrade Your Experience</h2>
+                <p class="text-center text-gray-400 mb-6">Choose the plan that's right for you</p>
+                
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <div class="free-badge mb-4">FREE</div>
+                        <h3 class="text-center mb-2">$0/month</h3>
+                        <p class="text-center text-gray-400 mb-4">Basic features to get started</p>
+                        <div class="flex flex-col gap-3 mb-6">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>Join unlimited events</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>30 likes/day per event</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>1 super like/week</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-times text-gray-500"></i>
+                                <span class="text-gray-400">See who liked you</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-times text-gray-500"></i>
+                                <span class="text-gray-400">Video calls</span>
+                            </div>
                         </div>
-                        
-                        <div class="grid grid-cols-2 gap-4 mb-6">
-                            <div class="card-glass text-center">
-                                <div class="text-2xl font-bold mb-1">${state.currentEvent.attendees}</div>
-                                <div class="text-gray-400 text-sm">Total Attendees</div>
-                            </div>
-                            <div class="card-glass text-center">
-                                <div class="text-2xl font-bold mb-1">${state.matches.length}</div>
-                                <div class="text-gray-400 text-sm">Matches Made</div>
-                            </div>
-                            <div class="card-glass text-center">
-                                <div class="text-2xl font-bold mb-1">${Object.values(state.chatMessages).flat().length}</div>
-                                <div class="text-gray-400 text-sm">Messages Sent</div>
-                            </div>
-                            <div class="card-glass text-center">
-                                <div class="text-2xl font-bold mb-1">${state.currentEvent.radius}m</div>
-                                <div class="text-gray-400 text-sm">Geofence Radius</div>
-                            </div>
-                        </div>
-                        
-                        <div class="flex gap-3">
-                            <button class="btn btn-primary flex-1" onclick="refreshAttendees()">
-                                <i class="fas fa-sync-alt"></i> Refresh
-                            </button>
-                            <button class="btn btn-secondary" onclick="exportAttendeeData()">
-                                <i class="fas fa-download"></i> Export
-                            </button>
-                        </div>
+                        <button class="btn btn-outline btn-block" onclick="showNotification('You\'re already on Free plan', 'info')">
+                            Current Plan
+                        </button>
                     </div>
                     
-                    <h3 class="mb-4">Active Attendees</h3>
-                    <div class="attendee-list" id="attendeeList">
-                        ${state.attendees.map(profile => `
-                            <div class="attendee-item">
-                                <div class="attendee-avatar" style="background-image: url('${profile.livePhoto}');"></div>
-                                <div class="attendee-info">
-                                    <h4>${profile.name}, ${profile.age}</h4>
-                                    <p class="text-gray-400 text-sm">${profile.location}</p>
-                                </div>
-                                <div class="attendee-status ${profile.online ? 'status-online' : 'status-away'}">
-                                    <i class="fas fa-circle" style="font-size: 8px;"></i>
-                                    <span>${profile.online ? 'Online' : 'Away'}</span>
-                                </div>
+                    <div class="pricing-card featured">
+                        <div class="pro-badge mb-4">PRO</div>
+                        <h3 class="text-center mb-2 pro-gradient">$14.99/month</h3>
+                        <p class="text-center text-gray-400 mb-4">or $99.99/year (save 44%)</p>
+                        <div class="flex flex-col gap-3 mb-6">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>Everything in Free</span>
                             </div>
-                        `).join('')}
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>Unlimited likes</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>5 super likes/day</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>See who liked you</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>Video calls & read receipts</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-pro btn-block" onclick="upgradeToPro()">
+                            <i class="fas fa-crown"></i> Upgrade to Pro
+                        </button>
+                    </div>
+                    
+                    <div class="pricing-card">
+                        <div class="pro-plus-badge mb-4">PRO PLUS</div>
+                        <h3 class="text-center mb-2 pro-plus-gradient">$49.99/month</h3>
+                        <p class="text-center text-gray-400 mb-4">or $399.99/year (save 33%)</p>
+                        <div class="flex flex-col gap-3 mb-6">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-yellow-500"></i>
+                                <span>Everything in Pro</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-yellow-500"></i>
+                                <span>Custom event branding</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-yellow-500"></i>
+                                <span>Advanced analytics</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-yellow-500"></i>
+                                <span>24/7 priority support</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-yellow-500"></i>
+                                <span>API access</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-pro-plus btn-block" onclick="upgradeToProPlus()">
+                            <i class="fas fa-star"></i> Upgrade to Pro Plus
+                        </button>
                     </div>
                 </div>
-            `;
-        }
-
-        function renderEventDetailPage(container) {
-            if (!state.currentEvent) {
-                navigateTo('events');
-                return;
-            }
-            
-            container.innerHTML = `
-                <div class="mb-6">
-                    <div class="card mb-4">
-                        <h2 class="mb-2">${state.currentEvent.name}</h2>
-                        <div class="flex flex-col gap-2 mb-4">
-                            <div class="flex items-center gap-2 text-gray-400">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>${state.currentEvent.location}</span>
-                            </div>
-                            <div class="flex items-center gap-2 text-gray-400">
-                                <i class="fas fa-clock"></i>
-                                <span>${state.currentEvent.date} • ${state.currentEvent.time}</span>
-                            </div>
-                            <div class="flex items-center gap-2 text-gray-400">
-                                <i class="fas fa-users"></i>
-                                <span>${state.currentEvent.attendees} / ${state.currentEvent.maxAttendees} attendees</span>
-                            </div>
-                        </div>
-                        
-                        <p class="mb-6">${state.currentEvent.description}</p>
-                        
-                        <div class="flex gap-3">
-                            <button class="btn btn-primary flex-1" onclick="joinEvent()">
-                                <i class="fas fa-qrcode"></i> Join Event
-                            </button>
-                            ${state.currentUser?.id === state.currentEvent.organizerId ? `
-                                <button class="btn btn-outline" onclick="navigateTo('manage-event')">
-                                    <i class="fas fa-chart-line"></i> Manage
-                                </button>
-                            ` : ''}
-                        </div>
+                
+                <div class="card mt-6">
+                    <h4 class="mb-4">Payment Methods</h4>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button class="btn btn-outline" onclick="showPayment('paypal')">
+                            <i class="fab fa-paypal"></i> PayPal
+                        </button>
+                        <button class="btn btn-outline" onclick="showPayment('card')">
+                            <i class="fas fa-credit-card"></i> Card
+                        </button>
+                        <button class="btn btn-outline" onclick="showPayment('mobile')">
+                            <i class="fas fa-mobile-alt"></i> Mobile Money
+                        </button>
+                        <button class="btn btn-outline" onclick="showPayment('bank')">
+                            <i class="fas fa-university"></i> Bank Transfer
+                        </button>
                     </div>
-                    
-                    ${state.currentUser?.id === state.currentEvent.organizerId ? `
-                        <div class="card">
-                            <h3 class="mb-4">Event QR Code</h3>
-                            <div class="text-center mb-4">
-                                <div class="qr-code-display" style="margin: 0 auto;">
-                                    ${state.currentEvent.qrCode}
-                                </div>
-                            </div>
-                            <p class="text-center text-gray-400">Display this code at your event for attendees to scan</p>
-                        </div>
-                    ` : ''}
+                    <p class="text-center text-xs text-gray-400 mt-4">
+                        <i class="fas fa-lock"></i> All payments are secure and encrypted
+                    </p>
                 </div>
             `;
         }
 
         function renderChatPage(container) {
             const matchId = state.currentPage.split('-')[1];
-            const match = state.matches.find(m => m.id === parseInt(matchId));
+            const match = state.matches.find(m => (m.user?.id || m.id) === parseInt(matchId)) || MOCK_PROFILES.find(p => p.id === parseInt(matchId));
             
             if (!match) {
                 navigateTo('matches');
@@ -2319,9 +2830,9 @@
                         <button class="back-btn" onclick="navigateTo('matches')">
                             <i class="fas fa-arrow-left"></i>
                         </button>
-                        <div class="chat-avatar" style="background-image: url('${match.livePhoto}'); background-size: cover;"></div>
+                        <div class="chat-avatar" style="background-image: url('${match.livePhoto || match.user?.livePhoto}');"></div>
                         <div>
-                            <h3>${match.name}</h3>
+                            <h3>${match.name || match.user?.name}</h3>
                             <p class="text-sm text-gradient">Active now at ${state.currentEvent?.name || 'Event'}</p>
                         </div>
                     </div>
@@ -2354,103 +2865,6 @@
             `;
         }
 
-        // ===== DRAG & SWIPE FUNCTIONALITY =====
-        function initializeSwipeGestures() {
-            const availableProfiles = MOCK_PROFILES.filter(p => 
-                !state.swipeHistory.some(s => s.profile.id === p.id)
-            );
-            
-            if (availableProfiles.length === 0) return;
-            
-            const currentProfile = availableProfiles[0];
-            const card = document.getElementById(`profileCard${currentProfile.id}`);
-            if (!card) return;
-            
-            let startX, startY, moveX, moveY;
-            
-            card.addEventListener('touchstart', e => {
-                startX = e.touches[0].clientX;
-                startY = e.touches[0].clientY;
-            }, { passive: true });
-            
-            card.addEventListener('touchmove', e => {
-                if (!startX || !startY) return;
-                
-                moveX = e.touches[0].clientX;
-                moveY = e.touches[0].clientY;
-                
-                const diffX = moveX - startX;
-                const diffY = moveY - startY;
-                
-                if (Math.abs(diffX) > Math.abs(diffY)) {
-                    e.preventDefault();
-                    card.style.transform = `translateX(${diffX}px) rotate(${diffX * 0.1}deg)`;
-                    card.style.opacity = 1 - Math.abs(diffX) / 300;
-                }
-            }, { passive: false });
-            
-            card.addEventListener('touchend', () => {
-                if (!startX || !moveX) return;
-                
-                const diffX = moveX - startX;
-                const threshold = 100;
-                
-                if (Math.abs(diffX) > threshold) {
-                    if (diffX > 0) {
-                        swipeRight();
-                    } else {
-                        swipeLeft();
-                    }
-                } else {
-                    card.style.transform = '';
-                    card.style.opacity = '';
-                }
-                
-                startX = startY = moveX = moveY = null;
-            });
-            
-            // Mouse events for desktop
-            card.addEventListener('mousedown', e => {
-                startX = e.clientX;
-                startY = e.clientY;
-                card.style.cursor = 'grabbing';
-            });
-            
-            document.addEventListener('mousemove', e => {
-                if (!startX || !startY) return;
-                
-                moveX = e.clientX;
-                moveY = e.clientY;
-                const diffX = moveX - startX;
-                
-                if (Math.abs(diffX) > 10) {
-                    card.style.transform = `translateX(${diffX}px) rotate(${diffX * 0.1}deg)`;
-                    card.style.opacity = 1 - Math.abs(diffX) / 300;
-                }
-            });
-            
-            document.addEventListener('mouseup', () => {
-                if (!startX || !moveX) return;
-                
-                const diffX = moveX - startX;
-                const threshold = 100;
-                
-                if (Math.abs(diffX) > threshold) {
-                    if (diffX > 0) {
-                        swipeRight();
-                    } else {
-                        swipeLeft();
-                    }
-                } else {
-                    card.style.transform = '';
-                    card.style.opacity = '';
-                }
-                
-                startX = startY = moveX = moveY = null;
-                card.style.cursor = 'grab';
-            });
-        }
-
         // ===== EVENT HANDLERS =====
         function switchAuthTab(tab) {
             const tabs = document.querySelectorAll('.auth-tab');
@@ -2481,41 +2895,49 @@
                 id: 'user_' + Date.now(),
                 name: isSignup ? (form.querySelector('input[type="text"]')?.value || email.split('@')[0]) : email.split('@')[0],
                 email: email,
-                isPro: false
+                isPro: false,
+                isProPlus: false
             };
             
             if (isSignup) {
                 const age = form.querySelector('input[type="number"]')?.value;
                 const phone = form.querySelector('input[type="tel"]')?.value;
                 
-                if (age) state.currentUser.age = parseInt(age);
-                if (phone) state.currentUser.phone = phone;
+                if (age) state.userProfile.age = parseInt(age);
+                if (phone) state.userProfile.phone = phone;
+                if (form.querySelector('input[type="text"]')?.value) {
+                    state.userProfile.name = form.querySelector('input[type="text"]').value;
+                }
             }
             
-            localStorage.setItem('sparkplug_user', JSON.stringify(state.currentUser));
-            localStorage.setItem('sparkplug_isPro', state.isPro);
-            localStorage.setItem('sparkplug_swipeCount', state.swipeCount);
-            localStorage.setItem('sparkplug_lastSwipeReset', state.lastSwipeReset);
+            localStorage.setItem('amps_user', JSON.stringify(state.currentUser));
+            localStorage.setItem('amps_isPro', state.isPro);
+            localStorage.setItem('amps_isProPlus', state.isProPlus);
+            localStorage.setItem('amps_userProfile', JSON.stringify(state.userProfile));
             
-            showNotification('Welcome to SparkPlug! ⚡', 'success');
-            setTimeout(() => navigateTo('home'), 1000);
+            showNotification('Welcome to Amps! ⚡', 'success');
+            setTimeout(() => navigateTo('dashboard'), 1000);
         }
 
         function demoLogin() {
             state.currentUser = {
                 id: 'demo_user',
                 name: 'Demo User',
-                email: 'demo@sparkplug.app',
-                isPro: false
+                email: 'demo@amps.com',
+                isPro: false,
+                isProPlus: false
             };
             
             state.isPro = false;
+            state.isProPlus = false;
             
-            localStorage.setItem('sparkplug_user', JSON.stringify(state.currentUser));
-            localStorage.setItem('sparkplug_isPro', state.isPro);
+            localStorage.setItem('amps_user', JSON.stringify(state.currentUser));
+            localStorage.setItem('amps_isPro', state.isPro);
+            localStorage.setItem('amps_isProPlus', state.isProPlus);
+            localStorage.setItem('amps_userProfile', JSON.stringify(state.userProfile));
             
-            showNotification('Welcome to SparkPlug Demo! ⚡', 'success');
-            navigateTo('home');
+            showNotification('Welcome to Amps Demo! ⚡', 'success');
+            navigateTo('dashboard');
         }
 
         function joinEvent(eventId) {
@@ -2657,9 +3079,167 @@
             }, 1500);
         }
 
+        // ===== DRAG & SWIPE FUNCTIONALITY =====
+        function initializeSwipeGestures() {
+            const availableProfiles = MOCK_PROFILES.filter(p => 
+                !state.swipeHistory.some(s => s.profile.id === p.id)
+            );
+            
+            if (availableProfiles.length === 0) return;
+            
+            const currentProfile = availableProfiles[0];
+            const card = document.getElementById(`profileCard${currentProfile.id}`);
+            if (!card) return;
+            
+            let startX, startY, moveX, moveY;
+            
+            card.addEventListener('touchstart', e => {
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+            }, { passive: true });
+            
+            card.addEventListener('touchmove', e => {
+                if (!startX || !startY) return;
+                
+                moveX = e.touches[0].clientX;
+                moveY = e.touches[0].clientY;
+                
+                const diffX = moveX - startX;
+                const diffY = moveY - startY;
+                
+                if (Math.abs(diffX) > Math.abs(diffY)) {
+                    e.preventDefault();
+                    card.style.transform = `translateX(${diffX}px) rotate(${diffX * 0.1}deg)`;
+                    card.style.opacity = 1 - Math.abs(diffX) / 300;
+                    
+                    // Show swipe overlays
+                    const likeOverlay = card.querySelector('.swipe-overlay.like');
+                    const nopeOverlay = card.querySelector('.swipe-overlay.nope');
+                    const superOverlay = card.querySelector('.swipe-overlay.super');
+                    
+                    if (diffX > 100) {
+                        if (likeOverlay) likeOverlay.style.opacity = '1';
+                        if (nopeOverlay) nopeOverlay.style.opacity = '0';
+                        if (superOverlay) superOverlay.style.opacity = '0';
+                    } else if (diffX < -100) {
+                        if (nopeOverlay) nopeOverlay.style.opacity = '1';
+                        if (likeOverlay) likeOverlay.style.opacity = '0';
+                        if (superOverlay) superOverlay.style.opacity = '0';
+                    } else if (diffY < -100) {
+                        if (superOverlay) superOverlay.style.opacity = '1';
+                        if (likeOverlay) likeOverlay.style.opacity = '0';
+                        if (nopeOverlay) nopeOverlay.style.opacity = '0';
+                    } else {
+                        if (likeOverlay) likeOverlay.style.opacity = '0';
+                        if (nopeOverlay) nopeOverlay.style.opacity = '0';
+                        if (superOverlay) superOverlay.style.opacity = '0';
+                    }
+                }
+            }, { passive: false });
+            
+            card.addEventListener('touchend', () => {
+                if (!startX || !moveX) return;
+                
+                const diffX = moveX - startX;
+                const diffY = moveY - startY;
+                const threshold = 100;
+                
+                // Hide all overlays
+                const overlays = card.querySelectorAll('.swipe-overlay');
+                overlays.forEach(o => o.style.opacity = '0');
+                
+                if (Math.abs(diffX) > threshold) {
+                    if (diffX > 0) {
+                        swipeRight();
+                    } else {
+                        swipeLeft();
+                    }
+                } else if (diffY < -threshold) {
+                    superLike();
+                } else {
+                    card.style.transform = '';
+                    card.style.opacity = '';
+                }
+                
+                startX = startY = moveX = moveY = null;
+            });
+            
+            // Mouse events for desktop
+            card.addEventListener('mousedown', e => {
+                startX = e.clientX;
+                startY = e.clientY;
+                card.style.cursor = 'grabbing';
+            });
+            
+            document.addEventListener('mousemove', e => {
+                if (!startX || !startY) return;
+                
+                moveX = e.clientX;
+                moveY = e.clientY;
+                const diffX = moveX - startX;
+                const diffY = moveY - startY;
+                
+                if (Math.abs(diffX) > 10) {
+                    card.style.transform = `translateX(${diffX}px) rotate(${diffX * 0.1}deg)`;
+                    card.style.opacity = 1 - Math.abs(diffX) / 300;
+                    
+                    // Show swipe overlays
+                    const likeOverlay = card.querySelector('.swipe-overlay.like');
+                    const nopeOverlay = card.querySelector('.swipe-overlay.nope');
+                    const superOverlay = card.querySelector('.swipe-overlay.super');
+                    
+                    if (diffX > 100) {
+                        if (likeOverlay) likeOverlay.style.opacity = '1';
+                        if (nopeOverlay) nopeOverlay.style.opacity = '0';
+                        if (superOverlay) superOverlay.style.opacity = '0';
+                    } else if (diffX < -100) {
+                        if (nopeOverlay) nopeOverlay.style.opacity = '1';
+                        if (likeOverlay) likeOverlay.style.opacity = '0';
+                        if (superOverlay) superOverlay.style.opacity = '0';
+                    } else if (diffY < -100) {
+                        if (superOverlay) superOverlay.style.opacity = '1';
+                        if (likeOverlay) likeOverlay.style.opacity = '0';
+                        if (nopeOverlay) nopeOverlay.style.opacity = '0';
+                    } else {
+                        if (likeOverlay) likeOverlay.style.opacity = '0';
+                        if (nopeOverlay) nopeOverlay.style.opacity = '0';
+                        if (superOverlay) superOverlay.style.opacity = '0';
+                    }
+                }
+            });
+            
+            document.addEventListener('mouseup', () => {
+                if (!startX || !moveX) return;
+                
+                const diffX = moveX - startX;
+                const diffY = moveY - startY;
+                const threshold = 100;
+                
+                // Hide all overlays
+                const overlays = card.querySelectorAll('.swipe-overlay');
+                overlays.forEach(o => o.style.opacity = '0');
+                
+                if (Math.abs(diffX) > threshold) {
+                    if (diffX > 0) {
+                        swipeRight();
+                    } else {
+                        swipeLeft();
+                    }
+                } else if (diffY < -threshold) {
+                    superLike();
+                } else {
+                    card.style.transform = '';
+                    card.style.opacity = '';
+                }
+                
+                startX = startY = moveX = moveY = null;
+                card.style.cursor = 'grab';
+            });
+        }
+
         function swipeLeft() {
-            if (!state.isPro && state.swipeCount >= 10) {
-                showProModal();
+            if (!state.isPro && !state.isProPlus && state.swipeCount >= state.dailyLikes) {
+                navigateTo('pricing');
                 return;
             }
             
@@ -2675,15 +3255,15 @@
             
             showNotification(`Passed on ${profile.name}`);
             
-            localStorage.setItem('sparkplug_swipeCount', state.swipeCount);
-            localStorage.setItem('sparkplug_swipeHistory', JSON.stringify(state.swipeHistory));
+            localStorage.setItem('amps_swipeCount', state.swipeCount);
+            localStorage.setItem('amps_swipeHistory', JSON.stringify(state.swipeHistory));
             
             setTimeout(() => renderSwipePage(document.getElementById('content')), 300);
         }
 
         function swipeRight() {
-            if (!state.isPro && state.swipeCount >= 10) {
-                showProModal();
+            if (!state.isPro && !state.isProPlus && state.swipeCount >= state.dailyLikes) {
+                navigateTo('pricing');
                 return;
             }
             
@@ -2698,7 +3278,18 @@
             state.swipeCount++;
             
             if (Math.random() < 0.4) {
-                state.matches.push({...profile, matchId: Date.now()});
+                const match = {
+                    id: Date.now(),
+                    userId: state.currentUser.id,
+                    matchId: profile.id,
+                    timestamp: new Date().toISOString(),
+                    eventId: state.currentEvent?.id,
+                    lastMessage: 'You matched! Say hi!',
+                    lastMessageTime: 'Just now',
+                    unread: true,
+                    user: profile
+                };
+                state.matches.push(match);
                 state.lastMatch = profile;
                 setTimeout(() => showMatchModal(), 400);
                 showNotification(`It's a match with ${profile.name}! 💫`, 'success');
@@ -2706,22 +3297,78 @@
                 showNotification(`Liked ${profile.name} ❤️`);
             }
             
-            localStorage.setItem('sparkplug_swipeCount', state.swipeCount);
-            localStorage.setItem('sparkplug_swipeHistory', JSON.stringify(state.swipeHistory));
-            localStorage.setItem('sparkplug_matches', JSON.stringify(state.matches));
+            localStorage.setItem('amps_swipeCount', state.swipeCount);
+            localStorage.setItem('amps_swipeHistory', JSON.stringify(state.swipeHistory));
+            localStorage.setItem('amps_matches', JSON.stringify(state.matches));
+            
+            setTimeout(() => renderSwipePage(document.getElementById('content')), 300);
+        }
+
+        function superLike() {
+            if (!state.isPro && !state.isProPlus && state.superLikes <= 0) {
+                navigateTo('pricing');
+                return;
+            }
+            
+            const availableProfiles = MOCK_PROFILES.filter(p => 
+                !state.swipeHistory.some(s => s.profile.id === p.id)
+            );
+            
+            if (availableProfiles.length === 0) return;
+            
+            const profile = availableProfiles[0];
+            state.swipeHistory.push({ profile, action: 'super' });
+            state.swipeCount++;
+            if (!state.isPro && !state.isProPlus) {
+                state.superLikes--;
+            }
+            
+            // Super like has higher match chance
+            if (Math.random() < 0.7) {
+                const match = {
+                    id: Date.now(),
+                    userId: state.currentUser.id,
+                    matchId: profile.id,
+                    timestamp: new Date().toISOString(),
+                    eventId: state.currentEvent?.id,
+                    lastMessage: 'You super liked each other!',
+                    lastMessageTime: 'Just now',
+                    unread: true,
+                    user: profile
+                };
+                state.matches.push(match);
+                state.lastMatch = profile;
+                setTimeout(() => showMatchModal(), 400);
+                showNotification(`Super match with ${profile.name}! ⭐`, 'success');
+            } else {
+                showNotification(`Super liked ${profile.name} ⭐`);
+            }
+            
+            localStorage.setItem('amps_swipeCount', state.swipeCount);
+            localStorage.setItem('amps_swipeHistory', JSON.stringify(state.swipeHistory));
+            localStorage.setItem('amps_matches', JSON.stringify(state.matches));
+            localStorage.setItem('amps_superLikes', state.superLikes);
             
             setTimeout(() => renderSwipePage(document.getElementById('content')), 300);
         }
 
         function undoSwipe() {
             if (state.swipeHistory.length === 0) return;
+            if (!state.isPro && !state.isProPlus && state.rewindCount <= 0) {
+                showNotification('No rewinds remaining. Upgrade to Pro for unlimited rewinds.', 'warning');
+                return;
+            }
             
             state.swipeHistory.pop();
             state.swipeCount = Math.max(0, state.swipeCount - 1);
+            if (!state.isPro && !state.isProPlus) {
+                state.rewindCount--;
+            }
             showNotification('Undid last swipe', 'info');
             
-            localStorage.setItem('sparkplug_swipeCount', state.swipeCount);
-            localStorage.setItem('sparkplug_swipeHistory', JSON.stringify(state.swipeHistory));
+            localStorage.setItem('amps_swipeCount', state.swipeCount);
+            localStorage.setItem('amps_swipeHistory', JSON.stringify(state.swipeHistory));
+            localStorage.setItem('amps_rewindCount', state.rewindCount);
             
             renderSwipePage(document.getElementById('content'));
         }
@@ -2740,8 +3387,7 @@
             
             if (modal && state.lastMatch) {
                 matchAvatar.style.backgroundImage = `url('${state.lastMatch.livePhoto}')`;
-                matchAvatar.style.backgroundSize = 'cover';
-                userAvatar.style.background = 'linear-gradient(135deg, var(--primary), var(--primary-light))';
+                userAvatar.style.backgroundImage = `url('${state.userProfile.profilePhoto}')`;
                 matchMessage.textContent = `You and ${state.lastMatch.name} liked each other`;
                 modal.style.display = 'flex';
                 createConfetti();
@@ -2782,7 +3428,7 @@
                     sender: 'user'
                 });
                 
-                localStorage.setItem('sparkplug_chatMessages', JSON.stringify(state.chatMessages));
+                localStorage.setItem('amps_chatMessages', JSON.stringify(state.chatMessages));
                 
                 input.value = '';
                 renderChatPage(document.getElementById('content'));
@@ -2806,7 +3452,7 @@
                         sender: 'match'
                     });
                     
-                    localStorage.setItem('sparkplug_chatMessages', JSON.stringify(state.chatMessages));
+                    localStorage.setItem('amps_chatMessages', JSON.stringify(state.chatMessages));
                     renderChatPage(document.getElementById('content'));
                     
                     const updatedChatMessages = document.getElementById('chatMessages');
@@ -2840,9 +3486,10 @@
                 time: '7:00 PM - 11:00 PM',
                 attendees: 0,
                 maxAttendees: parseInt(maxAttendees),
-                qrCode: 'EVENT_' + Math.random().toString(36).substr(2, 9).toUpperCase(),
+                qrCode: 'AMPS_' + Math.random().toString(36).substr(2, 9).toUpperCase(),
                 radius: 100,
-                organizerId: state.currentUser.id
+                organizerId: state.currentUser.id,
+                tags: ['New Event']
             };
             
             state.events.push(newEvent);
@@ -2862,50 +3509,38 @@
             }, 500);
         }
 
-        function showProModal() {
-            document.getElementById('proModal').style.display = 'flex';
-        }
-
-        function closeProModal() {
-            document.getElementById('proModal').style.display = 'none';
-        }
-
-        function initiatePayPalPayment() {
-            showNotification('Redirecting to PayPal...', 'info');
+        function upgradeToPro() {
+            showNotification('Upgrading to Pro...', 'info');
             setTimeout(() => {
                 state.isPro = true;
-                localStorage.setItem('sparkplug_isPro', true);
-                showNotification('Pro upgrade successful! 🎉', 'success');
-                closeProModal();
-                renderPage();
-                updateNavigation();
+                state.isProPlus = false;
+                localStorage.setItem('amps_isPro', true);
+                localStorage.setItem('amps_isProPlus', false);
+                showNotification('Pro upgrade successful!', 'success');
+                navigateTo('dashboard');
             }, 1500);
         }
 
-        function showMobileMoneyOptions() {
-            showNotification('Mobile Money options: 1. MTC Mobile Money 2. TN Mobile 3. EcoCash', 'info');
-        }
-
-        function showBankTransfer() {
-            showNotification('Bank transfer details: SparkPlug Ltd, Account: 123456789, Bank: Bank of Namibia', 'info');
-        }
-
-        function showCryptoOptions() {
-            showNotification('Crypto payments accepted: BTC, ETH, USDT. Send to: 0x742d35Cc6634C0532925a3b844Bc9e...', 'info');
-        }
-
-        function refreshAttendees() {
-            showNotification('Refreshing attendee list...', 'info');
+        function upgradeToProPlus() {
+            showNotification('Upgrading to Pro Plus...', 'info');
             setTimeout(() => {
-                showNotification('Attendee list updated', 'success');
-            }, 1000);
-        }
-
-        function exportAttendeeData() {
-            showNotification('Exporting attendee data...', 'info');
-            setTimeout(() => {
-                showNotification('Data exported successfully', 'success');
+                state.isPro = false;
+                state.isProPlus = true;
+                localStorage.setItem('amps_isPro', false);
+                localStorage.setItem('amps_isProPlus', true);
+                showNotification('Pro Plus upgrade successful!', 'success');
+                navigateTo('dashboard');
             }, 1500);
+        }
+
+        function showPayment(method) {
+            const methods = {
+                paypal: 'PayPal',
+                card: 'Credit/Debit Card',
+                mobile: 'Mobile Money',
+                bank: 'Bank Transfer'
+            };
+            showNotification(`Redirecting to ${methods[method]} payment...`, 'info');
         }
 
         function enterCodeManually() {
@@ -2935,7 +3570,7 @@
                     <h2 class="mb-2">Menu</h2>
                     <p class="text-gray-400 mb-4">Hi, ${state.currentUser?.name || 'Guest'}!</p>
                     <div class="flex flex-col gap-3">
-                        <button class="btn btn-outline" onclick="navigateTo('home'); this.closest('.menu-modal').remove()">
+                        <button class="btn btn-outline" onclick="navigateTo('dashboard'); this.closest('.menu-modal').remove()">
                             <i class="fas fa-calendar"></i> Browse Events
                         </button>
                         <button class="btn btn-outline" onclick="navigateTo('matches'); this.closest('.menu-modal').remove()">
@@ -2963,17 +3598,19 @@
         function logout() {
             state.currentUser = null;
             state.isPro = false;
+            state.isProPlus = false;
             state.swipeCount = 0;
             state.matches = [];
             state.chatMessages = {};
             
-            localStorage.removeItem('sparkplug_user');
-            localStorage.removeItem('sparkplug_isPro');
-            localStorage.removeItem('sparkplug_swipeCount');
-            localStorage.removeItem('sparkplug_matches');
-            localStorage.removeItem('sparkplug_chatMessages');
+            localStorage.removeItem('amps_user');
+            localStorage.removeItem('amps_isPro');
+            localStorage.removeItem('amps_isProPlus');
+            localStorage.removeItem('amps_swipeCount');
+            localStorage.removeItem('amps_matches');
+            localStorage.removeItem('amps_chatMessages');
             
-            showNotification('Successfully logged out', 'info');
+            showNotification('Successfully signed out', 'info');
             navigateTo('home');
         }
 
@@ -2989,8 +3626,27 @@
             showNotification('Privacy settings coming soon!', 'info');
         }
 
-        function manageSubscription() {
-            showNotification('Subscription management coming soon!', 'info');
+        function showHelp() {
+            showNotification('Help & support coming soon!', 'info');
+        }
+
+        function changeProfilePhoto() {
+            showNotification('Profile photo upload coming soon!', 'info');
+        }
+
+        function showProfileViews() {
+            showNotification('Profile views feature for Pro users!', 'info');
+        }
+
+        function showFilters() {
+            showNotification('Filter options coming soon!', 'info');
+        }
+
+        function viewFullProfile(profileId) {
+            const profile = MOCK_PROFILES.find(p => p.id === profileId);
+            if (profile) {
+                alert(`Full Profile:\n\nName: ${profile.name}\nAge: ${profile.age}\nBio: ${profile.bio}\nLocation: ${profile.location}\nInterests: ${profile.interests.join(', ')}`);
+            }
         }
 
         // ===== UTILITY FUNCTIONS =====
@@ -3051,12 +3707,16 @@
 
         // ===== INITIALIZATION =====
         function init() {
-            const savedUser = localStorage.getItem('sparkplug_user');
-            const savedPro = localStorage.getItem('sparkplug_isPro');
-            const savedSwipeCount = localStorage.getItem('sparkplug_swipeCount');
-            const savedMatches = localStorage.getItem('sparkplug_matches');
-            const savedChatMessages = localStorage.getItem('sparkplug_chatMessages');
-            const savedSwipeHistory = localStorage.getItem('sparkplug_swipeHistory');
+            const savedUser = localStorage.getItem('amps_user');
+            const savedPro = localStorage.getItem('amps_isPro');
+            const savedProPlus = localStorage.getItem('amps_isProPlus');
+            const savedSwipeCount = localStorage.getItem('amps_swipeCount');
+            const savedMatches = localStorage.getItem('amps_matches');
+            const savedChatMessages = localStorage.getItem('amps_chatMessages');
+            const savedSwipeHistory = localStorage.getItem('amps_swipeHistory');
+            const savedUserProfile = localStorage.getItem('amps_userProfile');
+            const savedSuperLikes = localStorage.getItem('amps_superLikes');
+            const savedRewindCount = localStorage.getItem('amps_rewindCount');
             
             if (savedUser) {
                 state.currentUser = JSON.parse(savedUser);
@@ -3064,6 +3724,10 @@
             
             if (savedPro) {
                 state.isPro = savedPro === 'true';
+            }
+            
+            if (savedProPlus) {
+                state.isProPlus = savedProPlus === 'true';
             }
             
             if (savedSwipeCount) {
@@ -3082,9 +3746,23 @@
                 state.swipeHistory = JSON.parse(savedSwipeHistory);
             }
             
+            if (savedUserProfile) {
+                state.userProfile = JSON.parse(savedUserProfile);
+            }
+            
+            if (savedSuperLikes) {
+                state.superLikes = parseInt(savedSuperLikes);
+            }
+            
+            if (savedRewindCount) {
+                state.rewindCount = parseInt(savedRewindCount);
+            }
+            
             const today = new Date().toDateString();
             if (localStorage.getItem('lastSwipeDate') !== today) {
                 state.swipeCount = 0;
+                state.superLikes = state.isPro || state.isProPlus ? 5 : 1;
+                state.rewindCount = state.isPro || state.isProPlus ? 999 : 1;
                 localStorage.setItem('lastSwipeDate', today);
             }
             
@@ -3093,6 +3771,45 @@
         }
 
         document.addEventListener('DOMContentLoaded', init);
+
+        // Export functions for HTML onclick handlers
+        window.navigateTo = navigateTo;
+        window.goBack = goBack;
+        window.demoLogin = demoLogin;
+        window.upgradeToPro = upgradeToPro;
+        window.upgradeToProPlus = upgradeToProPlus;
+        window.showPayment = showPayment;
+        window.logout = logout;
+        window.joinEvent = joinEvent;
+        window.viewEvent = viewEvent;
+        window.startCameraScanning = startCameraScanning;
+        window.enterCodeManually = enterCodeManually;
+        window.openCameraForSelfie = openCameraForSelfie;
+        window.closeCamera = closeCamera;
+        window.switchCamera = switchCamera;
+        window.takePhoto = takePhoto;
+        window.swipeLeft = swipeLeft;
+        window.swipeRight = swipeRight;
+        window.superLike = superLike;
+        window.undoSwipe = undoSwipe;
+        window.resetSwipes = resetSwipes;
+        window.closeMatchModal = closeMatchModal;
+        window.startChat = startChat;
+        window.openChat = openChat;
+        window.sendMessage = sendMessage;
+        window.handleMessageKeypress = handleMessageKeypress;
+        window.createEvent = createEvent;
+        window.switchAuthTab = switchAuthTab;
+        window.handleAuth = handleAuth;
+        window.showMenuModal = showMenuModal;
+        window.editProfile = editProfile;
+        window.showNotificationSettings = showNotificationSettings;
+        window.showPrivacySettings = showPrivacySettings;
+        window.showHelp = showHelp;
+        window.changeProfilePhoto = changeProfilePhoto;
+        window.showProfileViews = showProfileViews;
+        window.showFilters = showFilters;
+        window.viewFullProfile = viewFullProfile;
     </script>
 </body>
 </html>
