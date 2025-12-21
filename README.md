@@ -1,2 +1,2 @@
-# Mingl
+# Amps
 live event Dating app
