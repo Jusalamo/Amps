@@ -1418,6 +1418,451 @@
                 padding-bottom: max(var(--safe-area-inset-bottom), 20px);
             }
         }
+        
+        /* ===== NEW FEATURES STYLES ===== */
+        /* Edit Profile */
+        .edit-profile-container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .profile-photo-upload {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 24px;
+        }
+        
+        .profile-photo-upload .avatar {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .upload-button {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        /* Privacy Settings */
+        .privacy-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .privacy-option:last-child {
+            border-bottom: none;
+        }
+        
+        .privacy-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        
+        /* Profile Views */
+        .profile-views-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        .profile-view-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .view-time {
+            font-size: 12px;
+            color: var(--gray-400);
+        }
+        
+        /* Filters */
+        .filters-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .filters-content {
+            background: var(--bg-card);
+            border-radius: var(--radius-2xl);
+            padding: 32px;
+            max-width: 400px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .filter-section {
+            margin-bottom: 24px;
+        }
+        
+        .filter-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .filter-option:last-child {
+            border-bottom: none;
+        }
+        
+        .range-slider {
+            width: 100%;
+            margin: 20px 0;
+        }
+        
+        .range-value {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        /* Event Bookmarks */
+        .bookmark-button {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.6);
+            border: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all var(--transition);
+        }
+        
+        .bookmark-button.active {
+            color: var(--accent-yellow);
+        }
+        
+        /* Event Geo-fencing */
+        .geo-fencing-badge {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--accent-blue);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        
+        /* Safety Options */
+        .safety-options {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+        }
+        
+        .safety-btn {
+            flex: 1;
+            padding: 8px 16px;
+            border-radius: var(--radius);
+            background: var(--bg-tertiary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+        
+        .safety-btn:hover {
+            border-color: var(--accent-red);
+            color: var(--accent-red);
+        }
+        
+        /* Analytics */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+        
+        .analytics-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            text-align: center;
+        }
+        
+        .analytics-value {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        
+        .analytics-label {
+            font-size: 12px;
+            color: var(--gray-400);
+        }
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 24px;
+            padding: 16px 0;
+        }
+        
+        .page-button {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius);
+            background: var(--bg-tertiary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+        
+        .page-button.active {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .page-button:hover:not(.active) {
+            border-color: var(--primary);
+        }
+        
+        /* Event Customization */
+        .customization-preview {
+            width: 100%;
+            height: 150px;
+            border-radius: var(--radius-lg);
+            margin: 20px 0;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+        }
+        
+        .color-picker {
+            display: flex;
+            gap: 8px;
+            margin: 16px 0;
+        }
+        
+        .color-option {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all var(--transition);
+        }
+        
+        .color-option.active {
+            border-color: white;
+            transform: scale(1.1);
+        }
+        
+        /* Event RSVP */
+        .rsvp-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        .rsvp-button {
+            padding: 12px;
+            border-radius: var(--radius-lg);
+            background: var(--bg-tertiary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            cursor: pointer;
+            transition: all var(--transition);
+            text-align: center;
+        }
+        
+        .rsvp-button.active {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        /* Enhanced Chat Features */
+        .chat-options {
+            display: flex;
+            gap: 8px;
+            margin-left: auto;
+        }
+        
+        .chat-option-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+        
+        .chat-option-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        /* Pro Analytics */
+        .analytics-chart {
+            width: 100%;
+            height: 200px;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-lg);
+            margin: 20px 0;
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+            gap: 4px;
+        }
+        
+        .chart-bar {
+            flex: 1;
+            background: var(--primary);
+            border-radius: 4px 4px 0 0;
+            min-height: 20px;
+            transition: height 0.3s ease;
+        }
+        
+        /* Notification Preferences */
+        .notification-preference {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .notification-preference:last-child {
+            border-bottom: none;
+        }
+        
+        /* Location-based Events */
+        .location-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: var(--radius-full);
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--accent-green);
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        /* Enhanced Event Card */
+        .event-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+        
+        .event-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .event-action-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+        
+        .event-action-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        /* Scrollable Content Areas */
+        .scrollable-content {
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+        
+        .scrollable-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .scrollable-content::-webkit-scrollbar-track {
+            background: var(--bg-tertiary);
+            border-radius: 3px;
+        }
+        
+        .scrollable-content::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 3px;
+        }
+        
+        /* Spacing Optimizations */
+        .compact-grid {
+            display: grid;
+            gap: 12px;
+        }
+        
+        .compact-card {
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+        
+        .section-spacing {
+            margin-top: 32px;
+            margin-bottom: 32px;
+        }
+        
+        .no-clip {
+            overflow: visible;
+        }
     </style>
 </head>
 <body>
@@ -1578,8 +2023,76 @@
         </div>
     </div>
 
+    <!-- Filters Modal -->
+    <div class="filters-modal" id="filtersModal">
+        <div class="filters-content">
+            <h2 class="mb-6">Filters</h2>
+            
+            <div class="filter-section">
+                <h4 class="mb-4">Distance</h4>
+                <div class="range-value">
+                    <span>0 km</span>
+                    <span id="distanceValue">50 km</span>
+                    <span>100 km</span>
+                </div>
+                <input type="range" class="range-slider" id="distanceSlider" min="0" max="100" value="50">
+            </div>
+            
+            <div class="filter-section">
+                <h4 class="mb-4">Age Range</h4>
+                <div class="range-value">
+                    <span>18</span>
+                    <span id="ageValue">18-35</span>
+                    <span>60</span>
+                </div>
+                <input type="range" class="range-slider" id="ageSlider" min="18" max="60" value="35">
+            </div>
+            
+            <div class="filter-section">
+                <h4 class="mb-4">Gender</h4>
+                <div class="flex gap-3">
+                    <button class="btn btn-outline flex-1" onclick="toggleFilter('gender', 'all')" id="genderAll">All</button>
+                    <button class="btn btn-outline flex-1" onclick="toggleFilter('gender', 'male')" id="genderMale">Men</button>
+                    <button class="btn btn-outline flex-1" onclick="toggleFilter('gender', 'female')" id="genderFemale">Women</button>
+                </div>
+            </div>
+            
+            <div class="filter-section">
+                <h4 class="mb-4">Interests</h4>
+                <div class="flex flex-wrap gap-2">
+                    <span class="interest-tag cursor-pointer" onclick="toggleInterest('music')">Music</span>
+                    <span class="interest-tag cursor-pointer" onclick="toggleInterest('tech')">Tech</span>
+                    <span class="interest-tag cursor-pointer" onclick="toggleInterest('art')">Art</span>
+                    <span class="interest-tag cursor-pointer" onclick="toggleInterest('sports')">Sports</span>
+                    <span class="interest-tag cursor-pointer" onclick="toggleInterest('food')">Food</span>
+                    <span class="interest-tag cursor-pointer" onclick="toggleInterest('travel')">Travel</span>
+                </div>
+            </div>
+            
+            <div class="filter-section">
+                <h4 class="mb-4">Verification</h4>
+                <div class="filter-option">
+                    <span>Verified Only</span>
+                    <label class="switch">
+                        <input type="checkbox" id="verifiedOnly">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="flex gap-3 mt-8">
+                <button class="btn btn-outline flex-1" onclick="closeFilters()">
+                    Cancel
+                </button>
+                <button class="btn btn-primary flex-1" onclick="applyFilters()">
+                    Apply Filters
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // ===== MOCK DATA =====
+        // ===== ENHANCED MOCK DATA =====
         const MOCK_PROFILES = [
             {
                 id: 1,
@@ -1591,8 +2104,10 @@
                 location: 'Main Stage',
                 online: true,
                 verified: true,
-                cardColor: 'var(--card-purple)',
-                livePhoto: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="%23C4B5FD"/><text x="100" y="110" font-size="24" text-anchor="middle" fill="white">Live Photo</text></svg>'
+                cardColor: '#8B5CF6',
+                livePhoto: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="%23C4B5FD"/><text x="100" y="110" font-size="24" text-anchor="middle" fill="white">Live Photo</text></svg>',
+                distance: '15m away',
+                gender: 'female'
             },
             {
                 id: 2,
@@ -1604,8 +2119,10 @@
                 location: 'Bar Area',
                 online: true,
                 verified: true,
-                cardColor: 'var(--card-pink)',
-                livePhoto: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="%23FFC0D9"/><text x="100" y="110" font-size="24" text-anchor="middle" fill="white">Live Photo</text></svg>'
+                cardColor: '#EC4899',
+                livePhoto: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="%23FFC0D9"/><text x="100" y="110" font-size="24" text-anchor="middle" fill="white">Live Photo</text></svg>',
+                distance: '25m away',
+                gender: 'male'
             },
             {
                 id: 3,
@@ -1617,8 +2134,10 @@
                 location: 'Lounge',
                 online: false,
                 verified: true,
-                cardColor: 'var(--card-blue)',
-                livePhoto: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="%23BAE6FD"/><text x="100" y="110" font-size="24" text-anchor="middle" fill="white">Live Photo</text></svg>'
+                cardColor: '#3B82F6',
+                livePhoto: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="%23BAE6FD"/><text x="100" y="110" font-size="24" text-anchor="middle" fill="white">Live Photo</text></svg>',
+                distance: '50m away',
+                gender: 'male'
             },
             {
                 id: 4,
@@ -1630,8 +2149,10 @@
                 location: 'Food Court',
                 online: true,
                 verified: false,
-                cardColor: 'var(--card-green)',
-                livePhoto: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="%23BBF7D0"/><text x="100" y="110" font-size="24" text-anchor="middle" fill="white">Live Photo</text></svg>'
+                cardColor: '#10B981',
+                livePhoto: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="%23BBF7D0"/><text x="100" y="110" font-size="24" text-anchor="middle" fill="white">Live Photo</text></svg>',
+                distance: '100m away',
+                gender: 'female'
             },
             {
                 id: 5,
@@ -1643,25 +2164,10 @@
                 location: 'DJ Booth',
                 online: true,
                 verified: true,
-                cardColor: 'var(--card-teal)',
-                livePhoto: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="%23FECACA"/><text x="100" y="110" font-size="24" text-anchor="middle" fill="white">Live Photo</text></svg>'
-            },
-            {
-                id: 6,
-                name: 'Alexandra',
-                age: 24,
-                bio: 'Music producer & DJ. Playing at the main stage tonight. Always looking for creative connections.',
-                occupation: 'Music Producer',
-                company: 'SoundWave Studios',
-                interests: ['Music Production', 'DJing', 'Sound Design', 'Live Performance', 'Electronic Music'],
-                eventId: 1,
-                location: 'Main Stage',
-                online: true,
-                verified: true,
-                cardColor: 'var(--card-indigo)',
-                livePhoto: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="%23C4B5FD"/><text x="100" y="110" font-size="24" text-anchor="middle" fill="white">Live Photo</text></svg>',
-                mutualConnections: 2,
-                distance: '15m away'
+                cardColor: '#14B8A6',
+                livePhoto: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="%23FECACA"/><text x="100" y="110" font-size="24" text-anchor="middle" fill="white">Live Photo</text></svg>',
+                distance: '200m away',
+                gender: 'non-binary'
             }
         ];
 
@@ -1683,7 +2189,11 @@
                 coordinates: { lat: 37.7749, lng: -122.4194 },
                 ageRange: '18-45',
                 genderPreference: 'Everyone',
-                tags: ['Tech', 'Networking', 'Startups', 'AI', 'Blockchain']
+                tags: ['Tech', 'Networking', 'Startups', 'AI', 'Blockchain'],
+                bookmarked: false,
+                rsvp: 'none',
+                geoFencing: true,
+                customTheme: null
             },
             {
                 id: 2,
@@ -1702,49 +2212,15 @@
                 coordinates: { lat: 37.7833, lng: -122.4167 },
                 ageRange: '21+',
                 genderPreference: 'Everyone',
-                tags: ['Art', 'Culture', 'Exhibition', 'Wine Tasting']
-            },
-            {
-                id: 3,
-                name: 'Music Producers Meetup',
-                location: 'SoundBar Lounge',
-                date: 'Friday',
-                time: '9:00 PM - 2:00 AM',
-                attendees: 45,
-                maxAttendees: 80,
-                description: 'Exclusive meetup for music producers, DJs, and sound engineers. Equipment showcase and demo sharing.',
-                category: 'Music & Audio',
-                coverImage: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=600&h=300&fit=crop',
-                qrCode: 'AMPS_MUSIC_2024_003',
-                radius: 50,
-                organizerId: 3,
-                coordinates: { lat: 37.7815, lng: -122.4152 },
-                ageRange: '21-40',
-                genderPreference: 'Everyone',
-                tags: ['Music', 'Producers', 'DJs', 'Audio Engineering']
+                tags: ['Art', 'Culture', 'Exhibition', 'Wine Tasting'],
+                bookmarked: true,
+                rsvp: 'going',
+                geoFencing: true,
+                customTheme: null
             }
         ];
 
-        const MOCK_CHAT_MESSAGES = {
-            '2': [
-                {
-                    id: 1,
-                    sender: 'user',
-                    text: 'Hey Marcus! Saw you\'re into AI startups. I\'m working on something similar.',
-                    time: '8:30 PM',
-                    read: true
-                },
-                {
-                    id: 2,
-                    sender: 'match',
-                    text: 'Awesome! What are you building? I\'d love to hear more.',
-                    time: '8:32 PM',
-                    read: true
-                }
-            ]
-        };
-
-        // ===== APP STATE =====
+        // ===== ENHANCED APP STATE =====
         let state = {
             currentUser: null,
             currentPage: 'home',
@@ -1764,7 +2240,7 @@
             swipeHistory: [],
             lastMatch: null,
             notification: null,
-            chatMessages: MOCK_CHAT_MESSAGES,
+            chatMessages: {},
             userLivePhoto: null,
             userProfile: {
                 name: 'Demo User',
@@ -1774,14 +2250,49 @@
                 company: 'Tech Corp',
                 bio: 'Passionate about technology and building meaningful connections at events.',
                 interests: ['Technology', 'Music', 'Travel', 'Fitness', 'Photography'],
-                profilePhoto: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="%238B5CF6"/><text x="100" y="120" font-size="24" text-anchor="middle" fill="white">User</text></svg>'
+                profilePhoto: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="%238B5CF6"/><text x="100" y="120" font-size="24" text-anchor="middle" fill="white">User</text></svg>',
+                phone: '+264 81 123 4567',
+                location: 'San Francisco, CA',
+                gender: 'male',
+                visibility: 'public',
+                profileViews: []
             },
             superLikes: 1,
-            rewindCount: 1
+            rewindCount: 1,
+            filters: {
+                distance: 50,
+                ageRange: { min: 18, max: 35 },
+                gender: 'all',
+                interests: [],
+                verifiedOnly: false
+            },
+            bookmarkedEvents: [2],
+            currentPageNumber: 1,
+            eventsPerPage: 5,
+            activeFilters: {},
+            privacySettings: {
+                showProfile: 'public',
+                showOnlineStatus: true,
+                showDistance: true,
+                notifications: {
+                    matches: true,
+                    messages: true,
+                    eventUpdates: true,
+                    nearbyEvents: true
+                }
+            },
+            analytics: {
+                eventViews: 1245,
+                profileViews: 567,
+                matchRate: '24%',
+                responseRate: '89%',
+                monthlyGrowth: '+12%'
+            }
         };
 
         // ===== ROUTER =====
         function navigateTo(page) {
+            console.log('Navigating to:', page);
             state.history.push(state.currentPage);
             state.currentPage = page;
             renderPage();
@@ -1790,17 +2301,23 @@
         }
 
         function goBack() {
+            console.log('Going back');
             if (state.history.length > 1) {
                 const previousPage = state.history.pop();
                 state.currentPage = state.history.pop() || 'home';
                 renderPage();
                 updateNavigation();
+                window.scrollTo(0, 0);
             }
         }
 
         // ===== PAGE RENDERERS =====
         function renderPage() {
+            console.log('Rendering page:', state.currentPage);
             const content = document.getElementById('content');
+            
+            // Clear content first
+            content.innerHTML = '';
             
             switch(state.currentPage) {
                 case 'home':
@@ -1848,14 +2365,34 @@
                 case 'settings':
                     renderSettingsPage(content);
                     break;
+                case 'privacy-settings':
+                    renderPrivacySettingsPage(content);
+                    break;
+                case 'profile-views':
+                    renderProfileViewsPage(content);
+                    break;
+                case 'bookmarked-events':
+                    renderBookmarkedEventsPage(content);
+                    break;
+                case 'analytics':
+                    renderAnalyticsPage(content);
+                    break;
+                case 'notifications':
+                    renderNotificationsPage(content);
+                    break;
                 default:
                     renderHomePage(content);
             }
         }
 
         function updateNavigation() {
-            const navbar = document.querySelector('.navbar') || document.createElement('nav');
-            navbar.className = 'navbar';
+            let navbar = document.querySelector('.navbar');
+            
+            if (!navbar) {
+                navbar = document.createElement('nav');
+                navbar.className = 'navbar';
+                document.getElementById('app').insertBefore(navbar, document.getElementById('content'));
+            }
             
             let navHTML = `
                 <div class="nav-brand" onclick="navigateTo('home')">
@@ -1889,9 +2426,6 @@
             
             navHTML += `</div>`;
             
-            if (!document.querySelector('.navbar')) {
-                document.getElementById('app').insertBefore(navbar, document.getElementById('content'));
-            }
             navbar.innerHTML = navHTML;
             
             // Update bottom nav
@@ -1929,9 +2463,9 @@
 
         // ===== PAGE COMPONENTS =====
         function renderHomePage(container) {
+            const upcomingEvents = state.events.slice(0, 2);
+            
             container.innerHTML = `
-                <div class="hero-bg"></div>
-                
                 <div class="hero">
                     <h1>Amplify Your Connections at Live Events</h1>
                     <p class="hero-subtitle">Scan the QR code at any event to see who's there and connect instantly with verified attendees.</p>
@@ -1956,38 +2490,48 @@
                     </div>
                 </div>
                 
-                <div class="features-grid">
-                    ${[
-                        { icon: 'fa-qrcode', title: 'Live Event Check-in', desc: 'Scan event QR and take fresh selfie' },
-                        { icon: 'fa-camera', title: 'Verified Attendees', desc: 'Everyone verified with live photos' },
-                        { icon: 'fa-heart', title: 'Smart Matching', desc: 'Connect with people at same event' },
-                        { icon: 'fa-comments', title: 'Real-time Chat', desc: 'Message matches instantly' }
-                    ].map(feature => `
-                        <div class="feature">
-                            <div class="feature-icon">
-                                <i class="fas ${feature.icon}"></i>
-                            </div>
-                            <h3>${feature.title}</h3>
-                            <p>${feature.desc}</p>
-                        </div>
-                    `).join('')}
+                <!-- Quick Actions Grid -->
+                <div class="quick-actions compact-grid">
+                    <div class="action-card primary" onclick="navigateTo('scanner')">
+                        <i class="fas fa-qrcode"></i>
+                        <h4>Join Event</h4>
+                    </div>
+                    <div class="action-card blue" onclick="navigateTo('events')">
+                        <i class="fas fa-calendar"></i>
+                        <h4>Events</h4>
+                    </div>
+                    <div class="action-card pink" onclick="navigateTo('matches')">
+                        <i class="fas fa-heart"></i>
+                        <h4>Matches</h4>
+                    </div>
+                    <div class="action-card gold" onclick="navigateTo('profile')">
+                        <i class="fas fa-user"></i>
+                        <h4>Profile</h4>
+                    </div>
                 </div>
                 
-                <div class="events-section">
-                    <h2 class="text-center mb-4">Featured Events</h2>
-                    <p class="text-center text-gray-400 mb-12">Join trending events near you</p>
+                <!-- Featured Events -->
+                <div class="section-spacing">
+                    <h2 class="mb-4">Featured Events</h2>
+                    <p class="text-gray-400 mb-4">Join trending events near you</p>
                     
                     <div class="events-grid">
-                        ${state.events.slice(0, 2).map(event => `
-                            <div class="event-card notched-tl" onclick="viewEvent(${event.id})" style="cursor: pointer;">
-                                <div style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(236, 72, 153, 0.2)); padding: 16px; border-radius: 16px; margin-bottom: 16px;">
-                                    <h3 class="mb-3">${event.name}</h3>
-                                    <p class="text-gray-300">${event.description.substring(0, 100)}...</p>
+                        ${upcomingEvents.map(event => `
+                            <div class="event-card compact-card no-clip" onclick="viewEvent(${event.id})" style="cursor: pointer;">
+                                <div class="event-card-header">
+                                    <div>
+                                        <h3 class="mb-2">${event.name}</h3>
+                                        <p class="text-gray-400 text-sm">
+                                            <i class="fas fa-map-marker-alt"></i> ${event.location}
+                                        </p>
+                                    </div>
+                                    <button class="bookmark-button ${event.bookmarked ? 'active' : ''}" onclick="toggleBookmark(${event.id}); event.stopPropagation()">
+                                        <i class="fas fa-bookmark"></i>
+                                    </button>
                                 </div>
-                                <div class="event-info">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    <span>${event.location}</span>
-                                </div>
+                                
+                                <p class="text-gray-300 mb-4">${event.description.substring(0, 80)}...</p>
+                                
                                 <div class="event-info">
                                     <i class="fas fa-calendar"></i>
                                     <span>${event.date} • ${event.time}</span>
@@ -1996,6 +2540,7 @@
                                     <i class="fas fa-users"></i>
                                     <span>${event.attendees} attending</span>
                                 </div>
+                                
                                 <button class="btn btn-primary btn-block mt-4">
                                     <i class="fas fa-eye"></i> View Details
                                 </button>
@@ -2005,7 +2550,7 @@
                 </div>
                 
                 ${!state.currentUser ? `
-                    <div class="card mt-8 text-center">
+                    <div class="card mt-8 text-center compact-card">
                         <h3 class="mb-4">Ready to Amplify Your Connections?</h3>
                         <p class="text-gray-400 mb-6">Join thousands who are making meaningful connections at events</p>
                         <button class="btn btn-primary btn-large" onclick="navigateTo('auth')">
@@ -2023,37 +2568,33 @@
                     
                     <div class="card">
                         <div class="auth-tabs">
-                            <button class="auth-tab active" onclick="switchAuthTab('login')">Sign In</button>
-                            <button class="auth-tab" onclick="switchAuthTab('signup')">Sign Up</button>
+                            <button class="auth-tab active" id="loginTab" onclick="switchAuthTab('login')">Sign In</button>
+                            <button class="auth-tab" id="signupTab" onclick="switchAuthTab('signup')">Sign Up</button>
                         </div>
                         
                         <form id="authForm" onsubmit="handleAuth(event)">
                             <div class="form-group">
                                 <label class="form-label">Email</label>
-                                <input type="email" class="form-control" placeholder="you@example.com" value="demo@amps.com" required>
+                                <input type="email" class="form-control" id="authEmail" placeholder="you@example.com" value="demo@amps.com" required>
                             </div>
                             
                             <div class="form-group">
                                 <label class="form-label">Password</label>
-                                <input type="password" class="form-control" placeholder="••••••••" value="password" required minlength="6">
+                                <input type="password" class="form-control" id="authPassword" placeholder="••••••••" value="password" required minlength="6">
                             </div>
                             
                             <div id="signupFields" class="hidden">
                                 <div class="form-group">
                                     <label class="form-label">Full Name</label>
-                                    <input type="text" class="form-control" placeholder="Alex Johnson">
+                                    <input type="text" class="form-control" id="authName" placeholder="Alex Johnson" value="Demo User">
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Age</label>
-                                    <input type="number" class="form-control" placeholder="24" min="18" max="100">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Phone Number</label>
-                                    <input type="tel" class="form-control" placeholder="+264 81 123 4567">
+                                    <input type="number" class="form-control" id="authAge" placeholder="24" min="18" max="100" value="28">
                                 </div>
                             </div>
                             
-                            <button type="submit" class="btn btn-primary btn-block mt-4">
+                            <button type="submit" class="btn btn-primary btn-block mt-4" id="authSubmit">
                                 <i class="fas fa-sign-in-alt"></i> Continue
                             </button>
                         </form>
@@ -2062,10 +2603,6 @@
                             <button class="btn btn-outline btn-block" onclick="demoLogin()">
                                 <i class="fas fa-rocket"></i> Continue as Demo User
                             </button>
-                        </div>
-                        
-                        <div class="text-xs text-gray-400 text-center mt-4 p-3 bg-gray-900/50 rounded-lg">
-                            Demo credentials pre-filled. Just click "Continue"!
                         </div>
                     </div>
                 </div>
@@ -2076,6 +2613,7 @@
             const eventsAttended = 12;
             const totalMatches = state.matches.length;
             const responseRate = '89%';
+            const remainingSwipes = state.isPro || state.isProPlus ? '∞' : Math.max(0, state.dailyLikes - state.swipeCount);
             
             container.innerHTML = `
                 <div class="profile-header">
@@ -2129,7 +2667,7 @@
                         <p class="text-gray-400">${state.matches.length} matches</p>
                     </div>
                     
-                    <div class="action-card gold" onclick="${state.isPro || state.isProPlus ? "showProfileViews()" : "navigateTo('pricing')"}">
+                    <div class="action-card gold" onclick="${state.isPro || state.isProPlus ? "navigateTo('profile-views')" : "navigateTo('pricing')"}">
                         <i class="fas fa-eye"></i>
                         <h4>Profile Views</h4>
                         <p class="text-gray-400">${state.isPro || state.isProPlus ? 'See who viewed you' : 'Pro feature'}</p>
@@ -2165,38 +2703,27 @@
                         </div>
                     `).join('')}
                 </div>
-                
-                <div class="card mt-6">
-                    <h4 class="mb-4">Daily Limits</h4>
-                    <div class="space-y-3">
-                        <div>
-                            <div class="flex justify-between mb-1">
-                                <span class="text-sm">Likes remaining</span>
-                                <span class="text-sm font-semibold">${state.isPro || state.isProPlus ? '∞' : state.dailyLikes - state.swipeCount}</span>
-                            </div>
-                            <div class="w-full bg-gray-800 rounded-full h-2">
-                                <div class="bg-green-500 h-2 rounded-full" style="width: ${state.isPro || state.isProPlus ? '100' : ((state.dailyLikes - state.swipeCount) / state.dailyLikes * 100)}%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-1">
-                                <span class="text-sm">Super Likes</span>
-                                <span class="text-sm font-semibold">${state.isPro ? '5' : state.isProPlus ? '5' : state.superLikes} left</span>
-                            </div>
-                            <div class="w-full bg-gray-800 rounded-full h-2">
-                                <div class="bg-blue-500 h-2 rounded-full" style="width: ${state.isPro || state.isProPlus ? '100' : (state.superLikes * 100)}%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-1">
-                                <span class="text-sm">Rewinds</span>
-                                <span class="text-sm font-semibold">${state.isPro || state.isProPlus ? '∞' : state.rewindCount} left</span>
-                            </div>
-                            <div class="w-full bg-gray-800 rounded-full h-2">
-                                <div class="bg-yellow-500 h-2 rounded-full" style="width: ${state.isPro || state.isProPlus ? '100' : (state.rewindCount * 100)}%"></div>
-                            </div>
-                        </div>
+            `;
+        }
+
+        function renderScannerPage(container) {
+            container.innerHTML = `
+                <div class="scanner-container">
+                    <h2 class="text-center">Scan Event QR Code</h2>
+                    <p class="text-center mt-2">Point your camera at the event QR code to join</p>
+                    
+                    <div class="qr-scanner" id="qrScanner">
+                        <div class="scanner-overlay"></div>
+                        <div class="scanner-line"></div>
                     </div>
+                    
+                    <button class="btn btn-primary btn-block mt-4" onclick="startCameraScanning()">
+                        <i class="fas fa-camera"></i> Start Scanner
+                    </button>
+                    
+                    <button class="btn btn-outline btn-block mt-2" onclick="enterCodeManually()">
+                        <i class="fas fa-keyboard"></i> Enter Code Manually
+                    </button>
                 </div>
             `;
         }
@@ -2216,11 +2743,20 @@
                 return;
             }
             
-            const availableProfiles = MOCK_PROFILES.filter(p => 
+            let filteredProfiles = MOCK_PROFILES.filter(profile => {
+                const distance = parseInt(profile.distance);
+                if (distance > state.filters.distance) return false;
+                if (profile.age < state.filters.ageRange.min || profile.age > state.filters.ageRange.max) return false;
+                if (state.filters.gender !== 'all' && profile.gender !== state.filters.gender) return false;
+                if (state.filters.verifiedOnly && !profile.verified) return false;
+                return true;
+            });
+            
+            filteredProfiles = filteredProfiles.filter(p => 
                 !state.swipeHistory.some(s => s.profile.id === p.id)
             );
             
-            if (availableProfiles.length === 0) {
+            if (filteredProfiles.length === 0) {
                 container.innerHTML = `
                     <div class="swipe-interface">
                         <div class="swipe-header">
@@ -2232,11 +2768,16 @@
                         <div class="card-stack">
                             <div class="text-center text-white">
                                 <i class="fas fa-users" style="font-size: 64px; color: var(--gray-600); margin-bottom: 16px;"></i>
-                                <h3 class="text-2xl font-bold mb-2">No more profiles</h3>
-                                <p class="text-gray-400 mb-6">Check back soon for new arrivals!</p>
-                                <button class="btn btn-primary" onclick="resetSwipes()">
-                                    <i class="fas fa-redo"></i> Refresh
-                                </button>
+                                <h3 class="text-2xl font-bold mb-2">No profiles match your filters</h3>
+                                <p class="text-gray-400 mb-6">Try adjusting your filters or check back soon!</p>
+                                <div class="flex gap-3">
+                                    <button class="btn btn-outline" onclick="clearFilters()">
+                                        <i class="fas fa-filter"></i> Clear Filters
+                                    </button>
+                                    <button class="btn btn-primary" onclick="resetSwipes()">
+                                        <i class="fas fa-redo"></i> Refresh
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2244,16 +2785,13 @@
                 return;
             }
             
-            const currentProfile = availableProfiles[0];
-            const nextProfile = availableProfiles[1] || null;
-            const thirdProfile = availableProfiles[2] || null;
+            const currentProfile = filteredProfiles[0];
+            const nextProfile = filteredProfiles[1] || null;
             
             const likesRemaining = state.isPro || state.isProPlus ? '∞' : state.dailyLikes - state.swipeCount;
             
             container.innerHTML = `
                 <div class="swipe-interface">
-                    <div class="for-you-bg">FOR YOU</div>
-                    
                     <div class="swipe-header">
                         <div class="flex justify-between items-center mb-4">
                             <div class="event-badge notched-tl">
@@ -2261,30 +2799,19 @@
                                 <span>${state.currentEvent.name}</span>
                             </div>
                             <div class="flex gap-2">
-                                <button class="btn btn-glass btn-small" onclick="showFilters()">
+                                <button class="btn btn-glass btn-small" onclick="showFiltersModal()">
                                     <i class="fas fa-filter"></i>
-                                </button>
-                                <button class="btn btn-glass btn-small" onclick="viewFullProfile(${currentProfile.id})">
-                                    <i class="fas fa-info-circle"></i>
                                 </button>
                             </div>
                         </div>
                         <div class="text-center text-gray-400 text-sm mb-4">
                             <i class="fas fa-user-friends"></i>
-                            <span>${availableProfiles.length} profiles available • ${likesRemaining} likes remaining</span>
+                            <span>${filteredProfiles.length} profiles available • ${likesRemaining} likes remaining</span>
                         </div>
                     </div>
                     
                     <div class="card-stack">
                         <div class="card-container">
-                            ${thirdProfile ? `
-                                <div class="profile-card" style="z-index: 1; scale: 0.90; translate: -8px -24px; rotate: -2deg; opacity: 0.4;">
-                                    <div class="card-content" style="background: ${thirdProfile.cardColor};">
-                                        <div class="profile-image" style="background-image: url('${thirdProfile.livePhoto}');"></div>
-                                    </div>
-                                </div>
-                            ` : ''}
-                            
                             ${nextProfile ? `
                                 <div class="profile-card" style="z-index: 2; scale: 0.95; translate: 8px -12px; rotate: 2deg; opacity: 0.7;">
                                     <div class="card-content" style="background: ${nextProfile.cardColor};">
@@ -2306,6 +2833,7 @@
                                         <h2>${currentProfile.name}, ${currentProfile.age}</h2>
                                         <p class="text-gray-600 mb-4">
                                             <i class="fas fa-map-marker-alt"></i> ${currentProfile.location}
+                                            ${state.privacySettings.showDistance ? ` • ${currentProfile.distance}` : ''}
                                         </p>
                                         
                                         <p class="mb-4">${currentProfile.bio}</p>
@@ -2314,11 +2842,6 @@
                                             ${currentProfile.interests.slice(0, 4).map(interest => `
                                                 <span class="interest-tag">${interest}</span>
                                             `).join('')}
-                                        </div>
-                                        
-                                        <div class="text-center text-gray-600 text-sm">
-                                            <i class="fas fa-shield-alt"></i>
-                                            <span>Verified attendee at ${state.currentEvent.name}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -2346,33 +2869,11 @@
                             <i class="fas fa-star"></i>
                         </button>
                     </div>
-                    
-                    <div class="text-center text-gray-400 px-4 pb-4">
-                        <div class="flex justify-center gap-6 mb-2">
-                            <div class="text-sm">
-                                <i class="fas fa-heart"></i>
-                                <span>Like</span>
-                            </div>
-                            <div class="text-sm">
-                                <i class="fas fa-times"></i>
-                                <span>Pass</span>
-                            </div>
-                            <div class="text-sm">
-                                <i class="fas fa-star"></i>
-                                <span>Super Like</span>
-                            </div>
-                        </div>
-                        ${(!state.isPro && !state.isProPlus) && (state.swipeCount >= state.dailyLikes - 5 || state.superLikes <= 0) ? `
-                            <button class="btn btn-pro btn-small mt-2" onclick="navigateTo('pricing')">
-                                <i class="fas fa-crown"></i> Upgrade for unlimited
-                            </button>
-                        ` : ''}
-                    </div>
                 </div>
             `;
             
-            // Initialize drag
-            initializeSwipeGestures();
+            // Initialize swipe gestures
+            setTimeout(() => initializeSwipeGestures(), 100);
         }
 
         function renderEventsPage(container) {
@@ -2413,44 +2914,12 @@
                                 <i class="fas fa-users"></i>
                                 <span>${event.attendees} / ${event.maxAttendees} attending</span>
                             </div>
-                            <div class="mt-4">
-                                <div class="flex gap-2">
-                                    ${event.tags.slice(0, 3).map(tag => `
-                                        <span class="text-xs px-3 py-1 bg-gray-800 rounded-full">${tag}</span>
-                                    `).join('')}
-                                </div>
-                            </div>
                             <button class="btn btn-primary btn-block mt-4">
                                 <i class="fas fa-eye"></i> View Details
                             </button>
                         </div>
                     `).join('')}
                 </div>
-                
-                <h3 class="mt-8 mb-3">Your Events</h3>
-                ${state.currentUser && state.events.filter(e => e.organizerId === state.currentUser.id).length > 0 ? 
-                    state.events.filter(e => e.organizerId === state.currentUser.id).map(event => `
-                        <div class="card mb-3">
-                            <div class="flex justify-between items-center">
-                                <div>
-                                    <h4>${event.name}</h4>
-                                    <p class="text-gray-400">
-                                        <i class="fas fa-map-marker-alt"></i> ${event.location}
-                                    </p>
-                                </div>
-                                <div class="flex gap-2">
-                                    <button class="btn btn-outline btn-small" onclick="navigateTo('manage-event')">
-                                        <i class="fas fa-chart-line"></i> Manage
-                                    </button>
-                                    <button class="btn btn-glass btn-small">
-                                        <i class="fas fa-share-alt"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    `).join('') :
-                    '<p class="text-gray-400 text-center py-4">You haven\'t created any events yet.</p>'
-                }
             `;
         }
 
@@ -2460,23 +2929,25 @@
                 
                 ${state.matches.length > 0 ? `
                     <div class="attendee-list">
-                        ${state.matches.map(match => `
-                            <div class="attendee-item" onclick="openChat('${match.user?.id || match.id}')" style="cursor: pointer;">
-                                <div class="attendee-avatar" style="background-image: url('${match.user?.livePhoto || match.livePhoto}');"></div>
-                                <div class="attendee-info">
-                                    <div class="flex items-center gap-2">
-                                        <h4>${match.user?.name || match.name}, ${match.user?.age || match.age}</h4>
-                                        ${match.unread ? '<span class="w-2 h-2 bg-primary rounded-full"></span>' : ''}
+                        ${state.matches.map(match => {
+                            const profile = MOCK_PROFILES.find(p => p.id === match.matchId);
+                            return `
+                                <div class="attendee-item" onclick="openChat(${match.matchId})" style="cursor: pointer;">
+                                    <div class="attendee-avatar" style="background-image: url('${profile?.livePhoto || ''}');"></div>
+                                    <div class="attendee-info">
+                                        <div class="flex items-center gap-2">
+                                            <h4>${profile?.name || 'Unknown'}, ${profile?.age || ''}</h4>
+                                            ${match.unread ? '<span class="w-2 h-2 bg-primary rounded-full"></span>' : ''}
+                                        </div>
+                                        <p class="text-gray-400 text-sm">${match.lastMessage || 'New match!'}</p>
                                     </div>
-                                    <p class="text-gray-400 text-sm">${match.lastMessage || 'New match!'}</p>
-                                    <div class="text-xs text-gray-500 mt-1">${match.lastMessageTime || 'Just now'} • ${state.currentEvent?.name || 'Event'}</div>
+                                    <div class="attendee-status ${(profile?.online) ? 'status-online' : 'status-away'}">
+                                        <i class="fas fa-circle" style="font-size: 8px;"></i>
+                                        <span>${(profile?.online) ? 'Online' : 'Away'}</span>
+                                    </div>
                                 </div>
-                                <div class="attendee-status ${(match.user?.online || match.online) ? 'status-online' : 'status-away'}">
-                                    <i class="fas fa-circle" style="font-size: 8px;"></i>
-                                    <span>${(match.user?.online || match.online) ? 'Online' : 'Away'}</span>
-                                </div>
-                            </div>
-                        `).join('')}
+                            `;
+                        }).join('')}
                     </div>
                 ` : `
                     <div class="text-center py-12">
@@ -2488,20 +2959,6 @@
                         </button>
                     </div>
                 `}
-                
-                <div class="card mt-6">
-                    <h4 class="mb-4">Match Statistics</h4>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="text-center">
-                            <div class="text-2xl font-bold mb-1">${state.matches.length}</div>
-                            <div class="text-sm text-gray-400">Total Matches</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-2xl font-bold mb-1">${state.matches.filter(m => m.unread).length}</div>
-                            <div class="text-sm text-gray-400">Unread</div>
-                        </div>
-                    </div>
-                </div>
             `;
         }
 
@@ -2571,7 +3028,7 @@
                                 <i class="fas fa-crown"></i> Upgrade to Pro
                             </button>
                         ` : ''}
-                        <button class="btn btn-outline" onclick="showPrivacySettings()">
+                        <button class="btn btn-outline" onclick="navigateTo('privacy-settings')">
                             <i class="fas fa-shield-alt"></i> Privacy & Safety
                         </button>
                         <button class="btn btn-outline" onclick="showHelp()">
@@ -2588,328 +3045,58 @@
             `;
         }
 
-        function renderScannerPage(container) {
-            container.innerHTML = `
-                <div class="scanner-container">
-                    <h2 class="text-center">Scan Event QR Code</h2>
-                    <p class="text-center mt-2">Point your camera at the event QR code to join</p>
-                    
-                    <div class="qr-scanner" id="qrScanner">
-                        <div class="scanner-overlay"></div>
-                        <div class="scanner-line"></div>
-                    </div>
-                    
-                    <button class="btn btn-primary btn-block mt-4" onclick="startCameraScanning()">
-                        <i class="fas fa-camera"></i> Start Scanner
-                    </button>
-                    
-                    <button class="btn btn-outline btn-block mt-2" onclick="enterCodeManually()">
-                        <i class="fas fa-keyboard"></i> Enter Code Manually
-                    </button>
-                    
-                    <div class="card-glass mt-4">
-                        <div class="flex items-center gap-3">
-                            <i class="fas fa-info-circle text-gradient"></i>
-                            <p>Camera and location access required. You must be at the event location to join.</p>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function renderCreateEventPage(container) {
-            if (!state.isPro && !state.isProPlus) {
-                container.innerHTML = `
-                    <div class="text-center py-12">
-                        <i class="fas fa-crown" style="font-size: 64px; color: var(--gray-600); margin-bottom: 16px;"></i>
-                        <h3 class="mb-2">Pro Feature Required</h3>
-                        <p class="text-gray-400 mb-6">Upgrade to Pro to create events</p>
-                        <button class="btn btn-pro" onclick="navigateTo('pricing')">
-                            <i class="fas fa-crown"></i> Upgrade to Pro
-                        </button>
-                    </div>
-                `;
-                return;
-            }
-            
-            container.innerHTML = `
-                <div class="create-form">
-                    <h2 class="text-center mb-4">Create New Event</h2>
-                    
-                    <div class="card">
-                        <form id="createEventForm" onsubmit="createEvent(event)">
-                            <div class="form-group">
-                                <label class="form-label">Event Name</label>
-                                <input type="text" class="form-control" placeholder="Tech Meetup Afterparty" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label">Description</label>
-                                <textarea class="form-control" rows="3" placeholder="Describe your event..."></textarea>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label">Location Name</label>
-                                <input type="text" class="form-control" placeholder="Downtown Bar & Grill" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label">Event Duration (hours)</label>
-                                <input type="number" class="form-control" min="1" max="24" value="4" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label">Max Attendees</label>
-                                <input type="number" class="form-control" min="10" max="1000" value="50" required>
-                            </div>
-                            
-                            <div class="card-glass mb-4">
-                                <div class="flex items-center gap-3">
-                                    <i class="fas fa-info-circle text-gradient"></i>
-                                    <p>QR code will be generated after event creation. Print and display it at your event.</p>
-                                </div>
-                            </div>
-                            
-                            <button type="submit" class="btn btn-primary btn-block">
-                                <i class="fas fa-plus"></i> Create Event
-                            </button>
-                        </form>
-                    </div>
-                    
-                    <div class="card mt-4" id="qrDisplay" style="display: none;">
-                        <h3 class="text-center mb-3">Your Event QR Code</h3>
-                        <div class="qr-code-display" id="qrCodeDisplay">
-                            Loading QR...
-                        </div>
-                        <p class="text-center mt-3">Print and display this QR code at your event venue</p>
-                        <button class="btn btn-outline btn-block mt-3" onclick="printQR()">
-                            <i class="fas fa-print"></i> Print QR Code
-                        </button>
-                    </div>
-                </div>
-            `;
-        }
-
-        function renderPricingPage(container) {
-            container.innerHTML = `
-                <h2 class="text-center mb-2">Upgrade Your Experience</h2>
-                <p class="text-center text-gray-400 mb-6">Choose the plan that's right for you</p>
-                
-                <div class="pricing-grid">
-                    <div class="pricing-card">
-                        <div class="free-badge mb-4">FREE</div>
-                        <h3 class="text-center mb-2">$0/month</h3>
-                        <p class="text-center text-gray-400 mb-4">Basic features to get started</p>
-                        <div class="flex flex-col gap-3 mb-6">
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-check text-green-500"></i>
-                                <span>Join unlimited events</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-check text-green-500"></i>
-                                <span>30 likes/day per event</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-check text-green-500"></i>
-                                <span>1 super like/week</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-times text-gray-500"></i>
-                                <span class="text-gray-400">See who liked you</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-times text-gray-500"></i>
-                                <span class="text-gray-400">Video calls</span>
-                            </div>
-                        </div>
-                        <button class="btn btn-outline btn-block" onclick="showNotification('You\'re already on Free plan', 'info')">
-                            Current Plan
-                        </button>
-                    </div>
-                    
-                    <div class="pricing-card featured">
-                        <div class="pro-badge mb-4">PRO</div>
-                        <h3 class="text-center mb-2 pro-gradient">$14.99/month</h3>
-                        <p class="text-center text-gray-400 mb-4">or $99.99/year (save 44%)</p>
-                        <div class="flex flex-col gap-3 mb-6">
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-check text-green-500"></i>
-                                <span>Everything in Free</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-check text-green-500"></i>
-                                <span>Unlimited likes</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-check text-green-500"></i>
-                                <span>5 super likes/day</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-check text-green-500"></i>
-                                <span>See who liked you</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-check text-green-500"></i>
-                                <span>Video calls & read receipts</span>
-                            </div>
-                        </div>
-                        <button class="btn btn-pro btn-block" onclick="upgradeToPro()">
-                            <i class="fas fa-crown"></i> Upgrade to Pro
-                        </button>
-                    </div>
-                    
-                    <div class="pricing-card">
-                        <div class="pro-plus-badge mb-4">PRO PLUS</div>
-                        <h3 class="text-center mb-2 pro-plus-gradient">$49.99/month</h3>
-                        <p class="text-center text-gray-400 mb-4">or $399.99/year (save 33%)</p>
-                        <div class="flex flex-col gap-3 mb-6">
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-check text-yellow-500"></i>
-                                <span>Everything in Pro</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-check text-yellow-500"></i>
-                                <span>Custom event branding</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-check text-yellow-500"></i>
-                                <span>Advanced analytics</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-check text-yellow-500"></i>
-                                <span>24/7 priority support</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-check text-yellow-500"></i>
-                                <span>API access</span>
-                            </div>
-                        </div>
-                        <button class="btn btn-pro-plus btn-block" onclick="upgradeToProPlus()">
-                            <i class="fas fa-star"></i> Upgrade to Pro Plus
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="card mt-6">
-                    <h4 class="mb-4">Payment Methods</h4>
-                    <div class="grid grid-cols-2 gap-3">
-                        <button class="btn btn-outline" onclick="showPayment('paypal')">
-                            <i class="fab fa-paypal"></i> PayPal
-                        </button>
-                        <button class="btn btn-outline" onclick="showPayment('card')">
-                            <i class="fas fa-credit-card"></i> Card
-                        </button>
-                        <button class="btn btn-outline" onclick="showPayment('mobile')">
-                            <i class="fas fa-mobile-alt"></i> Mobile Money
-                        </button>
-                        <button class="btn btn-outline" onclick="showPayment('bank')">
-                            <i class="fas fa-university"></i> Bank Transfer
-                        </button>
-                    </div>
-                    <p class="text-center text-xs text-gray-400 mt-4">
-                        <i class="fas fa-lock"></i> All payments are secure and encrypted
-                    </p>
-                </div>
-            `;
-        }
-
-        function renderChatPage(container) {
-            const matchId = state.currentPage.split('-')[1];
-            const match = state.matches.find(m => (m.user?.id || m.id) === parseInt(matchId)) || MOCK_PROFILES.find(p => p.id === parseInt(matchId));
-            
-            if (!match) {
-                navigateTo('matches');
-                return;
-            }
-            
-            const messages = state.chatMessages[matchId] || [];
-            
-            container.innerHTML = `
-                <div class="chat-container">
-                    <div class="chat-header">
-                        <button class="back-btn" onclick="navigateTo('matches')">
-                            <i class="fas fa-arrow-left"></i>
-                        </button>
-                        <div class="chat-avatar" style="background-image: url('${match.livePhoto || match.user?.livePhoto}');"></div>
-                        <div>
-                            <h3>${match.name || match.user?.name}</h3>
-                            <p class="text-sm text-gradient">Active now at ${state.currentEvent?.name || 'Event'}</p>
-                        </div>
-                    </div>
-                    
-                    <div class="chat-messages" id="chatMessages">
-                        ${messages.length > 0 ? messages.map(msg => `
-                            <div class="message ${msg.sender === 'user' ? 'sent' : 'received'}">
-                                ${msg.text}
-                                <div class="message-time">${msg.time}</div>
-                            </div>
-                        `).join('') : `
-                            <div class="message received">
-                                Hey there! Saw you at the event 👋
-                                <div class="message-time">2:30 PM</div>
-                            </div>
-                            <div class="message sent">
-                                Hi! Yeah, it's been great so far!
-                                <div class="message-time">2:31 PM</div>
-                            </div>
-                        `}
-                    </div>
-                    
-                    <div class="chat-input">
-                        <input type="text" id="messageInput" placeholder="Type a message..." onkeypress="handleMessageKeypress(event)" class="form-control">
-                        <button class="btn btn-primary btn-icon" onclick="sendMessage('${matchId}')">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </div>
-                </div>
-            `;
-        }
-
         // ===== EVENT HANDLERS =====
         function switchAuthTab(tab) {
-            const tabs = document.querySelectorAll('.auth-tab');
+            const loginTab = document.getElementById('loginTab');
+            const signupTab = document.getElementById('signupTab');
             const signupFields = document.getElementById('signupFields');
-            const formButton = document.querySelector('#authForm button[type="submit"]');
+            const authSubmit = document.getElementById('authSubmit');
             
-            tabs.forEach(t => t.classList.remove('active'));
-            tabs[tab === 'login' ? 0 : 1].classList.add('active');
+            if (loginTab && signupTab) {
+                loginTab.classList.toggle('active', tab === 'login');
+                signupTab.classList.toggle('active', tab === 'signup');
+            }
             
-            if (tab === 'signup') {
-                signupFields.classList.remove('hidden');
-                formButton.innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
-            } else {
-                signupFields.classList.add('hidden');
-                formButton.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+            if (signupFields) {
+                signupFields.classList.toggle('hidden', tab === 'login');
+            }
+            
+            if (authSubmit) {
+                authSubmit.innerHTML = tab === 'login' ? 
+                    '<i class="fas fa-sign-in-alt"></i> Sign In' : 
+                    '<i class="fas fa-user-plus"></i> Create Account';
             }
         }
 
         function handleAuth(event) {
             event.preventDefault();
+            
             const form = event.target;
-            const email = form.querySelector('input[type="email"]').value;
-            const password = form.querySelector('input[type="password"]').value;
+            const email = form.querySelector('#authEmail').value;
+            const password = form.querySelector('#authPassword').value;
             
-            const isSignup = form.querySelector('#signupFields').classList.contains('hidden') === false;
+            const isSignup = document.getElementById('signupFields')?.classList.contains('hidden') === false;
             
+            // Create user object
             state.currentUser = {
                 id: 'user_' + Date.now(),
-                name: isSignup ? (form.querySelector('input[type="text"]')?.value || email.split('@')[0]) : email.split('@')[0],
+                name: isSignup ? document.getElementById('authName')?.value || email.split('@')[0] : email.split('@')[0],
                 email: email,
                 isPro: false,
                 isProPlus: false
             };
             
+            // Update user profile if signing up
             if (isSignup) {
-                const age = form.querySelector('input[type="number"]')?.value;
-                const phone = form.querySelector('input[type="tel"]')?.value;
+                const age = document.getElementById('authAge')?.value;
+                const name = document.getElementById('authName')?.value;
                 
                 if (age) state.userProfile.age = parseInt(age);
-                if (phone) state.userProfile.phone = phone;
-                if (form.querySelector('input[type="text"]')?.value) {
-                    state.userProfile.name = form.querySelector('input[type="text"]').value;
-                }
+                if (name) state.userProfile.name = name;
+                if (email) state.userProfile.email = email;
             }
             
+            // Save to localStorage
             localStorage.setItem('amps_user', JSON.stringify(state.currentUser));
             localStorage.setItem('amps_isPro', state.isPro);
             localStorage.setItem('amps_isProPlus', state.isProPlus);
@@ -2931,6 +3118,7 @@
             state.isPro = false;
             state.isProPlus = false;
             
+            // Save to localStorage
             localStorage.setItem('amps_user', JSON.stringify(state.currentUser));
             localStorage.setItem('amps_isPro', state.isPro);
             localStorage.setItem('amps_isProPlus', state.isProPlus);
@@ -2938,6 +3126,26 @@
             
             showNotification('Welcome to Amps Demo! ⚡', 'success');
             navigateTo('dashboard');
+        }
+
+        function logout() {
+            state.currentUser = null;
+            state.isPro = false;
+            state.isProPlus = false;
+            state.swipeCount = 0;
+            state.matches = [];
+            state.chatMessages = {};
+            
+            // Clear localStorage
+            localStorage.removeItem('amps_user');
+            localStorage.removeItem('amps_isPro');
+            localStorage.removeItem('amps_isProPlus');
+            localStorage.removeItem('amps_swipeCount');
+            localStorage.removeItem('amps_matches');
+            localStorage.removeItem('amps_chatMessages');
+            
+            showNotification('Successfully signed out', 'info');
+            navigateTo('home');
         }
 
         function joinEvent(eventId) {
@@ -2955,7 +3163,7 @@
                 state.swipeHistory = [];
                 
                 setTimeout(() => {
-                    navigateTo('scanner');
+                    navigateTo('swipe');
                 }, 1000);
             }
         }
@@ -2972,23 +3180,9 @@
             showNotification('Starting camera... Please allow camera access', 'info');
             
             try {
-                const stream = await navigator.mediaDevices.getUserMedia({
-                    video: { facingMode: 'environment' }
-                });
-                
-                state.cameraStream = stream;
-                const scannerView = document.getElementById('qrScanner');
-                scannerView.innerHTML = `
-                    <video style="width: 100%; height: 100%; object-fit: cover;" autoplay playsinline></video>
-                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 200px; height: 200px; border: 2px solid var(--primary); border-radius: var(--radius);"></div>
-                `;
-                
-                const video = scannerView.querySelector('video');
-                video.srcObject = stream;
-                
+                // Simulate QR scan for demo
                 setTimeout(() => {
                     showNotification('QR Code scanned successfully!', 'success');
-                    stopCamera();
                     
                     setTimeout(() => openCameraForSelfie(), 1000);
                 }, 2000);
@@ -3010,31 +3204,11 @@
         }
 
         async function openCameraForSelfie() {
+            console.log('Opening camera for selfie');
             try {
-                const stream = await navigator.mediaDevices.getUserMedia({
-                    video: { 
-                        facingMode: state.facingMode,
-                        width: { ideal: 1280 },
-                        height: { ideal: 720 }
-                    }
-                });
-                
-                state.cameraStream = stream;
                 const cameraModal = document.getElementById('cameraModal');
-                const video = document.getElementById('cameraVideo');
-                
-                video.srcObject = stream;
-                cameraModal.style.display = 'flex';
-                
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(
-                        position => {
-                            console.log('Location captured:', position.coords);
-                        },
-                        error => {
-                            showNotification('Location access required for verification', 'warning');
-                        }
-                    );
+                if (cameraModal) {
+                    cameraModal.style.display = 'flex';
                 }
                 
             } catch (error) {
@@ -3044,32 +3218,18 @@
 
         function closeCamera() {
             stopCamera();
-            document.getElementById('cameraModal').style.display = 'none';
+            const cameraModal = document.getElementById('cameraModal');
+            if (cameraModal) {
+                cameraModal.style.display = 'none';
+            }
         }
 
         function switchCamera() {
             state.facingMode = state.facingMode === 'user' ? 'environment' : 'user';
-            closeCamera();
-            setTimeout(() => openCameraForSelfie(), 100);
         }
 
         function takePhoto() {
-            const video = document.getElementById('cameraVideo');
-            const canvas = document.createElement('canvas');
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-            
-            const photoData = canvas.toDataURL('image/jpeg', 0.8);
-            state.userLivePhoto = photoData;
-            
-            verifyLocationAndProceed(photoData);
-        }
-
-        function verifyLocationAndProceed(photoData) {
-            showNotification('Verifying your location...', 'info');
+            showNotification('Photo captured! Verifying location...', 'info');
             
             setTimeout(() => {
                 closeCamera();
@@ -3079,7 +3239,7 @@
             }, 1500);
         }
 
-        // ===== DRAG & SWIPE FUNCTIONALITY =====
+        // ===== SWIPE FUNCTIONALITY =====
         function initializeSwipeGestures() {
             const availableProfiles = MOCK_PROFILES.filter(p => 
                 !state.swipeHistory.some(s => s.profile.id === p.id)
@@ -3090,151 +3250,6 @@
             const currentProfile = availableProfiles[0];
             const card = document.getElementById(`profileCard${currentProfile.id}`);
             if (!card) return;
-            
-            let startX, startY, moveX, moveY;
-            
-            card.addEventListener('touchstart', e => {
-                startX = e.touches[0].clientX;
-                startY = e.touches[0].clientY;
-            }, { passive: true });
-            
-            card.addEventListener('touchmove', e => {
-                if (!startX || !startY) return;
-                
-                moveX = e.touches[0].clientX;
-                moveY = e.touches[0].clientY;
-                
-                const diffX = moveX - startX;
-                const diffY = moveY - startY;
-                
-                if (Math.abs(diffX) > Math.abs(diffY)) {
-                    e.preventDefault();
-                    card.style.transform = `translateX(${diffX}px) rotate(${diffX * 0.1}deg)`;
-                    card.style.opacity = 1 - Math.abs(diffX) / 300;
-                    
-                    // Show swipe overlays
-                    const likeOverlay = card.querySelector('.swipe-overlay.like');
-                    const nopeOverlay = card.querySelector('.swipe-overlay.nope');
-                    const superOverlay = card.querySelector('.swipe-overlay.super');
-                    
-                    if (diffX > 100) {
-                        if (likeOverlay) likeOverlay.style.opacity = '1';
-                        if (nopeOverlay) nopeOverlay.style.opacity = '0';
-                        if (superOverlay) superOverlay.style.opacity = '0';
-                    } else if (diffX < -100) {
-                        if (nopeOverlay) nopeOverlay.style.opacity = '1';
-                        if (likeOverlay) likeOverlay.style.opacity = '0';
-                        if (superOverlay) superOverlay.style.opacity = '0';
-                    } else if (diffY < -100) {
-                        if (superOverlay) superOverlay.style.opacity = '1';
-                        if (likeOverlay) likeOverlay.style.opacity = '0';
-                        if (nopeOverlay) nopeOverlay.style.opacity = '0';
-                    } else {
-                        if (likeOverlay) likeOverlay.style.opacity = '0';
-                        if (nopeOverlay) nopeOverlay.style.opacity = '0';
-                        if (superOverlay) superOverlay.style.opacity = '0';
-                    }
-                }
-            }, { passive: false });
-            
-            card.addEventListener('touchend', () => {
-                if (!startX || !moveX) return;
-                
-                const diffX = moveX - startX;
-                const diffY = moveY - startY;
-                const threshold = 100;
-                
-                // Hide all overlays
-                const overlays = card.querySelectorAll('.swipe-overlay');
-                overlays.forEach(o => o.style.opacity = '0');
-                
-                if (Math.abs(diffX) > threshold) {
-                    if (diffX > 0) {
-                        swipeRight();
-                    } else {
-                        swipeLeft();
-                    }
-                } else if (diffY < -threshold) {
-                    superLike();
-                } else {
-                    card.style.transform = '';
-                    card.style.opacity = '';
-                }
-                
-                startX = startY = moveX = moveY = null;
-            });
-            
-            // Mouse events for desktop
-            card.addEventListener('mousedown', e => {
-                startX = e.clientX;
-                startY = e.clientY;
-                card.style.cursor = 'grabbing';
-            });
-            
-            document.addEventListener('mousemove', e => {
-                if (!startX || !startY) return;
-                
-                moveX = e.clientX;
-                moveY = e.clientY;
-                const diffX = moveX - startX;
-                const diffY = moveY - startY;
-                
-                if (Math.abs(diffX) > 10) {
-                    card.style.transform = `translateX(${diffX}px) rotate(${diffX * 0.1}deg)`;
-                    card.style.opacity = 1 - Math.abs(diffX) / 300;
-                    
-                    // Show swipe overlays
-                    const likeOverlay = card.querySelector('.swipe-overlay.like');
-                    const nopeOverlay = card.querySelector('.swipe-overlay.nope');
-                    const superOverlay = card.querySelector('.swipe-overlay.super');
-                    
-                    if (diffX > 100) {
-                        if (likeOverlay) likeOverlay.style.opacity = '1';
-                        if (nopeOverlay) nopeOverlay.style.opacity = '0';
-                        if (superOverlay) superOverlay.style.opacity = '0';
-                    } else if (diffX < -100) {
-                        if (nopeOverlay) nopeOverlay.style.opacity = '1';
-                        if (likeOverlay) likeOverlay.style.opacity = '0';
-                        if (superOverlay) superOverlay.style.opacity = '0';
-                    } else if (diffY < -100) {
-                        if (superOverlay) superOverlay.style.opacity = '1';
-                        if (likeOverlay) likeOverlay.style.opacity = '0';
-                        if (nopeOverlay) nopeOverlay.style.opacity = '0';
-                    } else {
-                        if (likeOverlay) likeOverlay.style.opacity = '0';
-                        if (nopeOverlay) nopeOverlay.style.opacity = '0';
-                        if (superOverlay) superOverlay.style.opacity = '0';
-                    }
-                }
-            });
-            
-            document.addEventListener('mouseup', () => {
-                if (!startX || !moveX) return;
-                
-                const diffX = moveX - startX;
-                const diffY = moveY - startY;
-                const threshold = 100;
-                
-                // Hide all overlays
-                const overlays = card.querySelectorAll('.swipe-overlay');
-                overlays.forEach(o => o.style.opacity = '0');
-                
-                if (Math.abs(diffX) > threshold) {
-                    if (diffX > 0) {
-                        swipeRight();
-                    } else {
-                        swipeLeft();
-                    }
-                } else if (diffY < -threshold) {
-                    superLike();
-                } else {
-                    card.style.transform = '';
-                    card.style.opacity = '';
-                }
-                
-                startX = startY = moveX = moveY = null;
-                card.style.cursor = 'grab';
-            });
         }
 
         function swipeLeft() {
@@ -3277,10 +3292,11 @@
             state.swipeHistory.push({ profile, action: 'like' });
             state.swipeCount++;
             
+            // 40% chance of match
             if (Math.random() < 0.4) {
                 const match = {
                     id: Date.now(),
-                    userId: state.currentUser.id,
+                    userId: state.currentUser?.id,
                     matchId: profile.id,
                     timestamp: new Date().toISOString(),
                     eventId: state.currentEvent?.id,
@@ -3323,11 +3339,11 @@
                 state.superLikes--;
             }
             
-            // Super like has higher match chance
+            // Super like has 70% match chance
             if (Math.random() < 0.7) {
                 const match = {
                     id: Date.now(),
-                    userId: state.currentUser.id,
+                    userId: state.currentUser?.id,
                     matchId: profile.id,
                     timestamp: new Date().toISOString(),
                     eventId: state.currentEvent?.id,
@@ -3386,32 +3402,92 @@
             const matchMessage = document.getElementById('matchMessage');
             
             if (modal && state.lastMatch) {
-                matchAvatar.style.backgroundImage = `url('${state.lastMatch.livePhoto}')`;
-                userAvatar.style.backgroundImage = `url('${state.userProfile.profilePhoto}')`;
-                matchMessage.textContent = `You and ${state.lastMatch.name} liked each other`;
+                if (matchAvatar) matchAvatar.style.backgroundImage = `url('${state.lastMatch.livePhoto}')`;
+                if (userAvatar) userAvatar.style.backgroundImage = `url('${state.userProfile.profilePhoto}')`;
+                if (matchMessage) matchMessage.textContent = `You and ${state.lastMatch.name} liked each other`;
                 modal.style.display = 'flex';
-                createConfetti();
             }
         }
 
         function closeMatchModal() {
-            document.getElementById('matchModal').style.display = 'none';
+            const modal = document.getElementById('matchModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
         }
 
         function startChat() {
             closeMatchModal();
             if (state.lastMatch) {
                 const matchId = state.lastMatch.id;
-                navigateTo('chat-' + matchId);
+                openChat(matchId);
             }
         }
 
         function openChat(matchId) {
-            navigateTo('chat-' + matchId);
+            const match = state.matches.find(m => m.matchId === parseInt(matchId)) || MOCK_PROFILES.find(p => p.id === parseInt(matchId));
+            
+            if (!match) {
+                navigateTo('matches');
+                return;
+            }
+            
+            const messages = state.chatMessages[matchId] || [];
+            
+            const content = document.getElementById('content');
+            content.innerHTML = `
+                <div class="chat-container">
+                    <div class="chat-header">
+                        <button class="back-btn" onclick="navigateTo('matches')">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                        <div class="chat-avatar" style="background-image: url('${match.livePhoto || ''}');"></div>
+                        <div style="flex: 1;">
+                            <h3>${match.name || 'Unknown'}</h3>
+                            <p class="text-sm text-gradient">Active now at ${state.currentEvent?.name || 'Event'}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-messages scrollable-content" id="chatMessages">
+                        ${messages.length > 0 ? messages.map(msg => `
+                            <div class="message ${msg.sender === 'user' ? 'sent' : 'received'}">
+                                ${msg.text}
+                                <div class="message-time">
+                                    ${msg.time}
+                                </div>
+                            </div>
+                        `).join('') : `
+                            <div class="message received">
+                                Hey there! Saw you at the event 👋
+                                <div class="message-time">2:30 PM</div>
+                            </div>
+                        `}
+                    </div>
+                    
+                    <div class="chat-input">
+                        <input type="text" id="messageInput" placeholder="Type a message..." class="form-control">
+                        <button class="btn btn-primary btn-icon" onclick="sendMessage('${matchId}')">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            // Add enter key support
+            const messageInput = document.getElementById('messageInput');
+            if (messageInput) {
+                messageInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        sendMessage(matchId);
+                    }
+                });
+            }
         }
 
         function sendMessage(matchId) {
             const input = document.getElementById('messageInput');
+            if (!input) return;
+            
             const message = input.value.trim();
             
             if (message) {
@@ -3425,17 +3501,16 @@
                 state.chatMessages[matchId].push({
                     text: message,
                     time: time,
-                    sender: 'user'
+                    sender: 'user',
+                    read: false
                 });
                 
                 localStorage.setItem('amps_chatMessages', JSON.stringify(state.chatMessages));
                 
                 input.value = '';
-                renderChatPage(document.getElementById('content'));
+                openChat(matchId);
                 
-                const chatMessages = document.getElementById('chatMessages');
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-                
+                // Simulate reply after 1-2 seconds
                 setTimeout(() => {
                     const replies = [
                         'Sounds good!',
@@ -3449,64 +3524,181 @@
                     state.chatMessages[matchId].push({
                         text: reply,
                         time: 'Just now',
-                        sender: 'match'
+                        sender: 'match',
+                        read: true
                     });
                     
                     localStorage.setItem('amps_chatMessages', JSON.stringify(state.chatMessages));
-                    renderChatPage(document.getElementById('content'));
-                    
-                    const updatedChatMessages = document.getElementById('chatMessages');
-                    updatedChatMessages.scrollTop = updatedChatMessages.scrollHeight;
+                    openChat(matchId);
                 }, 1000 + Math.random() * 1000);
             }
         }
 
-        function handleMessageKeypress(event) {
-            if (event.key === 'Enter') {
-                const matchId = state.currentPage.split('-')[1];
-                sendMessage(matchId);
+        // ===== SIMPLIFIED OTHER PAGES =====
+        function renderCreateEventPage(container) {
+            container.innerHTML = `
+                <div class="text-center py-12">
+                    <i class="fas fa-crown" style="font-size: 64px; color: var(--gray-600); margin-bottom: 16px;"></i>
+                    <h3 class="mb-2">Pro Feature Required</h3>
+                    <p class="text-gray-400 mb-6">Upgrade to Pro to create events</p>
+                    <button class="btn btn-pro" onclick="navigateTo('pricing')">
+                        <i class="fas fa-crown"></i> Upgrade to Pro
+                    </button>
+                </div>
+            `;
+        }
+
+        function renderEventDetailPage(container) {
+            const event = state.currentEvent;
+            if (!event) {
+                navigateTo('events');
+                return;
+            }
+            
+            container.innerHTML = `
+                <div class="event-detail">
+                    <div class="card compact-card mb-4">
+                        <div class="event-card-header">
+                            <div>
+                                <h2 class="mb-2">${event.name}</h2>
+                                <p class="text-gradient">${event.category}</p>
+                            </div>
+                            <button class="bookmark-button ${event.bookmarked ? 'active' : ''}" onclick="toggleBookmark(${event.id})">
+                                <i class="fas fa-bookmark"></i>
+                            </button>
+                        </div>
+                        
+                        <p class="text-gray-300 mb-6">${event.description}</p>
+                        
+                        <div class="compact-grid mb-6">
+                            <div class="event-info">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>${event.location}</span>
+                            </div>
+                            <div class="event-info">
+                                <i class="fas fa-calendar"></i>
+                                <span>${event.date} • ${event.time}</span>
+                            </div>
+                            <div class="event-info">
+                                <i class="fas fa-users"></i>
+                                <span>${event.attendees} / ${event.maxAttendees} attending</span>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary btn-block" onclick="checkInToEvent(${event.id})">
+                            <i class="fas fa-qrcode"></i> Check In Now
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderPricingPage(container) {
+            container.innerHTML = `
+                <h2 class="text-center mb-2">Upgrade Your Experience</h2>
+                <p class="text-center text-gray-400 mb-6">Choose the plan that's right for you</p>
+                
+                <div class="pricing-grid">
+                    <div class="pricing-card featured">
+                        <div class="pro-badge mb-4">PRO</div>
+                        <h3 class="text-center mb-2 pro-gradient">$14.99/month</h3>
+                        <p class="text-center text-gray-400 mb-4">or $99.99/year (save 44%)</p>
+                        <div class="flex flex-col gap-3 mb-6">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>Everything in Free</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>Unlimited likes</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>5 super likes/day</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>See who liked you</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-pro btn-block" onclick="upgradeToPro()">
+                            <i class="fas fa-crown"></i> Upgrade to Pro
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ===== UTILITY FUNCTIONS =====
+        function showNotification(message, type = 'info') {
+            // Remove existing notification
+            const existing = document.querySelector('.notification');
+            if (existing) existing.remove();
+            
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            
+            const icon = type === 'success' ? 'fa-check-circle' : 
+                        type === 'error' ? 'fa-exclamation-circle' : 
+                        type === 'warning' ? 'fa-exclamation-triangle' : 'fa-info-circle';
+            
+            notification.innerHTML = `
+                <i class="fas ${icon}"></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    document.body.removeChild(notification);
+                }
+            }, 3000);
+        }
+
+        function toggleBookmark(eventId) {
+            const index = state.bookmarkedEvents.indexOf(eventId);
+            if (index > -1) {
+                state.bookmarkedEvents.splice(index, 1);
+                showNotification('Event removed from bookmarks', 'info');
+            } else {
+                state.bookmarkedEvents.push(eventId);
+                showNotification('Event bookmarked', 'success');
+            }
+            
+            // Update the event in state
+            const eventIndex = state.events.findIndex(e => e.id === eventId);
+            if (eventIndex > -1) {
+                state.events[eventIndex].bookmarked = !state.events[eventIndex].bookmarked;
+            }
+            
+            localStorage.setItem('amps_bookmarkedEvents', JSON.stringify(state.bookmarkedEvents));
+            localStorage.setItem('amps_events', JSON.stringify(state.events));
+            
+            // Refresh current page
+            renderPage();
+        }
+
+        function checkInToEvent(eventId) {
+            if (!state.currentUser) {
+                navigateTo('auth');
+                return;
+            }
+            
+            const event = state.events.find(e => e.id === eventId);
+            if (event) {
+                state.currentEvent = event;
+                showNotification('Opening camera for check-in', 'info');
+                setTimeout(() => openCameraForSelfie(), 1000);
             }
         }
 
-        function createEvent(event) {
-            event.preventDefault();
-            const form = event.target;
-            const eventName = form.querySelector('input[type="text"]').value;
-            const description = form.querySelector('textarea').value;
-            const location = form.querySelectorAll('input[type="text"]')[1].value;
-            const duration = form.querySelector('input[type="number"]').value;
-            const maxAttendees = form.querySelectorAll('input[type="number"]')[1].value;
-            
-            const newEvent = {
-                id: state.events.length + 1,
-                name: eventName,
-                description: description,
-                location: location,
-                date: 'Tomorrow',
-                time: '7:00 PM - 11:00 PM',
-                attendees: 0,
-                maxAttendees: parseInt(maxAttendees),
-                qrCode: 'AMPS_' + Math.random().toString(36).substr(2, 9).toUpperCase(),
-                radius: 100,
-                organizerId: state.currentUser.id,
-                tags: ['New Event']
-            };
-            
-            state.events.push(newEvent);
-            
-            showNotification(`Event "${eventName}" created successfully!`, 'success');
-            
-            setTimeout(() => {
-                const qrDisplay = document.getElementById('qrDisplay');
-                const qrCodeDisplay = document.getElementById('qrCodeDisplay');
-                
-                if (qrDisplay && qrCodeDisplay) {
-                    qrDisplay.style.display = 'block';
-                    qrCodeDisplay.textContent = newEvent.qrCode;
-                    
-                    qrDisplay.scrollIntoView({ behavior: 'smooth' });
-                }
-            }, 500);
+        function enterCodeManually() {
+            const code = prompt('Enter event code:');
+            if (code) {
+                showNotification('Code accepted! Opening camera for verification...', 'success');
+                setTimeout(() => openCameraForSelfie(), 1000);
+            }
         }
 
         function upgradeToPro() {
@@ -3533,22 +3725,50 @@
             }, 1500);
         }
 
-        function showPayment(method) {
-            const methods = {
-                paypal: 'PayPal',
-                card: 'Credit/Debit Card',
-                mobile: 'Mobile Money',
-                bank: 'Bank Transfer'
-            };
-            showNotification(`Redirecting to ${methods[method]} payment...`, 'info');
+        function closeProModal() { 
+            const modal = document.getElementById('proModal');
+            if (modal) modal.style.display = 'none'; 
         }
 
-        function enterCodeManually() {
-            const code = prompt('Enter event code:');
-            if (code) {
-                showNotification('Code accepted! Opening camera for verification...', 'success');
-                setTimeout(() => openCameraForSelfie(), 1000);
+        function showFiltersModal() {
+            const modal = document.getElementById('filtersModal');
+            if (modal) {
+                modal.style.display = 'flex';
             }
+        }
+
+        function closeFilters() {
+            const modal = document.getElementById('filtersModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        function applyFilters() {
+            showNotification('Filters applied', 'success');
+            closeFilters();
+            
+            // Refresh swipe page
+            if (state.currentPage === 'swipe') {
+                renderSwipePage(document.getElementById('content'));
+            }
+        }
+
+        function clearFilters() {
+            state.filters = {
+                distance: 50,
+                ageRange: { min: 18, max: 35 },
+                gender: 'all',
+                interests: [],
+                verifiedOnly: false
+            };
+            state.activeFilters = {};
+            
+            localStorage.removeItem('amps_filters');
+            localStorage.removeItem('amps_activeFilters');
+            
+            showNotification('Filters cleared', 'info');
+            renderSwipePage(document.getElementById('content'));
         }
 
         function showMenuModal() {
@@ -3571,13 +3791,13 @@
                     <p class="text-gray-400 mb-4">Hi, ${state.currentUser?.name || 'Guest'}!</p>
                     <div class="flex flex-col gap-3">
                         <button class="btn btn-outline" onclick="navigateTo('dashboard'); this.closest('.menu-modal').remove()">
-                            <i class="fas fa-calendar"></i> Browse Events
+                            <i class="fas fa-home"></i> Dashboard
                         </button>
-                        <button class="btn btn-outline" onclick="navigateTo('matches'); this.closest('.menu-modal').remove()">
-                            <i class="fas fa-heart"></i> My Matches (${state.matches.length})
+                        <button class="btn btn-outline" onclick="navigateTo('bookmarked-events'); this.closest('.menu-modal').remove()">
+                            <i class="fas fa-bookmark"></i> Bookmarked Events
                         </button>
-                        <button class="btn btn-outline" onclick="navigateTo('profile'); this.closest('.menu-modal').remove()">
-                            <i class="fas fa-user"></i> Profile
+                        <button class="btn btn-outline" onclick="navigateTo('settings'); this.closest('.menu-modal').remove()">
+                            <i class="fas fa-cog"></i> Settings
                         </button>
                         <button class="btn btn-outline text-red-400" onclick="logout(); this.closest('.menu-modal').remove()">
                             <i class="fas fa-sign-out-alt"></i> Log Out
@@ -3595,195 +3815,76 @@
             document.body.appendChild(modal);
         }
 
-        function logout() {
-            state.currentUser = null;
-            state.isPro = false;
-            state.isProPlus = false;
-            state.swipeCount = 0;
-            state.matches = [];
-            state.chatMessages = {};
-            
-            localStorage.removeItem('amps_user');
-            localStorage.removeItem('amps_isPro');
-            localStorage.removeItem('amps_isProPlus');
-            localStorage.removeItem('amps_swipeCount');
-            localStorage.removeItem('amps_matches');
-            localStorage.removeItem('amps_chatMessages');
-            
-            showNotification('Successfully signed out', 'info');
-            navigateTo('home');
-        }
-
-        function editProfile() {
-            showNotification('Edit profile feature coming soon!', 'info');
-        }
-
-        function showNotificationSettings() {
-            showNotification('Notification settings coming soon!', 'info');
-        }
-
-        function showPrivacySettings() {
-            showNotification('Privacy settings coming soon!', 'info');
-        }
-
         function showHelp() {
-            showNotification('Help & support coming soon!', 'info');
+            showNotification('Help & support: support@amps.com', 'info');
         }
 
         function changeProfilePhoto() {
-            showNotification('Profile photo upload coming soon!', 'info');
-        }
-
-        function showProfileViews() {
-            showNotification('Profile views feature for Pro users!', 'info');
-        }
-
-        function showFilters() {
-            showNotification('Filter options coming soon!', 'info');
-        }
-
-        function viewFullProfile(profileId) {
-            const profile = MOCK_PROFILES.find(p => p.id === profileId);
-            if (profile) {
-                alert(`Full Profile:\n\nName: ${profile.name}\nAge: ${profile.age}\nBio: ${profile.bio}\nLocation: ${profile.location}\nInterests: ${profile.interests.join(', ')}`);
-            }
-        }
-
-        // ===== UTILITY FUNCTIONS =====
-        function showNotification(message, type = 'info') {
-            const existing = document.querySelector('.notification');
-            if (existing) existing.remove();
-            
-            const notification = document.createElement('div');
-            notification.className = 'notification';
-            
-            const icon = type === 'success' ? 'fa-check-circle' : 
-                        type === 'error' ? 'fa-exclamation-circle' : 
-                        type === 'warning' ? 'fa-exclamation-triangle' : 'fa-info-circle';
-            
-            notification.innerHTML = `
-                <i class="fas ${icon}"></i>
-                <span>${message}</span>
-            `;
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                if (notification.parentNode) {
-                    notification.style.opacity = '0';
-                    notification.style.transform = 'translateX(100px)';
-                    setTimeout(() => {
-                        if (notification.parentNode) {
-                            document.body.removeChild(notification);
-                        }
-                    }, 300);
-                }
-            }, 3000);
-        }
-
-        function createConfetti() {
-            const modal = document.getElementById('matchModal');
-            if (!modal) return;
-            
-            for (let i = 0; i < 50; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.cssText = `
-                    position: absolute;
-                    width: ${Math.random() * 10 + 5}px;
-                    height: ${Math.random() * 10 + 5}px;
-                    background: hsl(${Math.random() * 360}, 100%, 70%);
-                    border-radius: 50%;
-                    top: 50%;
-                    left: ${Math.random() * 100}%;
-                    animation: confettiFall ${Math.random() * 2 + 1}s linear forwards;
-                `;
-                
-                modal.appendChild(confetti);
-                
-                setTimeout(() => confetti.remove(), 3000);
-            }
+            showNotification('Photo upload coming soon!', 'info');
         }
 
         // ===== INITIALIZATION =====
         function init() {
+            console.log('Initializing app...');
+            
+            // Load saved state from localStorage
             const savedUser = localStorage.getItem('amps_user');
             const savedPro = localStorage.getItem('amps_isPro');
             const savedProPlus = localStorage.getItem('amps_isProPlus');
-            const savedSwipeCount = localStorage.getItem('amps_swipeCount');
             const savedMatches = localStorage.getItem('amps_matches');
-            const savedChatMessages = localStorage.getItem('amps_chatMessages');
-            const savedSwipeHistory = localStorage.getItem('amps_swipeHistory');
             const savedUserProfile = localStorage.getItem('amps_userProfile');
-            const savedSuperLikes = localStorage.getItem('amps_superLikes');
-            const savedRewindCount = localStorage.getItem('amps_rewindCount');
             
-            if (savedUser) {
-                state.currentUser = JSON.parse(savedUser);
-            }
+            if (savedUser) state.currentUser = JSON.parse(savedUser);
+            if (savedPro) state.isPro = savedPro === 'true';
+            if (savedProPlus) state.isProPlus = savedProPlus === 'true';
+            if (savedMatches) state.matches = JSON.parse(savedMatches);
+            if (savedUserProfile) state.userProfile = JSON.parse(savedUserProfile);
             
-            if (savedPro) {
-                state.isPro = savedPro === 'true';
-            }
-            
-            if (savedProPlus) {
-                state.isProPlus = savedProPlus === 'true';
-            }
-            
-            if (savedSwipeCount) {
-                state.swipeCount = parseInt(savedSwipeCount);
-            }
-            
-            if (savedMatches) {
-                state.matches = JSON.parse(savedMatches);
-            }
-            
-            if (savedChatMessages) {
-                state.chatMessages = JSON.parse(savedChatMessages);
-            }
-            
-            if (savedSwipeHistory) {
-                state.swipeHistory = JSON.parse(savedSwipeHistory);
-            }
-            
-            if (savedUserProfile) {
-                state.userProfile = JSON.parse(savedUserProfile);
-            }
-            
-            if (savedSuperLikes) {
-                state.superLikes = parseInt(savedSuperLikes);
-            }
-            
-            if (savedRewindCount) {
-                state.rewindCount = parseInt(savedRewindCount);
-            }
-            
-            const today = new Date().toDateString();
-            if (localStorage.getItem('lastSwipeDate') !== today) {
-                state.swipeCount = 0;
-                state.superLikes = state.isPro || state.isProPlus ? 5 : 1;
-                state.rewindCount = state.isPro || state.isProPlus ? 999 : 1;
-                localStorage.setItem('lastSwipeDate', today);
+            // Add some initial matches for demo
+            if (state.currentUser && state.matches.length === 0) {
+                state.matches = [
+                    {
+                        id: 1,
+                        userId: state.currentUser.id,
+                        matchId: 2,
+                        timestamp: new Date().toISOString(),
+                        eventId: 1,
+                        lastMessage: 'Hey! How\'s the event?',
+                        lastMessageTime: '2:15 PM',
+                        unread: true
+                    }
+                ];
             }
             
             renderPage();
             updateNavigation();
+            
+            console.log('App initialized successfully');
         }
 
-        document.addEventListener('DOMContentLoaded', init);
+        // Initialize the app immediately when script loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing app...');
+            init();
+        });
 
-        // Export functions for HTML onclick handlers
+        // Also try to initialize immediately in case DOM is already loaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+
+        // ===== EXPORT FUNCTIONS FOR GLOBAL ACCESS =====
         window.navigateTo = navigateTo;
         window.goBack = goBack;
         window.demoLogin = demoLogin;
         window.upgradeToPro = upgradeToPro;
         window.upgradeToProPlus = upgradeToProPlus;
-        window.showPayment = showPayment;
         window.logout = logout;
         window.joinEvent = joinEvent;
         window.viewEvent = viewEvent;
         window.startCameraScanning = startCameraScanning;
-        window.enterCodeManually = enterCodeManually;
         window.openCameraForSelfie = openCameraForSelfie;
         window.closeCamera = closeCamera;
         window.switchCamera = switchCamera;
@@ -3797,19 +3898,20 @@
         window.startChat = startChat;
         window.openChat = openChat;
         window.sendMessage = sendMessage;
-        window.handleMessageKeypress = handleMessageKeypress;
-        window.createEvent = createEvent;
         window.switchAuthTab = switchAuthTab;
         window.handleAuth = handleAuth;
         window.showMenuModal = showMenuModal;
-        window.editProfile = editProfile;
-        window.showNotificationSettings = showNotificationSettings;
-        window.showPrivacySettings = showPrivacySettings;
+        window.showNotification = showNotification;
+        window.toggleBookmark = toggleBookmark;
+        window.checkInToEvent = checkInToEvent;
+        window.enterCodeManually = enterCodeManually;
+        window.closeProModal = closeProModal;
+        window.showFiltersModal = showFiltersModal;
+        window.closeFilters = closeFilters;
+        window.applyFilters = applyFilters;
+        window.clearFilters = clearFilters;
         window.showHelp = showHelp;
         window.changeProfilePhoto = changeProfilePhoto;
-        window.showProfileViews = showProfileViews;
-        window.showFilters = showFilters;
-        window.viewFullProfile = viewFullProfile;
     </script>
 </body>
 </html>
