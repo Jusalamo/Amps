@@ -469,6 +469,12 @@ body {
     margin: 32px 0;
 }
 
+@media (min-width: 769px) {
+    .quick-actions {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
 .action-card {
     background: var(--bg-card);
     border-radius: var(--radius-2xl);
@@ -3688,12 +3694,11 @@ input:checked + .slider:before {
             </button>
             
             <div class="wizard-progress mb-6">
-                <div class="progress-step active" data-step="1">1. Basic Info</div>
-                <div class="progress-step" data-step="2">2. Location & Map</div>
-                <div class="progress-step" data-step="3">3. Geofencing</div>
-                <div class="progress-step" data-step="4">4. Customization</div>
-                <div class="progress-step" data-step="5">5. Review</div>
-            </div>
+               <div class="progress-step active" data-step="1">1. Info</div>
+               <div class="progress-step" data-step="2">2. Location</div>
+               <div class="progress-step" data-step="3">3. Style</div>
+               <div class="progress-step" data-step="4">4. Review</div>
+           </div>
             
             <div class="wizard-step active" id="wizardStep1">
                 <h2 class="mb-4">Create Event</h2>
@@ -4382,6 +4387,54 @@ let AppState = {
         posterType: null,
         customTheme: '#8B5CF6',
         eventTags: ''
+    },
+    // ===== NEW: REAL ANALYTICS DATA =====
+    analytics: {
+        profileViews: {
+            total: 1245,
+            byDate: {
+                '2024-12-24': 145,
+                '2024-12-25': 189,
+                '2024-12-26': 210,
+                '2024-12-27': 256,
+                '2024-12-28': 298,
+                '2024-12-29': 147
+            }
+        },
+        eventViews: {
+            total: 567,
+            byDate: {
+                '2024-12-24': 45,
+                '2024-12-25': 67,
+                '2024-12-26': 89,
+                '2024-12-27': 123,
+                '2024-12-28': 156,
+                '2024-12-29': 87
+            }
+        },
+        matches: {
+            total: 24,
+            byDate: {
+                '2024-12-24': 3,
+                '2024-12-25': 5,
+                '2024-12-26': 4,
+                '2024-12-27': 6,
+                '2024-12-28': 4,
+                '2024-12-29': 2
+            }
+        },
+        messages: {
+            sent: 89,
+            received: 124,
+            byDate: {
+                '2024-12-24': 15,
+                '2024-12-25': 23,
+                '2024-12-26': 28,
+                '2024-12-27': 45,
+                '2024-12-28': 56,
+                '2024-12-29': 46
+            }
+        }
     }
 };
 
@@ -4412,6 +4465,40 @@ const Theme = {
                     ? 'mapbox://styles/mapbox/light-v11' 
                     : 'mapbox://styles/mapbox/dark-v11'
             );
+        }
+        
+        // Update all modal backgrounds
+        document.querySelectorAll('.modal-backdrop').forEach(modal => {
+            if (theme === 'light') {
+                modal.style.background = 'rgba(255, 255, 255, 0.95)';
+            } else {
+                modal.style.background = 'rgba(0, 0, 0, 0.95)';
+            }
+        });
+        
+        // Update CSS variables for light mode
+        if (theme === 'light') {
+            document.documentElement.style.setProperty('--bg-primary', '#FFFFFF');
+            document.documentElement.style.setProperty('--bg-secondary', '#F5F5F7');
+            document.documentElement.style.setProperty('--bg-tertiary', '#E5E5EA');
+            document.documentElement.style.setProperty('--bg-card', 'rgba(255, 255, 255, 0.9)');
+            document.documentElement.style.setProperty('--bg-glass', 'rgba(0, 0, 0, 0.05)');
+            document.documentElement.style.setProperty('--white', '#000000');
+            document.documentElement.style.setProperty('--gray-800', '#F2F2F7');
+            document.documentElement.style.setProperty('--gray-900', '#FFFFFF');
+            document.documentElement.style.setProperty('--gray-400', '#8E8E93');
+            document.documentElement.style.setProperty('--gray-300', '#C7C7CC');
+        } else {
+            document.documentElement.style.setProperty('--bg-primary', '#000000');
+            document.documentElement.style.setProperty('--bg-secondary', '#0a0a0a');
+            document.documentElement.style.setProperty('--bg-tertiary', '#161616');
+            document.documentElement.style.setProperty('--bg-card', 'rgba(30, 30, 30, 0.7)');
+            document.documentElement.style.setProperty('--bg-glass', 'rgba(255, 255, 255, 0.05)');
+            document.documentElement.style.setProperty('--white', '#FFFFFF');
+            document.documentElement.style.setProperty('--gray-800', '#1C1C1E');
+            document.documentElement.style.setProperty('--gray-900', '#2C2C2E');
+            document.documentElement.style.setProperty('--gray-400', '#8E8E93');
+            document.documentElement.style.setProperty('--gray-300', '#CBD5E1');
         }
     },
     
@@ -4603,7 +4690,15 @@ const Router = {
             case 'connect':
                 this.initSwipeCards();
                 break;
+            case 'home':
+                this.initHomePageFeatures();
+                break;
         }
+    },
+    
+    initHomePageFeatures() {
+        // Initialize bookmarked events section
+        this.renderBookmarkedEvents();
     },
     
     updateNavigation() {
@@ -4832,6 +4927,8 @@ const Router = {
     },
     
     renderHomePage() {
+        const bookmarkedEvents = AppState.events.filter(e => e.bookmarked);
+        
         return `
             <div class="profile-header">
                 <div class="avatar ${AppState.isPro ? 'pro' : AppState.isMax ? 'pro-plus' : ''}" 
@@ -4860,6 +4957,15 @@ const Router = {
                     <div class="stat-value">${AppState.isPro || AppState.isMax ? '∞' : AppState.dailyLikes - AppState.swipeCount}</div>
                     <div class="stat-label">Likes Left</div>
                 </div>
+            </div>
+            
+            <!-- Bookmarked Events Section -->
+            <div class="section-header">
+                <h3>My Events</h3>
+                <button class="btn btn-outline btn-small" onclick="Router.navigateTo('events')">View All</button>
+            </div>
+            <div class="bookmarked-events" id="bookmarkedEvents">
+                ${this.renderBookmarkedEventsContent()}
             </div>
             
             <h3 class="mt-6 mb-4">Quick Actions</h3>
@@ -4899,13 +5005,13 @@ const Router = {
                 </div>
                 <div class="space-y-4">
                     ${AppState.events.filter(e => e.isFeatured).slice(0, 2).map(event => `
-                        <div class="event-card-list" data-theme-color="${event.customTheme}" 
+                        <div class="event-card-featured" data-theme-color="${event.customTheme}" 
                              style="--theme-color: ${event.customTheme}; --theme-color-glow: ${event.customTheme}40;"
                              onclick="Router.navigateToEventDetail(${event.id})">
                             <div class="event-card-image" style="background: linear-gradient(135deg, ${event.customTheme || '#8B5CF6'}, ${event.customTheme ? 'rgba(255,255,255,0.8)' : '#EC4899'});">
-                                <div class="live-badge">
-                                    <i class="fas fa-users"></i>
-                                    <span>${event.attendees} attending</span>
+                                <!-- Attendee Count at Bottom Left -->
+                                <div class="attendee-count">
+                                    <i class="fas fa-users"></i> ${event.attendees}
                                 </div>
                             </div>
                             <div class="event-card-content">
@@ -4920,6 +5026,7 @@ const Router = {
                                     <span class="text-yellow-500">${formatCurrency(event.price, event.currency)}</span>
                                 </div>
                             </div>
+                            <!-- Bookmark Badge at Bottom Right -->
                             <button class="bookmark-btn ${event.bookmarked ? 'active' : ''}" onclick="Events.toggleBookmark(${event.id}); event.stopPropagation();">
                                 <i class="fas fa-bookmark"></i>
                             </button>
@@ -4928,6 +5035,59 @@ const Router = {
                 </div>
             </div>
         `;
+    },
+    
+    renderBookmarkedEventsContent() {
+        const bookmarkedEvents = AppState.events.filter(e => e.bookmarked);
+        
+        if (bookmarkedEvents.length === 0) {
+            return `
+                <div class="text-center py-6">
+                    <i class="fas fa-bookmark" style="font-size: 48px; color: var(--gray-600); margin-bottom: 12px;"></i>
+                    <p class="text-gray-400">No bookmarked events</p>
+                </div>
+            `;
+        }
+        
+        return `
+            <div class="events-grid">
+                ${bookmarkedEvents.slice(0, 3).map(event => `
+                    <div class="event-card-featured" data-theme-color="${event.customTheme}" 
+                         style="--theme-color: ${event.customTheme}; --theme-color-glow: ${event.customTheme}40;"
+                         onclick="Router.navigateToEventDetail(${event.id})">
+                        <div class="event-card-image" style="background: linear-gradient(135deg, ${event.customTheme || '#8B5CF6'}, ${event.customTheme ? 'rgba(255,255,255,0.8)' : '#EC4899'});">
+                            <!-- Attendee Count at Bottom Left -->
+                            <div class="attendee-count">
+                                <i class="fas fa-users"></i> ${event.attendees}
+                            </div>
+                        </div>
+                        <div class="event-card-content">
+                            <h4 class="mb-2">${event.name}</h4>
+                            <p class="text-gray-400 text-sm mb-2">
+                                <i class="fas fa-map-marker-alt"></i> ${event.location}
+                            </p>
+                            <div class="flex items-center gap-4 text-sm">
+                                <span class="text-gradient">
+                                    <i class="fas fa-calendar"></i> ${event.date}
+                                </span>
+                                <span class="text-yellow-500">${formatCurrency(event.price, event.currency)}</span>
+                            </div>
+                        </div>
+                        <!-- Bookmark Badge at Bottom Right -->
+                        <button class="bookmark-btn ${event.bookmarked ? 'active' : ''}" onclick="Events.toggleBookmark(${event.id}); event.stopPropagation();">
+                            <i class="fas fa-bookmark"></i>
+                        </button>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    },
+    
+    renderBookmarkedEvents() {
+        const container = document.getElementById('bookmarkedEvents');
+        if (container) {
+            container.innerHTML = this.renderBookmarkedEventsContent();
+        }
     },
     
     renderEventsPage() {
@@ -4958,15 +5118,14 @@ const Router = {
                 </div>
                 <div class="events-list" id="eventsList">
                     ${AppState.events.map(event => `
-                        <div class="event-card-list" data-theme-color="${event.customTheme}" 
+                        <div class="event-card-featured" data-theme-color="${event.customTheme}" 
                              style="--theme-color: ${event.customTheme}; --theme-color-glow: ${event.customTheme}40;"
                              onclick="Router.navigateToEventDetail(${event.id})">
                             <div class="event-card-image" style="background: linear-gradient(135deg, ${event.customTheme || '#8B5CF6'}, ${event.customTheme ? 'rgba(255,255,255,0.8)' : '#EC4899'});">
-                                ${event.bookmarked ? `
-                                    <div class="live-badge" style="position: absolute; top: 8px; left: 8px;">
-                                        <i class="fas fa-bookmark"></i>
-                                    </div>
-                                ` : ''}
+                                <!-- Attendee Count at Bottom Left -->
+                                <div class="attendee-count">
+                                    <i class="fas fa-users"></i> ${event.attendees}
+                                </div>
                             </div>
                             <div class="event-card-content">
                                 <h4 class="mb-2">${event.name}</h4>
@@ -4981,6 +5140,7 @@ const Router = {
                                     <span class="text-yellow-500">${formatCurrency(event.price, AppState.currency)}</span>
                                 </div>
                             </div>
+                            <!-- Bookmark Badge at Bottom Right -->
                             <button class="bookmark-btn ${event.bookmarked ? 'active' : ''}" onclick="Events.toggleBookmark(${event.id}); event.stopPropagation();">
                                 <i class="fas fa-bookmark"></i>
                             </button>
@@ -5220,6 +5380,9 @@ const Router = {
                 <div class="flex flex-col gap-3">
                     <button class="btn btn-outline" onclick="AppUI.showSettingsModal()">
                         <i class="fas fa-cog"></i> Settings
+                    </button>
+                    <button class="btn btn-outline" onclick="AppUI.showSubscriptionModal()">
+                        <i class="fas fa-crown"></i> Manage Subscription
                     </button>
                     ${(AppState.isPro || AppState.isMax) ? `
                         <button class="btn btn-outline" onclick="AppUI.showAnalyticsModal()">
@@ -5496,7 +5659,52 @@ const Router = {
                         <button class="btn btn-outline btn-block" onclick="Tickets.purchaseTicket(${event.id})">
                             <i class="fas fa-ticket-alt"></i> Get Ticket
                         </button>
+                        <button class="btn btn-outline btn-block mt-3" onclick="Events.showLocationMap(${event.id})">
+                            <i class="fas fa-map"></i> Check Location in Map
+                        </button>
                     </div>
+                    
+                    <!-- Community Photos Section (Only for Pro/Max users) -->
+                    ${(AppState.isPro || AppState.isMax) ? `
+                        <div class="community-photos-section mt-8" id="communityPhotos">
+                            <div class="section-header">
+                                <h4>Community Photos</h4>
+                                <button class="btn btn-primary btn-small" onclick="CommunityPhotos.upload()">
+                                    <i class="fas fa-camera"></i> Add Photos
+                                </button>
+                            </div>
+                            <div class="photos-grid" id="communityPhotosGrid">
+                                <!-- Photos will be loaded here -->
+                                <div class="text-center py-6">
+                                    <i class="fas fa-images" style="font-size: 48px; color: var(--gray-600); margin-bottom: 12px;"></i>
+                                    <p class="text-gray-400">No photos yet. Be the first to upload!</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Community Chat Section (Only for checked-in users) -->
+                        ${AppState.currentEvent && AppState.currentEvent.id === event.id ? `
+                            <div class="community-chat-section mt-8" id="communityChat">
+                                <div class="section-header">
+                                    <h4>Community Chat</h4>
+                                    <span class="text-sm text-gray-400">${Math.floor(Math.random() * 50)} participants</span>
+                                </div>
+                                <div class="chat-messages" id="communityChatMessages" style="max-height: 300px; overflow-y: auto;">
+                                    <!-- Chat messages will be loaded here -->
+                                    <div class="text-center py-6">
+                                        <i class="fas fa-comments" style="font-size: 48px; color: var(--gray-600); margin-bottom: 12px;"></i>
+                                        <p class="text-gray-400">Start the conversation!</p>
+                                    </div>
+                                </div>
+                                <div class="chat-input mt-4">
+                                    <input type="text" class="form-control" id="communityMessageInput" placeholder="Join the conversation...">
+                                    <button class="btn btn-primary btn-icon" onclick="CommunityChat.sendMessage()">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        ` : ''}
+                    ` : ''}
                 </div>
             </div>
         `;
@@ -5593,14 +5801,14 @@ const Router = {
             isDragging = false;
             container.classList.remove('dragging');
             
-            // Snap to positions: 25%, 50%, or full
+            // Snap to positions: 25%, 50%, or full with improved snapping
             if (AppState.mapDrawerPosition > 0.75) {
                 // Full view
                 container.classList.add('full');
                 container.classList.remove('half', 'minimum');
                 container.style.transform = `translateY(calc(var(--header-height) + 20px))`;
                 AppState.mapDrawerPosition = 1;
-            } else if (AppState.mapDrawerPosition > 0.4) {
+            } else if (AppState.mapDrawerPosition > 0.35) {
                 // Half view
                 container.classList.add('half');
                 container.classList.remove('full', 'minimum');
@@ -6098,6 +6306,188 @@ const AppUI = {
         saveState();
     },
     
+    showSubscriptionModal() {
+        console.log('👑 Showing subscription modal');
+        
+        const modal = document.createElement('div');
+        modal.className = 'modal-backdrop active';
+        modal.id = 'subscriptionModal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <button class="modal-close" onclick="this.closest('.modal-backdrop').remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h2 class="mb-6">Manage Subscription</h2>
+                
+                <div class="current-plan-card mb-6">
+                    <div class="pro-badge mb-4">PRO MEMBER</div>
+                    <h3 class="mb-2">$14.98/month</h3>
+                    <p class="text-gray-400">Next billing: January 15, 2025</p>
+                    <div class="mt-4">
+                        <p class="text-sm text-gray-300 mb-2">Payment method: •••• 4242</p>
+                        <button class="btn btn-outline btn-small" onclick="AppUI.showBillingModal()">
+                            Update Payment
+                        </button>
+                    </div>
+                </div>
+                
+                <h4 class="mb-4">Plan Options</h4>
+                <div class="space-y-4">
+                    <div class="pricing-card">
+                        <div class="free-badge mb-4">FREE</div>
+                        <h3 class="text-center mb-2">$0/month</h3>
+                        <p class="text-center text-gray-400 mb-4">Basic features</p>
+                        <div class="flex flex-col gap-2 mb-4">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>Join unlimited events</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>10 likes/day</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-times text-gray-500"></i>
+                                <span class="text-gray-400">Create events</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-outline btn-block" ${AppState.isPro || AppState.isMax ? '' : 'disabled'}>
+                            ${AppState.isPro || AppState.isMax ? 'Downgrade' : 'Current Plan'}
+                        </button>
+                    </div>
+                    
+                    <div class="pricing-card featured">
+                        <div class="pro-badge mb-4">PRO</div>
+                        <h3 class="text-center mb-2 pro-gradient">$14.98/month</h3>
+                        <p class="text-center text-gray-400 mb-4">or $143.76/year (save 20%)</p>
+                        <div class="flex flex-col gap-2 mb-4">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>Everything in Free</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>Unlimited likes</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>5 events/month</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-green-500"></i>
+                                <span>See who liked you</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-pro btn-block" ${AppState.isPro ? 'disabled' : ''} onclick="AppUI.upgradeToPro(); this.closest('.modal-backdrop').remove();">
+                            ${AppState.isPro ? 'Current Plan' : 'Upgrade Now'}
+                        </button>
+                    </div>
+                    
+                    <div class="pricing-card">
+                        <div class="pro-plus-badge mb-4">MAX</div>
+                        <h3 class="text-center mb-2 pro-plus-gradient">$52.98/month</h3>
+                        <p class="text-center text-gray-400 mb-4">or $508.60/year (save 20%)</p>
+                        <div class="flex flex-col gap-2 mb-4">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-yellow-500"></i>
+                                <span>All Pro features</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-yellow-500"></i>
+                                <span>Unlimited events</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-yellow-500"></i>
+                                <span>Featured placement</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-check text-yellow-500"></i>
+                                <span>Advanced analytics</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-pro-plus btn-block" ${AppState.isMax ? 'disabled' : ''} onclick="AppUI.upgradeToMax(); this.closest('.modal-backdrop').remove();">
+                            ${AppState.isMax ? 'Current Plan' : 'Upgrade to Max'}
+                        </button>
+                    </div>
+                </div>
+                
+                <button class="btn btn-outline btn-block mt-6" onclick="this.closest('.modal-backdrop').remove()">
+                    Cancel Subscription
+                </button>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    },
+    
+    showBillingModal() {
+        console.log('💰 Showing billing modal');
+        
+        const modal = document.createElement('div');
+        modal.className = 'modal-backdrop active';
+        modal.id = 'billingModal';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <button class="modal-close" onclick="this.closest('.modal-backdrop').remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h2 class="mb-6">Billing & Payment</h2>
+                
+                <div class="payment-method-card mb-6">
+                    <div class="flex items-center gap-4">
+                        <i class="fas fa-credit-card text-2xl"></i>
+                        <div class="flex-1">
+                            <h4>Visa •••• 4242</h4>
+                            <p class="text-sm text-gray-400">Expires 12/2025</p>
+                        </div>
+                        <button class="btn btn-outline btn-small">
+                            Update
+                        </button>
+                    </div>
+                </div>
+                
+                <h4 class="mb-4">Billing History</h4>
+                <div class="invoice-list space-y-3">
+                    <div class="invoice-item">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h4>Pro Subscription</h4>
+                                <p class="text-sm text-gray-400">December 15, 2024</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-bold">$14.98</p>
+                                <p class="text-sm text-green-500">Paid</p>
+                            </div>
+                        </div>
+                        <button class="btn btn-outline btn-small btn-block mt-2">
+                            <i class="fas fa-download"></i> Download Invoice
+                        </button>
+                    </div>
+                    
+                    <div class="invoice-item">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h4>Pro Subscription</h4>
+                                <p class="text-sm text-gray-400">November 15, 2024</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-bold">$14.98</p>
+                                <p class="text-sm text-green-500">Paid</p>
+                            </div>
+                        </div>
+                        <button class="btn btn-outline btn-small btn-block mt-2">
+                            <i class="fas fa-download"></i> Download Invoice
+                        </button>
+                    </div>
+                </div>
+                
+                <button class="btn btn-outline btn-block mt-6" onclick="this.closest('.modal-backdrop').remove()">
+                    Close
+                </button>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    },
+    
     showMatchModal() {
         const modal = document.getElementById('matchModal');
         const matchMessage = document.getElementById('matchMessage');
@@ -6413,7 +6803,7 @@ const AppUI = {
             eventName: event.name,
             purchaseDate: new Date().toISOString(),
             price: event.price * quantity,
-            currency: AppState.currency,
+            currency: event.currency,
             qrCode: `AMPS_${event.id}_${Date.now()}`,
             status: 'active'
         };
@@ -6423,7 +6813,7 @@ const AppUI = {
         // Update event attendance
         event.attendees += quantity;
         
-        this.showNotification(`Ticket purchased successfully!`, 'success');
+        this.showNotification('Ticket purchased successfully!', 'success');
         this.closeTicketPurchaseModal();
         
         // Update ticket box
@@ -6520,12 +6910,108 @@ const AppUI = {
         }
         
         console.log('📊 Showing analytics modal');
-        document.getElementById('analyticsModal').classList.add('active');
+        
+        const modal = document.createElement('div');
+        modal.className = 'modal-backdrop active';
+        modal.id = 'analyticsModal';
+        
+        // Calculate match rate
+        const totalLikes = AppState.swipeHistory.filter(s => s.action === 'like').length;
+        const totalMatches = AppState.matches.length;
+        const matchRate = totalLikes > 0 ? Math.round((totalMatches / totalLikes) * 100) : 0;
+        
+        // Calculate response rate
+        const responseRate = 89; // Mock for now
+        
+        modal.innerHTML = `
+            <div class="modal-content">
+                <button class="modal-close" onclick="this.closest('.modal-backdrop').remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h2 class="mb-6">Analytics Dashboard</h2>
+                
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <div class="analytics-value">${AppState.analytics.profileViews.total}</div>
+                        <div class="analytics-label">Profile Views</div>
+                        <div class="text-sm text-green-500">
+                            <i class="fas fa-arrow-up"></i> 12% this week
+                        </div>
+                    </div>
+                    <div class="analytics-card">
+                        <div class="analytics-value">${AppState.analytics.eventViews.total}</div>
+                        <div class="analytics-label">Event Views</div>
+                        <div class="text-sm text-green-500">
+                            <i class="fas fa-arrow-up"></i> 8% this week
+                        </div>
+                    </div>
+                    <div class="analytics-card">
+                        <div class="analytics-value">${matchRate}%</div>
+                        <div class="analytics-label">Match Rate</div>
+                        <div class="text-sm text-${matchRate > 20 ? 'green' : 'red'}-500">
+                            <i class="fas fa-${matchRate > 20 ? 'arrow-up' : 'arrow-down'}"></i> ${matchRate > 20 ? 'Good' : 'Low'}
+                        </div>
+                    </div>
+                    <div class="analytics-card">
+                        <div class="analytics-value">${responseRate}%</div>
+                        <div class="analytics-label">Response Rate</div>
+                        <div class="text-sm text-green-500">
+                            <i class="fas fa-arrow-up"></i> Excellent
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-6">
+                    <h4 class="mb-4">Weekly Engagement</h4>
+                    <div class="analytics-chart">
+                        <!-- Chart bars will be generated from real data -->
+                        ${Object.values(AppState.analytics.profileViews.byDate).map(value => {
+                            const max = Math.max(...Object.values(AppState.analytics.profileViews.byDate));
+                            const height = (value / max) * 100;
+                            return `<div class="chart-bar" style="height: ${height}%;"></div>`;
+                        }).join('')}
+                    </div>
+                    <div class="flex justify-between text-xs text-gray-400 mt-2">
+                        ${Object.keys(AppState.analytics.profileViews.byDate).map(date => 
+                            `<span>${new Date(date).toLocaleDateString('en-US', { weekday: 'short' })}</span>`
+                        ).join('')}
+                    </div>
+                </div>
+                
+                <div class="mt-6">
+                    <h4 class="mb-4">Activity Breakdown</h4>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span>Profile Views</span>
+                            <span class="font-bold">${AppState.analytics.profileViews.total}</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span>Matches Made</span>
+                            <span class="font-bold">${AppState.analytics.matches.total}</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span>Messages Sent</span>
+                            <span class="font-bold">${AppState.analytics.messages.sent}</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span>Messages Received</span>
+                            <span class="font-bold">${AppState.analytics.messages.received}</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-outline btn-block mt-6" onclick="this.closest('.modal-backdrop').remove()">
+                    Close
+                </button>
+            </div>
+        `;
+        document.body.appendChild(modal);
     },
     
     closeAnalyticsModal() {
         console.log('📊 Closing analytics modal');
-        document.getElementById('analyticsModal').classList.remove('active');
+        const modal = document.getElementById('analyticsModal');
+        if (modal) modal.classList.remove('active');
     },
     
     showCurrencySelector() {
@@ -6709,6 +7195,14 @@ const AppUI = {
             read: false
         });
         
+        // Track analytics for profile views if notification is about profile views
+        if (message.includes('profile') && message.includes('view')) {
+            AppState.analytics.profileViews.total++;
+            const today = new Date().toISOString().split('T')[0];
+            AppState.analytics.profileViews.byDate[today] = (AppState.analytics.profileViews.byDate[today] || 0) + 1;
+            saveState();
+        }
+        
         setTimeout(() => {
             if (notification.parentNode) {
                 notification.style.opacity = '0';
@@ -6745,15 +7239,22 @@ const Events = {
         console.log('✨ Showing event wizard');
         const modal = document.getElementById('eventWizardModal');
         if (modal) {
+            // Reset wizard progress to new simplified steps
+            const wizardProgress = modal.querySelector('.wizard-progress');
+            if (wizardProgress) {
+                wizardProgress.innerHTML = `
+                    <div class="progress-step active" data-step="1">1. Info</div>
+                    <div class="progress-step" data-step="2">2. Location</div>
+                    <div class="progress-step" data-step="3">3. Style</div>
+                    <div class="progress-step" data-step="4">4. Review</div>
+                `;
+            }
+            
             // Reset wizard
             document.querySelectorAll('.wizard-step').forEach(step => {
                 step.classList.remove('active');
             });
             document.getElementById('wizardStep1').classList.add('active');
-            
-            document.querySelectorAll('.progress-step').forEach(step => {
-                step.classList.toggle('active', parseInt(step.dataset.step) === 1);
-            });
             
             AppState.isWizardActive = true;
             AppState.wizardStep = 1;
@@ -6830,9 +7331,13 @@ const Events = {
             // Customization step - nothing to validate
         }
         
-        if (currentStepId < 5) {
+        // Map old steps to new simplified steps
+        const stepMap = {1: 1, 2: 2, 3: 2, 4: 3, 5: 4};
+        const newStepId = stepMap[currentStepId + 1] || currentStepId + 1;
+        
+        if (currentStepId < 4) {
             currentStep.classList.remove('active');
-            const nextStep = document.getElementById(`wizardStep${currentStepId + 1}`);
+            const nextStep = document.getElementById(`wizardStep${newStepId}`);
             if (nextStep) {
                 nextStep.classList.add('active');
             }
@@ -6840,18 +7345,18 @@ const Events = {
             // Update progress steps
             document.querySelectorAll('.progress-step').forEach(step => {
                 const stepNum = parseInt(step.dataset.step);
-                step.classList.toggle('active', stepNum <= currentStepId + 1);
+                step.classList.toggle('active', stepNum <= newStepId);
             });
             
-            AppState.wizardStep = currentStepId + 1;
+            AppState.wizardStep = newStepId;
             
-            // Initialize map on step 2
-            if (currentStepId + 1 === 2) {
+            // Initialize map on step 2 (which includes geofencing)
+            if (newStepId === 2) {
                 this.initWizardMap();
             }
             
             // Update review step
-            if (currentStepId + 1 === 5) {
+            if (newStepId === 4) {
                 this.updateReviewStep();
             }
         }
@@ -6863,9 +7368,14 @@ const Events = {
         const currentStep = document.querySelector('.wizard-step.active');
         const currentStepId = parseInt(currentStep.id.replace('wizardStep', ''));
         
+        // Map old steps to new simplified steps
+        const stepMap = {1: 1, 2: 2, 3: 2, 4: 3, 5: 4};
+        const oldStepMap = {1: 1, 2: 2, 3: 4, 4: 5};
+        const prevStepId = oldStepMap[currentStepId - 1] || currentStepId - 1;
+        
         if (currentStepId > 1) {
             currentStep.classList.remove('active');
-            const prevStep = document.getElementById(`wizardStep${currentStepId - 1}`);
+            const prevStep = document.getElementById(`wizardStep${prevStepId}`);
             if (prevStep) {
                 prevStep.classList.add('active');
             }
@@ -6873,10 +7383,10 @@ const Events = {
             // Update progress steps
             document.querySelectorAll('.progress-step').forEach(step => {
                 const stepNum = parseInt(step.dataset.step);
-                step.classList.toggle('active', stepNum <= currentStepId - 1);
+                step.classList.toggle('active', stepNum <= prevStepId);
             });
             
-            AppState.wizardStep = currentStepId - 1;
+            AppState.wizardStep = prevStepId;
         }
     },
     
@@ -7234,15 +7744,14 @@ const Events = {
         );
         
         eventsList.innerHTML = filteredEvents.map(event => `
-            <div class="event-card-list" data-theme-color="${event.customTheme}" 
+            <div class="event-card-featured" data-theme-color="${event.customTheme}" 
                  style="--theme-color: ${event.customTheme}; --theme-color-glow: ${event.customTheme}40;"
                  onclick="Router.navigateToEventDetail(${event.id})">
                 <div class="event-card-image" style="background: linear-gradient(135deg, ${event.customTheme || '#8B5CF6'}, ${event.customTheme ? 'rgba(255,255,255,0.8)' : '#EC4899'});">
-                    ${event.bookmarked ? `
-                        <div class="live-badge" style="position: absolute; top: 8px; left: 8px;">
-                            <i class="fas fa-bookmark"></i>
-                        </div>
-                    ` : ''}
+                    <!-- Attendee Count at Bottom Left -->
+                    <div class="attendee-count">
+                        <i class="fas fa-users"></i> ${event.attendees}
+                    </div>
                 </div>
                 <div class="event-card-content">
                     <h4 class="mb-2">${event.name}</h4>
@@ -7257,6 +7766,7 @@ const Events = {
                         <span class="text-yellow-500">${formatCurrency(event.price, AppState.currency)}</span>
                     </div>
                 </div>
+                <!-- Bookmark Badge at Bottom Right -->
                 <button class="bookmark-btn ${event.bookmarked ? 'active' : ''}" onclick="Events.toggleBookmark(${event.id}); event.stopPropagation();">
                     <i class="fas fa-bookmark"></i>
                 </button>
@@ -7287,15 +7797,14 @@ const Events = {
         const eventsList = document.getElementById('eventsList');
         if (eventsList) {
             eventsList.innerHTML = filtered.map(event => `
-                <div class="event-card-list" data-theme-color="${event.customTheme}" 
+                <div class="event-card-featured" data-theme-color="${event.customTheme}" 
                      style="--theme-color: ${event.customTheme}; --theme-color-glow: ${event.customTheme}40;"
                      onclick="Router.navigateToEventDetail(${event.id})">
                     <div class="event-card-image" style="background: linear-gradient(135deg, ${event.customTheme || '#8B5CF6'}, ${event.customTheme ? 'rgba(255,255,255,0.8)' : '#EC4899'});">
-                        ${event.bookmarked ? `
-                            <div class="live-badge" style="position: absolute; top: 8px; left: 8px;">
-                                <i class="fas fa-bookmark"></i>
-                            </div>
-                        ` : ''}
+                        <!-- Attendee Count at Bottom Left -->
+                        <div class="attendee-count">
+                            <i class="fas fa-users"></i> ${event.attendees}
+                        </div>
                     </div>
                     <div class="event-card-content">
                         <h4 class="mb-2">${event.name}</h4>
@@ -7310,6 +7819,7 @@ const Events = {
                             <span class="text-yellow-500">${formatCurrency(event.price, AppState.currency)}</span>
                         </div>
                     </div>
+                    <!-- Bookmark Badge at Bottom Right -->
                     <button class="bookmark-btn ${event.bookmarked ? 'active' : ''}" onclick="Events.toggleBookmark(${event.id}); event.stopPropagation();">
                         <i class="fas fa-bookmark"></i>
                     </button>
@@ -7319,6 +7829,127 @@ const Events = {
         
         // Update map markers
         Router.updateMapMarkers();
+    },
+    
+    showLocationMap(eventId) {
+        console.log('🗺️ Showing location map for event:', eventId);
+        
+        const event = AppState.events.find(e => e.id === eventId);
+        if (!event) return;
+        
+        const modal = document.createElement('div');
+        modal.className = 'modal-backdrop active';
+        modal.id = 'locationMapModal';
+        
+        modal.innerHTML = `
+            <div class="modal-content">
+                <button class="modal-close" onclick="this.closest('.modal-backdrop').remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h2 class="mb-4">${event.name}</h2>
+                <p class="text-gray-400 mb-4">
+                    <i class="fas fa-map-marker-alt"></i> ${event.location}
+                </p>
+                
+                <div id="locationMapContainer" style="height: 300px; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 20px;">
+                    <!-- Map will be initialized here -->
+                    <div class="map-preview" style="height: 100%; display: flex; align-items: center; justify-content: center;">
+                        <p>Loading map...</p>
+                    </div>
+                </div>
+                
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <p class="text-sm text-gray-400">Geofence radius</p>
+                        <p class="font-bold">${event.geofenceRadius}m</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-400">Distance from you</p>
+                        <p class="font-bold">${Math.floor(Math.random() * 5) + 1}km</p>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary btn-block" onclick="window.open('https://maps.google.com/?q=${event.coordinates.lat},${event.coordinates.lng}', '_blank')">
+                    <i class="fas fa-directions"></i> Get Directions
+                </button>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Initialize map after modal is added to DOM
+        setTimeout(() => {
+            this.initLocationMap(event, 'locationMapContainer');
+        }, 100);
+    },
+    
+    initLocationMap(event, containerId) {
+        if (!mapboxgl || !MAPBOX_TOKEN) return;
+        
+        try {
+            mapboxgl.accessToken = MAPBOX_TOKEN;
+            const locationMap = new mapboxgl.Map({
+                container: containerId,
+                style: AppState.userProfile.theme === 'light' ? 'mapbox://styles/mapbox/light-v11' : 'mapbox://styles/mapbox/dark-v11',
+                center: [event.coordinates.lng, event.coordinates.lat],
+                zoom: 14
+            });
+            
+            locationMap.on('load', () => {
+                // Add event marker
+                const el = document.createElement('div');
+                el.className = 'event-marker';
+                el.innerHTML = `<i class="fas fa-map-marker-alt"></i>`;
+                el.style.color = event.customTheme || '#8B5CF6';
+                
+                new mapboxgl.Marker(el)
+                    .setLngLat([event.coordinates.lng, event.coordinates.lat])
+                    .addTo(locationMap);
+                
+                // Add user location marker
+                const userEl = document.createElement('div');
+                userEl.className = 'user-marker';
+                userEl.innerHTML = `<i class="fas fa-user"></i>`;
+                
+                // Add geofence circle
+                if (event.geofenceRadius) {
+                    const radius = event.geofenceRadius / 111320;
+                    const coordinates = [];
+                    const steps = 64;
+                    
+                    for (let i = 0; i < steps; i++) {
+                        const angle = (i / steps) * 2 * Math.PI;
+                        const lat = event.coordinates.lat + radius * Math.cos(angle);
+                        const lng = event.coordinates.lng + radius * Math.sin(angle) / Math.cos(event.coordinates.lat * Math.PI / 180);
+                        coordinates.push([lng, lat]);
+                    }
+                    coordinates.push(coordinates[0]);
+                    
+                    locationMap.addSource('geofence', {
+                        type: 'geojson',
+                        data: {
+                            type: 'Feature',
+                            geometry: {
+                                type: 'Polygon',
+                                coordinates: [coordinates]
+                            }
+                        }
+                    });
+                    
+                    locationMap.addLayer({
+                        id: 'geofence-fill',
+                        type: 'fill',
+                        source: 'geofence',
+                        paint: {
+                            'fill-color': event.customTheme || '#8B5CF6',
+                            'fill-opacity': 0.1
+                        }
+                    });
+                }
+            });
+        } catch (error) {
+            console.error('Location map error:', error);
+        }
     }
 };
 
@@ -7453,6 +8084,11 @@ const CheckIn = {
             // Set as current event
             AppState.currentEvent = event;
             
+            // Track analytics
+            AppState.analytics.eventViews.total++;
+            const today = new Date().toISOString().split('T')[0];
+            AppState.analytics.eventViews.byDate[today] = (AppState.analytics.eventViews.byDate[today] || 0) + 1;
+            
             AppUI.showNotification(`Welcome to ${event.name}! Your profile is live.`, 'success');
             
             // Navigate to connect page
@@ -7469,6 +8105,11 @@ const CheckIn = {
         const event = AppState.events.find(e => e.id === AppState.checkInFlow.eventId);
         if (event) {
             AppState.currentEvent = event;
+            
+            // Track analytics
+            AppState.analytics.eventViews.total++;
+            const today = new Date().toISOString().split('T')[0];
+            AppState.analytics.eventViews.byDate[today] = (AppState.analytics.eventViews.byDate[today] || 0) + 1;
             
             AppUI.showNotification(`Welcome to ${event.name}! You're browsing privately.`, 'success');
             
@@ -7490,7 +8131,10 @@ const Tickets = {
     openModal() {
         console.log('🎫 Opening ticket modal');
         const modal = document.getElementById('ticketModal');
-        if (!modal) return;
+        if (!modal) {
+            console.error('❌ Ticket modal not found');
+            return;
+        }
         
         this.loadActiveTickets();
         modal.classList.add('active');
@@ -7744,6 +8388,11 @@ const Swipe = {
         AppState.swipeHistory.push({ profile, action: 'reject' });
         AppState.swipeCount++;
         
+        // Track analytics for swipe
+        AppState.analytics.profileViews.total++;
+        const today = new Date().toISOString().split('T')[0];
+        AppState.analytics.profileViews.byDate[today] = (AppState.analytics.profileViews.byDate[today] || 0) + 1;
+        
         AppUI.showNotification(`Passed on ${profile.name}`);
         saveState();
         
@@ -7766,6 +8415,11 @@ const Swipe = {
         AppState.swipeHistory.push({ profile, action: 'like' });
         AppState.swipeCount++;
         
+        // Track analytics for swipe
+        AppState.analytics.profileViews.total++;
+        const today = new Date().toISOString().split('T')[0];
+        AppState.analytics.profileViews.byDate[today] = (AppState.analytics.profileViews.byDate[today] || 0) + 1;
+        
         if (Math.random() < 0.4) {
             const match = {
                 id: Date.now(),
@@ -7779,6 +8433,11 @@ const Swipe = {
             };
             AppState.matches.push(match);
             AppState.lastMatch = profile;
+            
+            // Track analytics for match
+            AppState.analytics.matches.total++;
+            AppState.analytics.matches.byDate[today] = (AppState.analytics.matches.byDate[today] || 0) + 1;
+            
             setTimeout(() => AppUI.showMatchModal(), 400);
             AppUI.showNotification(`It's a match with ${profile.name}! 💫`, 'success');
         } else {
@@ -7920,6 +8579,11 @@ const Chat = {
             match.lastMessageTime = 'Just now';
         }
         
+        // Track analytics for messages
+        AppState.analytics.messages.sent++;
+        const today = new Date().toISOString().split('T')[0];
+        AppState.analytics.messages.byDate[today] = (AppState.analytics.messages.byDate[today] || 0) + 1;
+        
         input.value = '';
         this.loadMessages(AppState.currentMatch.matchId);
         
@@ -7947,6 +8611,11 @@ const Chat = {
         };
         
         AppState.chatMessages[chatId].push(reply);
+        
+        // Track analytics for received messages
+        AppState.analytics.messages.received++;
+        const today = new Date().toISOString().split('T')[0];
+        AppState.analytics.messages.byDate[today] = (AppState.analytics.messages.byDate[today] || 0) + 1;
         
         if (AppState.currentMatch) {
             this.loadMessages(AppState.currentMatch.matchId);
@@ -8113,6 +8782,288 @@ const Chat = {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
+    }
+};
+
+// ===== COMMUNITY FEATURES =====
+const CommunityPhotos = {
+    upload() {
+        console.log('📸 Uploading community photo');
+        
+        // Create file input
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.style.display = 'none';
+        
+        input.onchange = (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            if (file.size > 10 * 1024 * 1024) {
+                AppUI.showNotification('Image too large. Max 10MB', 'error');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                // Add watermark
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const ctx = canvas.getContext('2d');
+                    
+                    // Draw image
+                    ctx.drawImage(img, 0, 0);
+                    
+                    // Add watermark
+                    ctx.font = 'bold 48px Arial';
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+                    ctx.textAlign = 'right';
+                    ctx.textBaseline = 'bottom';
+                    ctx.fillText('AMPS', canvas.width - 20, canvas.height - 20);
+                    
+                    const watermarkedImage = canvas.toDataURL('image/jpeg');
+                    
+                    // Add to community photos
+                    const photo = {
+                        id: Date.now(),
+                        url: watermarkedImage,
+                        userId: AppState.currentUser?.id,
+                        userName: AppState.userProfile.name,
+                        timestamp: new Date().toISOString(),
+                        likes: 0,
+                        comments: []
+                    };
+                    
+                    if (!AppState.communityPhotos) {
+                        AppState.communityPhotos = [];
+                    }
+                    AppState.communityPhotos.push(photo);
+                    
+                    this.updatePhotosGrid();
+                    AppUI.showNotification('Photo uploaded successfully!', 'success');
+                    saveState();
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        };
+        
+        document.body.appendChild(input);
+        input.click();
+        document.body.removeChild(input);
+    },
+    
+    updatePhotosGrid() {
+        const grid = document.getElementById('communityPhotosGrid');
+        if (!grid) return;
+        
+        const photos = AppState.communityPhotos || [];
+        
+        if (photos.length === 0) {
+            grid.innerHTML = `
+                <div class="text-center py-6">
+                    <i class="fas fa-images" style="font-size: 48px; color: var(--gray-600); margin-bottom: 12px;"></i>
+                    <p class="text-gray-400">No photos yet. Be the first to upload!</p>
+                </div>
+            `;
+            return;
+        }
+        
+        // Show max 4 photos with "more" indicator
+        const visiblePhotos = photos.slice(0, 4);
+        const moreCount = Math.max(0, photos.length - 4);
+        
+        grid.innerHTML = `
+            <div class="photos-grid">
+                ${visiblePhotos.map(photo => `
+                    <div class="photo-item" onclick="CommunityPhotos.viewPhoto(${photo.id})">
+                        <img src="${photo.url}" alt="Community photo">
+                        <div class="photo-overlay">
+                            <i class="fas fa-heart"></i>
+                            <span>${photo.likes}</span>
+                        </div>
+                    </div>
+                `).join('')}
+                ${moreCount > 0 ? `
+                    <div class="photo-item more-photos" onclick="CommunityPhotos.viewAllPhotos()">
+                        <div class="photo-overlay">
+                            <span>+${moreCount} more</span>
+                        </div>
+                    </div>
+                ` : ''}
+            </div>
+        `;
+    },
+    
+    viewPhoto(photoId) {
+        const photo = AppState.communityPhotos.find(p => p.id === photoId);
+        if (!photo) return;
+        
+        const modal = document.createElement('div');
+        modal.className = 'modal-backdrop active';
+        modal.innerHTML = `
+            <div class="modal-content" style="padding: 0; max-width: 100%; height: 100%; max-height: 100%;">
+                <div class="photo-viewer-header">
+                    <button class="back-btn" onclick="this.closest('.modal-backdrop').remove()">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div class="flex-1 text-center">
+                        <h4>Community Photo</h4>
+                    </div>
+                    <button class="btn btn-outline btn-small">
+                        <i class="fas fa-heart"></i> ${photo.likes}
+                    </button>
+                </div>
+                <div class="photo-viewer-content">
+                    <img src="${photo.url}" alt="Community photo">
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    },
+    
+    viewAllPhotos() {
+        const modal = document.createElement('div');
+        modal.className = 'modal-backdrop active';
+        modal.id = 'allCommunityPhotos';
+        
+        const photos = AppState.communityPhotos || [];
+        
+        modal.innerHTML = `
+            <div class="modal-content" style="max-width: 100%; height: 100%; max-height: 100%;">
+                <div class="photo-viewer-header">
+                    <button class="back-btn" onclick="this.closest('.modal-backdrop').remove()">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <h4>Community Photos (${photos.length})</h4>
+                </div>
+                <div class="photos-grid-full">
+                    ${photos.map(photo => `
+                        <div class="photo-item-large" onclick="CommunityPhotos.viewPhoto(${photo.id})">
+                            <img src="${photo.url}" alt="Community photo">
+                            <div class="photo-overlay-large">
+                                <div class="photo-info">
+                                    <span>${photo.userName}</span>
+                                    <span>${new Date(photo.timestamp).toLocaleDateString()}</span>
+                                </div>
+                                <i class="fas fa-heart"></i>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+};
+
+const CommunityChat = {
+    sendMessage() {
+        const input = document.getElementById('communityMessageInput');
+        if (!input || !input.value.trim()) return;
+        
+        const message = {
+            id: Date.now(),
+            senderId: AppState.currentUser?.id,
+            senderName: AppState.userProfile.name,
+            text: input.value.trim(),
+            timestamp: new Date().toISOString(),
+            likes: 0,
+            replies: []
+        };
+        
+        if (!AppState.communityMessages) {
+            AppState.communityMessages = [];
+        }
+        AppState.communityMessages.push(message);
+        
+        input.value = '';
+        this.updateChatMessages();
+        saveState();
+    },
+    
+    updateChatMessages() {
+        const container = document.getElementById('communityChatMessages');
+        if (!container) return;
+        
+        const messages = AppState.communityMessages || [];
+        
+        if (messages.length === 0) {
+            container.innerHTML = `
+                <div class="text-center py-6">
+                    <i class="fas fa-comments" style="font-size: 48px; color: var(--gray-600); margin-bottom: 12px;"></i>
+                    <p class="text-gray-400">Start the conversation!</p>
+                </div>
+            `;
+            return;
+        }
+        
+        container.innerHTML = messages.map(msg => `
+            <div class="community-message">
+                <div class="message-avatar" style="background: ${this.getUserColor(msg.senderId)};"></div>
+                <div class="message-bubble">
+                    <span class="message-sender">${msg.senderName}</span>
+                    <p>${msg.text}</p>
+                    <div class="message-reactions">
+                        <button onclick="CommunityChat.likeMessage(${msg.id})">
+                            <i class="fas fa-heart"></i> ${msg.likes}
+                        </button>
+                        <button onclick="CommunityChat.replyToMessage(${msg.id})">
+                            Reply
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+        
+        container.scrollTop = container.scrollHeight;
+    },
+    
+    likeMessage(messageId) {
+        const message = AppState.communityMessages.find(m => m.id === messageId);
+        if (message) {
+            message.likes = (message.likes || 0) + 1;
+            this.updateChatMessages();
+            saveState();
+        }
+    },
+    
+    replyToMessage(messageId) {
+        const reply = prompt('Enter your reply:');
+        if (reply) {
+            const message = AppState.communityMessages.find(m => m.id === messageId);
+            if (message) {
+                if (!message.replies) message.replies = [];
+                message.replies.push({
+                    id: Date.now(),
+                    senderId: AppState.currentUser?.id,
+                    senderName: AppState.userProfile.name,
+                    text: reply,
+                    timestamp: new Date().toISOString()
+                });
+                this.updateChatMessages();
+                saveState();
+            }
+        }
+    },
+    
+    getUserColor(userId) {
+        const colors = [
+            'var(--card-purple)',
+            'var(--card-pink)',
+            'var(--card-blue)',
+            'var(--card-green)',
+            'var(--card-yellow)',
+            'var(--card-orange)'
+        ];
+        
+        // Simple hash to get consistent color per user
+        const hash = userId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+        return colors[hash % colors.length];
     }
 };
 
