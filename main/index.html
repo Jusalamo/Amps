@@ -13,6 +13,10 @@
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
     
+    <!-- QR Code Libraries -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.3/qrcode.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.min.js"></script>
+    
     <!-- PWA Meta Tags -->
     <link rel="manifest" id="manifest">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -20,7 +24,7 @@
     <meta name="apple-mobile-web-app-title" content="Amps">
     
     <style>
-       /* ===== BASE STYLES ===== */
+      /* ===== BASE STYLES ===== */
 :root {
     --bg-primary: #000000;
     --bg-secondary: #0a0a0a;
@@ -647,7 +651,6 @@ body {
 
 .search-container {
     margin-bottom: 16px;
-    margin-top: 20px;
 }
 
 .events-container {
@@ -743,7 +746,7 @@ body {
     background: linear-gradient(90deg, transparent, var(--bg-card));
     border-radius: var(--radius-xl);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     cursor: pointer;
     position: relative;
     overflow: hidden;
@@ -865,7 +868,7 @@ body {
 }
 
 .profile-info {
-    padding: 20px 22px;
+    padding: 20px 24px;
     text-align: center;
 }
 
@@ -1192,7 +1195,7 @@ body {
 
 .tab-button {
     flex: 1;
-    padding: 10px;
+    padding: 12px;
     text-align: center;
     background: none;
     border: none;
@@ -1359,6 +1362,8 @@ body {
     display: flex;
     justify-content: space-between;
     margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
 }
 
 /* Wizard Map Container */
@@ -1367,26 +1372,21 @@ body {
     width: 100%;
     border-radius: var(--radius-lg);
     overflow: hidden;
-    margin: 12px 0;
+    margin: 16px 0;
 }
 
 /* Full Screen Modal for Mobile */
 @media (max-width: 768px) {
     #eventWizardModal .modal-content {
-        width: 100vw;
-        height: 100vh;
-        max-width: 100vw;
-        max-height: 100vh;
-        margin: 0;
-        border-radius: 0;
-        padding: 20px;
+        max-height: 80vh;
+        padding: 24px;
     }
 }
 
 @media (min-width: 769px) {
     #eventWizardModal .modal-content {
-        max-width: 800px;
-        max-height: 90vh;
+        max-width: 600px;
+        max-height: 85vh;
     }
 }
 
@@ -1444,7 +1444,7 @@ body {
 
 .notifications-list {
     overflow-y: auto;
-    max-height: 270px;
+    max-height: 300px;
 }
 
 .notification-item {
@@ -1740,7 +1740,8 @@ body {
 .privacy-options {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 16px;
+    margin: 24px 0;
 }
 
 .privacy-option {
@@ -1817,8 +1818,8 @@ body {
 }
 
 .qr-frame {
-    width: 300px;
-    height: 300px;
+    width: 200px;
+    height: 200px;
     border: 2px solid var(--primary);
     border-radius: var(--radius);
     position: relative;
@@ -1890,7 +1891,7 @@ body {
     width: 100%;
     height: 6px;
     border-radius: 3px;
-    background: var(--bg-tertiary);
+    background: var(--gray-700);
     outline: none;
     -webkit-appearance: none;
 }
@@ -2127,12 +2128,16 @@ body {
 }
 
 /* Map Drawer States */
+.events-container.minimum {
+    transform: translateY(75%);
+}
+
 .events-container.half {
     transform: translateY(50%);
 }
 
 .events-container.full {
-    transform: translateY(calc(var(--header-height) + 20px));
+    transform: translateY(0);
 }
 
 /* ===== ANIMATIONS ===== */
@@ -2321,6 +2326,9 @@ input:checked + .slider:before {
 /* Community Chat */
 .community-chat-section {
     margin-top: 32px;
+    padding: 20px;
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-lg);
 }
 
 .community-message {
@@ -2334,36 +2342,93 @@ input:checked + .slider:before {
     height: 40px;
     border-radius: 50%;
     flex-shrink: 0;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.message-avatar.online::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 12px;
+    height: 12px;
+    background: var(--accent-green);
+    border: 2px solid var(--bg-tertiary);
+    border-radius: 50%;
 }
 
 .message-bubble {
     background: var(--bg-card);
-    border-radius: var(--radius-lg);
     padding: 12px 16px;
+    border-radius: 16px;
+    border-bottom-left-radius: 4px;
     flex: 1;
 }
 
 .message-sender {
-    font-weight: bold;
-    display: block;
+    font-weight: 600;
+    font-size: 13px;
     margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.message-sender .verified-badge {
+    color: var(--primary);
+    font-size: 12px;
+}
+
+.message-text {
+    color: var(--gray-300);
+    font-size: 14px;
+    line-height: 1.5;
 }
 
 .message-reactions {
     display: flex;
     gap: 12px;
     margin-top: 8px;
+    font-size: 12px;
 }
 
-.message-reactions button {
+.reaction-btn {
     background: none;
     border: none;
     color: var(--gray-400);
-    font-size: 12px;
     cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 12px;
+    transition: all 0.2s;
     display: flex;
     align-items: center;
     gap: 4px;
+}
+
+.reaction-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--white);
+}
+
+.reaction-btn.liked {
+    color: var(--card-pink);
+}
+
+.reply-thread {
+    margin-left: 52px;
+    margin-top: 12px;
+    padding-left: 16px;
+    border-left: 2px solid var(--gray-700);
+}
+
+.community-chat-input {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* 8. Location Map Viewer */
@@ -2554,12 +2619,14 @@ input:checked + .slider:before {
 
 .watermark {
     position: absolute;
-    bottom: 20px;
-    right: 20px;
+    bottom: 8px;
+    right: 8px;
     color: white;
-    font-size: 24px;
+    font-size: 12px;
     font-weight: bold;
-    opacity: 0.7;
+    opacity: 0.5;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    pointer-events: none;
 }
 
 /* ===== FILTER PILLS ===== */
@@ -2662,8 +2729,8 @@ input:checked + .slider:before {
 /* ===== NOTIFICATION BADGE ===== */
 .notification-badge {
     position: absolute;
-    top: 0px;
-    right: 0px;
+    top: -5px;
+    right: -5px;
     background: var(--accent-red);
     color: white;
     font-size: 10px;
@@ -3301,70 +3368,868 @@ input:checked + .slider:before {
     color: var(--accent-blue);
 }
 
-/* ===== Light Mode Support ===== */
-[data-theme="light"] {
-    --bg-primary: #FFFFFF;
-    --bg-secondary: #F5F5F7;
-    --bg-tertiary: #E5E5EA;
-    --bg-card: rgba(255, 255, 255, 0.9);
-    --bg-glass: rgba(0, 0, 0, 0.05);
-    --white: #000000;
-    --gray-800: #F2F2F7;
-    --gray-900: #FFFFFF;
-    --gray-400: #8E8E93;
-    --gray-300: #C7C7CC;
+/* ============================================
+   AMPS APP - CSS UPDATES & LIGHT MODE
+   ============================================ */
+
+/* 1. PROFILE PHOTO BORDER RADIUS FIX */
+.avatar,
+.profile-image,
+.match-avatar,
+.chat-avatar,
+.notification-avatar,
+.attendee-avatar,
+.message-avatar,
+.user-avatar {
+    border-radius: 50% !important;
+    object-fit: cover !important;
 }
 
-[data-theme="light"] .navbar {
-    background: rgba(255, 255, 255, 0.9);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+/* Specific sizes */
+.avatar { 
+    width: 100px !important; 
+    height: 100px !important; 
+}
+.chat-avatar { 
+    width: 40px !important; 
+    height: 40px !important; 
+}
+.match-avatar { 
+    width: 50px !important; 
+    height: 50px !important; 
+}
+.notification-avatar { 
+    width: 40px !important; 
+    height: 40px !important; 
+}
+.message-avatar {
+    width: 40px !important;
+    height: 40px !important;
 }
 
-[data-theme="light"] .bottom-nav {
-    background: rgba(255, 255, 255, 0.98);
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
+/* 3. MY EVENTS HORIZONTAL CAROUSEL */
+.events-carousel-container {
+    position: relative;
+    overflow: hidden;
+    margin: 0 -20px;
+    padding: 0 20px;
 }
 
-[data-theme="light"] .card {
-    background: var(--bg-card);
-    border: 1px solid rgba(0, 0, 0, 0.1);
+.events-carousel {
+    overflow: hidden;
+    width: 100%;
 }
 
-[data-theme="light"] .modal-content {
-    background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
-    border: 1px solid rgba(0, 0, 0, 0.1);
+.carousel-track {
+    display: flex;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-[data-theme="light"] .form-control {
-    background: var(--bg-tertiary);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    color: #000000;
+.carousel-slide {
+    min-width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 0 4px;
 }
 
-/* 6. Subscription Management Styles */
-.current-plan-card {
+@media (max-width: 360px) {
+    .carousel-slide {
+        grid-template-columns: 1fr;
+    }
+}
+
+.carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+    color: white;
+    cursor: pointer;
+    z-index: 2;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-nav:hover {
+    background: rgba(0, 0, 0, 0.9);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-nav.prev { left: 0; }
+.carousel-nav.next { right: 0; }
+
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gray-600);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.dot.active {
+    background: var(--primary);
+    width: 24px;
+    border-radius: 4px;
+}
+
+/* 4. FEATURED EVENTS CAROUSEL */
+#featuredCarousel .carousel-slide {
+    grid-template-columns: 1fr !important;
+}
+
+/* 5. MAP DRAWER FIXES */
+#eventsContainer {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#eventsContainer.dragging {
+    transition: none;
+}
+
+#eventsContainer.minimum {
+    transform: translateY(75%);
+}
+
+#eventsContainer.half {
+    transform: translateY(50%);
+}
+
+#eventsContainer.full {
+    transform: translateY(0);
+}
+
+/* 6. EVENT WIZARD MODAL SIZE */
+#eventWizardModal .modal-content {
+    max-width: 600px;
+    max-height: 85vh;
+    width: 90%;
+    padding: 32px;
+    overflow-y: auto;
+    border-radius: var(--radius-2xl) !important;
+}
+
+@media (max-width: 768px) {
+    #eventWizardModal .modal-content {
+        max-height: 80vh;
+        padding: 24px;
+    }
+}
+
+/* Remove any full-screen overrides */
+#eventWizardModal .modal-content {
+    height: auto !important;
+    width: 90% !important;
+    margin: auto !important;
+}
+
+/* 7. MAP VIEWER SQUARE */
+.map-viewer-square {
+    width: 100%;
+    aspect-ratio: 1/1;
+    max-height: 350px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 16px 0;
+}
+
+#wizardMap {
+    width: 100%;
+    height: 100%;
+}
+
+/* Location Search Suggestions */
+.location-search {
+    position: relative;
+}
+
+.search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
     background: var(--bg-card);
     border-radius: var(--radius-lg);
-    padding: 20px;
-    margin-bottom: 24px;
-    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    max-height: 300px;
+    overflow-y: auto;
+    display: none;
 }
 
-.payment-method-card {
+.search-result-item {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: background 0.2s;
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 16px;
-    background: var(--bg-card);
-    border-radius: var(--radius-lg);
-    margin-bottom: 24px;
 }
 
-.invoice-item {
+.search-result-item:hover {
+    background: var(--bg-tertiary);
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-item i {
+    color: var(--primary);
+}
+
+/* Range Slider */
+.range-value {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: var(--gray-400);
+}
+
+.range-slider {
+    width: 100%;
+    height: 6px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--gray-700);
+    border-radius: 3px;
+    outline: none;
+}
+
+.range-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--primary);
+    cursor: pointer;
+    border: 2px solid white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* 10. CAMERA MODAL */
+.camera-modal .modal-content {
+    background: black;
+    max-width: 100%;
+    max-height: 100%;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+}
+
+.camera-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.camera-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 2px solid var(--primary);
+    pointer-events: none;
+}
+
+.camera-controls {
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* 11. QR CODE DISPLAY */
+.qr-code-display {
+    background: white;
+    padding: 20px;
+    border-radius: var(--radius-lg);
+    display: inline-block;
+}
+
+.event-code-display {
+    background: var(--bg-tertiary);
     padding: 16px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+}
+
+/* 12. PHOTO CONFIRMATION */
+.photo-preview {
+    display: flex;
+    justify-content: center;
+}
+
+/* 13. COMMUNITY PHOTO DUMP - HORIZONTAL GRID */
+.photos-horizontal-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    margin: 0 -20px;
+    padding: 0 20px;
+    padding-bottom: 8px;
+}
+
+.photos-grid-horizontal {
+    display: flex;
+    gap: 8px;
+    padding-bottom: 8px;
+}
+
+.photo-column {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    scroll-snap-align: start;
+    flex-shrink: 0;
+}
+
+.photo-item {
+    width: 120px;
+    height: 120px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.photo-item:hover {
+    transform: scale(1.05);
+}
+
+.photo-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.photo-item.more-photos {
+    background: rgba(139, 92, 246, 0.2);
+    border: 2px dashed var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    font-weight: 600;
+}
+
+/* Hide scrollbar but keep functionality */
+.photos-horizontal-scroll::-webkit-scrollbar {
+    height: 4px;
+}
+
+.photos-horizontal-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.photos-horizontal-scroll::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 2px;
+}
+
+/* Watermark */
+.watermark {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    opacity: 0.5;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    pointer-events: none;
+}
+
+.photo-item-gallery {
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.photo-item-gallery:hover {
+    transform: scale(1.05);
+}
+
+/* 14. COMMUNITY CHAT SECTION */
+.community-chat-messages {
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.community-message {
+    display: flex;
+    gap: 12px;
+    animation: messageSlideIn 0.3s ease;
+}
+
+.message-bubble {
+    flex: 1;
+    background: var(--bg-card);
+    padding: 12px 16px;
+    border-radius: 16px;
+    border-bottom-left-radius: 4px;
+}
+
+.message-sender {
+    font-weight: 600;
+    font-size: 13px;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.message-sender .verified-badge {
+    color: var(--primary);
+    font-size: 12px;
+}
+
+.message-text {
+    color: var(--gray-300);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.message-reactions {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+    font-size: 12px;
+}
+
+.reaction-btn {
+    background: none;
+    border: none;
+    color: var(--gray-400);
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 12px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.reaction-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--white);
+}
+
+.reaction-btn.liked {
+    color: var(--card-pink);
+}
+
+.reply-thread {
+    margin-left: 52px;
+    margin-top: 12px;
+    padding-left: 16px;
+    border-left: 2px solid var(--gray-700);
+}
+
+.community-chat-input {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@keyframes messageSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 15. SWIPE CARD ANIMATIONS */
+#profileCard1 {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s;
+}
+
+/* NOTIFICATIONS */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
     background: var(--bg-card);
     border-radius: var(--radius-lg);
+    padding: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+    max-width: 350px;
+    animation: slideInRight 0.3s ease;
+    border-left: 4px solid var(--primary);
+}
+
+.notification-success {
+    border-left-color: var(--accent-green);
+}
+
+.notification-error {
+    border-left-color: var(--accent-red);
+}
+
+.notification-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.notification.fade-out {
+    animation: fadeOut 0.3s ease forwards;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+/* ============================================
+   LIGHT MODE - INSTAGRAM STYLE
+   ============================================ */
+
+[data-theme="light"] {
+    /* Instagram-like color palette */
+    --primary: #8B5CF6; /* Purple (kept for brand) */
+    --primary-hover: #7C3AED;
+    --primary-light: #F5F3FF;
+    
+    /* Background colors */
+    --bg-primary: #FFFFFF;
+    --bg-secondary: #FAFAFA;
+    --bg-tertiary: #F2F2F2;
+    --bg-card: #FFFFFF;
+    
+    /* Text colors */
+    --text-primary: #262626;
+    --text-secondary: #8E8E8E;
+    --text-tertiary: #C7C7C7;
+    --white: #262626;
+    
+    /* Border colors */
+    --border-color: #DBDBDB;
+    --border-light: #EFEFEF;
+    
+    /* Gray scale */
+    --gray-100: #F8F9FA;
+    --gray-200: #E9ECEF;
+    --gray-300: #DEE2E6;
+    --gray-400: #CED4DA;
+    --gray-500: #ADB5BD;
+    --gray-600: #6C757D;
+    --gray-700: #495057;
+    --gray-800: #343A40;
+    --gray-900: #212529;
+    
+    /* Accent colors */
+    --accent-green: #10B981;
+    --accent-red: #EF4444;
+    --accent-yellow: #F59E0B;
+    --accent-blue: #3B82F6;
+    --card-pink: #EC4899;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    
+    /* Glass effect */
+    --glass-bg: rgba(255, 255, 255, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.2);
+}
+
+/* Light mode specific overrides */
+[data-theme="light"] body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .header {
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+}
+
+[data-theme="light"] .nav-bar {
+    background: var(--bg-primary);
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .card,
+[data-theme="light"] .event-card,
+[data-theme="light"] .profile-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+}
+
+[data-theme="light"] .section-header {
+    border-bottom: 1px solid var(--border-light);
+}
+
+[data-theme="light"] .btn-outline {
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .btn-outline:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--gray-400);
+}
+
+[data-theme="light"] .form-control {
+    background: var(--bg-secondary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .form-control:focus {
+    background: var(--bg-primary);
+    border-color: var(--primary);
+}
+
+[data-theme="light"] .modal-backdrop {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="light"] .modal-content {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .notification {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-lg);
+}
+
+[data-theme="light"] .carousel-nav {
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="light"] .carousel-nav:hover {
+    background: rgba(255, 255, 255, 1);
+}
+
+[data-theme="light"] .search-results {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-lg);
+}
+
+[data-theme="light"] .search-result-item:hover {
+    background: var(--bg-tertiary);
+}
+
+[data-theme="light"] .community-chat-section {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="light"] .message-bubble {
+    background: var(--bg-tertiary);
+}
+
+[data-theme="light"] .reaction-btn:hover {
+    background: var(--bg-tertiary);
+}
+
+[data-theme="light"] .photos-horizontal-scroll::-webkit-scrollbar-thumb {
+    background: var(--gray-400);
+}
+
+[data-theme="light"] .watermark {
+    color: rgba(0, 0, 0, 0.5);
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+/* Light mode adjustments for specific components */
+[data-theme="light"] .event-manage-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+}
+
+[data-theme="light"] .qr-code-display {
+    background: white;
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="light"] .event-code-display {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="light"] .range-slider {
+    background: var(--gray-300);
+}
+
+[data-theme="light"] .photo-item.more-photos {
+    background: rgba(139, 92, 246, 0.1);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+/* Ensure text remains readable in light mode */
+[data-theme="light"] h1,
+[data-theme="light"] h2,
+[data-theme="light"] h3,
+[data-theme="light"] h4,
+[data-theme="light"] h5,
+[data-theme="light"] h6 {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] p {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .text-gray-400 {
+    color: var(--gray-600) !important;
+}
+
+[data-theme="light"] .text-gray-500 {
+    color: var(--gray-700) !important;
+}
+
+/* Light mode map adjustments */
+[data-theme="light"] .map-viewer-square {
+    border-color: var(--border-color);
+}
+
+/* PRO FEATURES */
+.pro-features {
+    text-align: left;
+    margin: 20px 0;
+}
+
+.pro-feature {
+    display: flex;
+    align-items: center;
+    gap: 12px;
     margin-bottom: 12px;
+    padding: 8px 0;
+}
+
+/* WIZARD NAVIGATION */
+.wizard-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+/* PRIVACY OPTIONS */
+.privacy-options {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 24px 0;
+}
+
+.privacy-option {
+    padding: 20px;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+}
+
+.privacy-option:hover {
+    border-color: var(--primary);
+    background: var(--primary-light);
+}
+
+/* MY EVENTS GRID */
+.my-events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.event-manage-card {
+    background: var(--bg-tertiary);
+    padding: 20px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+}
+
+/* RESPONSIVE ADJUSTMENTS */
+@media (max-width: 640px) {
+    .carousel-nav {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+    }
+    
+    .photo-item {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .my-events-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .community-chat-input {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .community-chat-input .form-control {
+        width: 100%;
+    }
 }
     </style>
 </head>
@@ -4279,7 +5144,7 @@ input:checked + .slider:before {
     </div>
 
     <script>
-       // ===== APP INITIALIZATION =====
+// ===== APP INITIALIZATION =====
 console.log('🚀 Initializing Amps App...');
 
 // ===== CONFIGURATION =====
@@ -4325,23 +5190,6 @@ const MOCK_PROFILES = [
         livePhoto: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="%23BAE6FD"/><text x="100" y="110" font-size="24" text-anchor="middle" fill="white">Live Photo</text></svg>',
         distance: '25m away',
         gender: 'male',
-        isPublic: true,
-        tempProfile: true
-    },
-    {
-        id: 3,
-        name: 'Sarah',
-        age: 26,
-        bio: 'Environmental Activist & Yoga Instructor. Passionate about sustainability.',
-        interests: ['Yoga', 'Environment', 'Wellness', 'Travel'],
-        eventId: 2,
-        location: 'Garden Area',
-        online: false,
-        verified: true,
-        cardColor: 'var(--card-green)',
-        livePhoto: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="%23BBF7D0"/><text x="100" y="110" font-size="24" text-anchor="middle" fill="white">Live Photo</text></svg>',
-        distance: '50m away',
-        gender: 'female',
         isPublic: true,
         tempProfile: true
     }
@@ -4462,7 +5310,8 @@ let AppState = {
             shareAnalytics: true
         },
         blockedUsers: [],
-        theme: 'dark'
+        theme: 'dark',
+        createdEvents: []
     },
     superLikes: 1,
     rewindCount: 3,
@@ -4513,7 +5362,6 @@ let AppState = {
         customTheme: '#8B5CF6',
         eventTags: ''
     },
-    // ===== NEW: REAL ANALYTICS DATA =====
     analytics: {
         profileViews: {
             total: 1245,
@@ -4613,6 +5461,8 @@ const Theme = {
             document.documentElement.style.setProperty('--gray-900', '#FFFFFF');
             document.documentElement.style.setProperty('--gray-400', '#8E8E93');
             document.documentElement.style.setProperty('--gray-300', '#C7C7CC');
+            document.documentElement.style.setProperty('--primary', '#6d28d9');
+            document.documentElement.style.setProperty('--primary-light', '#7c3aed');
         } else {
             document.documentElement.style.setProperty('--bg-primary', '#000000');
             document.documentElement.style.setProperty('--bg-secondary', '#0a0a0a');
@@ -4624,6 +5474,8 @@ const Theme = {
             document.documentElement.style.setProperty('--gray-900', '#2C2C2E');
             document.documentElement.style.setProperty('--gray-400', '#8E8E93');
             document.documentElement.style.setProperty('--gray-300', '#CBD5E1');
+            document.documentElement.style.setProperty('--primary', '#8B5CF6');
+            document.documentElement.style.setProperty('--primary-light', '#A78BFA');
         }
     },
     
@@ -4813,17 +5665,37 @@ const Router = {
                 }, 100);
                 break;
             case 'connect':
-                this.initSwipeCards();
+                setTimeout(() => this.initSwipeCards(), 100);
                 break;
             case 'home':
-                this.initHomePageFeatures();
+                setTimeout(() => {
+                    this.initHomePageFeatures();
+                    EventsCarousel.init('myEvents');
+                    if (AppState.events.filter(e => e.isFeatured).length > 0) {
+                        FeaturedCarousel.start();
+                    }
+                }, 100);
                 break;
         }
     },
     
     initHomePageFeatures() {
-        // Initialize bookmarked events section
         this.renderBookmarkedEvents();
+        
+        // Initialize carousels
+        setTimeout(() => {
+            EventsCarousel.init('myEvents');
+            EventsCarousel.init('featured');
+            
+            // Setup featured carousel pause on hover
+            const featuredCarousel = document.getElementById('featuredCarousel');
+            if (featuredCarousel) {
+                featuredCarousel.addEventListener('mouseenter', () => FeaturedCarousel.pause());
+                featuredCarousel.addEventListener('mouseleave', () => FeaturedCarousel.resume());
+                featuredCarousel.addEventListener('touchstart', () => FeaturedCarousel.pause());
+                featuredCarousel.addEventListener('touchend', () => setTimeout(() => FeaturedCarousel.resume(), 3000));
+            }
+        }, 500);
     },
     
     updateNavigation() {
@@ -5053,6 +5925,8 @@ const Router = {
     
     renderHomePage() {
         const bookmarkedEvents = AppState.events.filter(e => e.bookmarked);
+        const userEvents = AppState.userProfile.createdEvents || [];
+        const showMyEvents = (AppState.isPro || AppState.isMax) && userEvents.length > 0;
         
         return `
             <div class="profile-header">
@@ -5084,13 +5958,51 @@ const Router = {
                 </div>
             </div>
             
-            <!-- Bookmarked Events Section -->
+            <!-- My Created Events Section (For Pro/Max Users) -->
+            ${showMyEvents ? `
+                <div class="section-header mt-6">
+                    <h3>My Created Events</h3>
+                    <button class="btn btn-outline btn-small" onclick="Events.showEventManagement()">Manage All</button>
+                </div>
+                <div class="my-events-grid">
+                    ${userEvents.slice(0, 3).map(event => `
+                        <div class="event-manage-card">
+                            <h4>${event.name}</h4>
+                            <p><i class="fas fa-users"></i> ${event.attendees || 0} attending</p>
+                            <p><i class="fas fa-calendar"></i> ${event.date || 'TBD'}</p>
+                            <button class="btn btn-primary btn-small" 
+                                    onclick="Events.openEventManagement(${event.id})">
+                                Manage Event
+                            </button>
+                        </div>
+                    `).join('')}
+                </div>
+            ` : ''}
+            
+            <!-- My Events Carousel -->
             <div class="section-header">
                 <h3>My Events</h3>
                 <button class="btn btn-outline btn-small" onclick="Router.navigateTo('events')">View All</button>
             </div>
-            <div class="bookmarked-events" id="bookmarkedEvents">
-                ${this.renderBookmarkedEventsContent()}
+            
+            <div class="events-carousel-container">
+                <button class="carousel-nav prev" onclick="EventsCarousel.prev('myEvents')">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                
+                <div class="events-carousel" id="myEventsCarousel">
+                    <div class="carousel-track" id="myEventsTrack">
+                        ${this.renderMyEventsCarouselSlides()}
+                    </div>
+                </div>
+                
+                <button class="carousel-nav next" onclick="EventsCarousel.next('myEvents')">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                
+                <div class="carousel-dots" id="myEventsDots">
+                    ${this.renderCarouselDots('myEvents')}
+                </div>
             </div>
             
             <h3 class="mt-6 mb-4">Quick Actions</h3>
@@ -5121,20 +6033,60 @@ const Router = {
                 </div>
             </div>
             
-            <div class="card mt-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h3>Featured Events</h3>
-                    <button class="btn btn-outline btn-small" onclick="Router.navigateTo('events')">
-                        View All
-                    </button>
+            <!-- Featured Events Carousel -->
+            <div class="section-header mt-6">
+                <h3>Featured Events</h3>
+                <button class="btn btn-outline btn-small" onclick="Router.navigateTo('events')">View All</button>
+            </div>
+            
+            <div class="events-carousel-container">
+                <button class="carousel-nav prev" onclick="EventsCarousel.prev('featured')">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                
+                <div class="events-carousel" id="featuredCarousel">
+                    <div class="carousel-track" id="featuredTrack">
+                        ${this.renderFeaturedEventsCarouselSlides()}
+                    </div>
                 </div>
-                <div class="space-y-4">
-                    ${AppState.events.filter(e => e.isFeatured).slice(0, 2).map(event => `
-                        <div class="event-card-featured" data-theme-color="${event.customTheme}" 
-                             style="--theme-color: ${event.customTheme}; --theme-color-glow: ${event.customTheme}40;"
-                             onclick="Router.navigateToEventDetail(${event.id})">
+                
+                <button class="carousel-nav next" onclick="EventsCarousel.next('featured')">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                
+                <div class="carousel-dots" id="featuredDots">
+                    ${this.renderCarouselDots('featured')}
+                </div>
+            </div>
+        `;
+    },
+    
+    renderMyEventsCarouselSlides() {
+        const bookmarkedEvents = AppState.events.filter(e => e.bookmarked);
+        if (bookmarkedEvents.length === 0) {
+            return `
+                <div class="carousel-slide">
+                    <div class="event-card-featured" onclick="Router.navigateTo('events')" style="grid-column: span 2;">
+                        <div class="event-card-content text-center py-12">
+                            <i class="fas fa-bookmark" style="font-size: 48px; color: var(--gray-400); margin-bottom: 16px;"></i>
+                            <h4 class="mb-2">No Bookmarked Events</h4>
+                            <p class="text-gray-400">Browse events and save your favorites</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        const slides = [];
+        const eventsPerSlide = 2;
+        
+        for (let i = 0; i < bookmarkedEvents.length; i += eventsPerSlide) {
+            const slideEvents = bookmarkedEvents.slice(i, i + eventsPerSlide);
+            slides.push(`
+                <div class="carousel-slide">
+                    ${slideEvents.map(event => `
+                        <div class="event-card-featured" onclick="Router.navigateToEventDetail(${event.id})">
                             <div class="event-card-image" style="background: linear-gradient(135deg, ${event.customTheme || '#8B5CF6'}, ${event.customTheme ? 'rgba(255,255,255,0.8)' : '#EC4899'});">
-                                <!-- Attendee Count at Bottom Left -->
                                 <div class="attendee-count">
                                     <i class="fas fa-users"></i> ${event.attendees}
                                 </div>
@@ -5151,68 +6103,79 @@ const Router = {
                                     <span class="text-yellow-500">${formatCurrency(event.price, event.currency)}</span>
                                 </div>
                             </div>
-                            <!-- Bookmark Badge at Bottom Right -->
                             <button class="bookmark-btn ${event.bookmarked ? 'active' : ''}" onclick="Events.toggleBookmark(${event.id}); event.stopPropagation();">
                                 <i class="fas fa-bookmark"></i>
                             </button>
                         </div>
                     `).join('')}
                 </div>
-            </div>
-        `;
+            `);
+        }
+        
+        return slides.join('');
     },
     
-    renderBookmarkedEventsContent() {
-        const bookmarkedEvents = AppState.events.filter(e => e.bookmarked);
-        
-        if (bookmarkedEvents.length === 0) {
+    renderFeaturedEventsCarouselSlides() {
+        const featuredEvents = AppState.events.filter(e => e.isFeatured);
+        if (featuredEvents.length === 0) {
             return `
-                <div class="text-center py-6">
-                    <i class="fas fa-bookmark" style="font-size: 48px; color: var(--gray-600); margin-bottom: 12px;"></i>
-                    <p class="text-gray-400">No bookmarked events</p>
+                <div class="carousel-slide">
+                    <div class="event-card-featured" onclick="Router.navigateTo('events')">
+                        <div class="event-card-content text-center py-12">
+                            <i class="fas fa-star" style="font-size: 48px; color: var(--gray-400); margin-bottom: 16px;"></i>
+                            <h4 class="mb-2">No Featured Events</h4>
+                            <p class="text-gray-400">Check back soon for featured events</p>
+                        </div>
+                    </div>
                 </div>
             `;
         }
         
-        return `
-            <div class="events-grid">
-                ${bookmarkedEvents.slice(0, 3).map(event => `
-                    <div class="event-card-featured" data-theme-color="${event.customTheme}" 
-                         style="--theme-color: ${event.customTheme}; --theme-color-glow: ${event.customTheme}40;"
-                         onclick="Router.navigateToEventDetail(${event.id})">
-                        <div class="event-card-image" style="background: linear-gradient(135deg, ${event.customTheme || '#8B5CF6'}, ${event.customTheme ? 'rgba(255,255,255,0.8)' : '#EC4899'});">
-                            <!-- Attendee Count at Bottom Left -->
-                            <div class="attendee-count">
-                                <i class="fas fa-users"></i> ${event.attendees}
-                            </div>
+        return featuredEvents.map(event => `
+            <div class="carousel-slide">
+                <div class="event-card-featured" onclick="Router.navigateToEventDetail(${event.id})">
+                    <div class="event-card-image" style="background: linear-gradient(135deg, ${event.customTheme || '#8B5CF6'}, ${event.customTheme ? 'rgba(255,255,255,0.8)' : '#EC4899'});">
+                        <div class="attendee-count">
+                            <i class="fas fa-users"></i> ${event.attendees}
                         </div>
-                        <div class="event-card-content">
-                            <h4 class="mb-2">${event.name}</h4>
-                            <p class="text-gray-400 text-sm mb-2">
-                                <i class="fas fa-map-marker-alt"></i> ${event.location}
-                            </p>
-                            <div class="flex items-center gap-4 text-sm">
-                                <span class="text-gradient">
-                                    <i class="fas fa-calendar"></i> ${event.date}
-                                </span>
-                                <span class="text-yellow-500">${formatCurrency(event.price, event.currency)}</span>
-                            </div>
-                        </div>
-                        <!-- Bookmark Badge at Bottom Right -->
-                        <button class="bookmark-btn ${event.bookmarked ? 'active' : ''}" onclick="Events.toggleBookmark(${event.id}); event.stopPropagation();">
-                            <i class="fas fa-bookmark"></i>
-                        </button>
                     </div>
-                `).join('')}
+                    <div class="event-card-content">
+                        <h4 class="mb-2">${event.name}</h4>
+                        <p class="text-gray-400 text-sm mb-2">
+                            <i class="fas fa-map-marker-alt"></i> ${event.location}
+                        </p>
+                        <div class="flex items-center gap-4 text-sm">
+                            <span class="text-gradient">
+                                <i class="fas fa-calendar"></i> ${event.date}
+                            </span>
+                            <span class="text-yellow-500">${formatCurrency(event.price, event.currency)}</span>
+                        </div>
+                    </div>
+                    <button class="bookmark-btn ${event.bookmarked ? 'active' : ''}" onclick="Events.toggleBookmark(${event.id}); event.stopPropagation();">
+                        <i class="fas fa-bookmark"></i>
+                    </button>
+                </div>
             </div>
-        `;
+        `).join('');
     },
     
-    renderBookmarkedEvents() {
-        const container = document.getElementById('bookmarkedEvents');
-        if (container) {
-            container.innerHTML = this.renderBookmarkedEventsContent();
+    renderCarouselDots(carouselId) {
+        let eventCount = 0;
+        if (carouselId === 'myEvents') {
+            eventCount = AppState.events.filter(e => e.bookmarked).length;
+        } else if (carouselId === 'featured') {
+            eventCount = AppState.events.filter(e => e.isFeatured).length;
         }
+        
+        const slides = carouselId === 'myEvents' ? Math.ceil(eventCount / 2) : eventCount;
+        
+        if (slides <= 1) return '';
+        
+        let dots = '';
+        for (let i = 0; i < slides; i++) {
+            dots += `<span class="dot ${i === 0 ? 'active' : ''}" onclick="EventsCarousel.goToSlide('${carouselId}', ${i})"></span>`;
+        }
+        return dots;
     },
     
     renderEventsPage() {
@@ -5243,11 +6206,8 @@ const Router = {
                 </div>
                 <div class="events-list" id="eventsList">
                     ${AppState.events.map(event => `
-                        <div class="event-card-featured" data-theme-color="${event.customTheme}" 
-                             style="--theme-color: ${event.customTheme}; --theme-color-glow: ${event.customTheme}40;"
-                             onclick="Router.navigateToEventDetail(${event.id})">
+                        <div class="event-card-featured" onclick="Router.navigateToEventDetail(${event.id})">
                             <div class="event-card-image" style="background: linear-gradient(135deg, ${event.customTheme || '#8B5CF6'}, ${event.customTheme ? 'rgba(255,255,255,0.8)' : '#EC4899'});">
-                                <!-- Attendee Count at Bottom Left -->
                                 <div class="attendee-count">
                                     <i class="fas fa-users"></i> ${event.attendees}
                                 </div>
@@ -5265,7 +6225,6 @@ const Router = {
                                     <span class="text-yellow-500">${formatCurrency(event.price, AppState.currency)}</span>
                                 </div>
                             </div>
-                            <!-- Bookmark Badge at Bottom Right -->
                             <button class="bookmark-btn ${event.bookmarked ? 'active' : ''}" onclick="Events.toggleBookmark(${event.id}); event.stopPropagation();">
                                 <i class="fas fa-bookmark"></i>
                             </button>
@@ -5284,35 +6243,35 @@ const Router = {
     
     renderConnectPage() {
         const availableProfiles = getAvailableProfiles();
-        const currentProfile = availableProfiles[0];
         
-        if (!currentProfile) {
+        if (availableProfiles.length === 0) {
             return `
                 <div class="swipe-interface">
                     <div class="swipe-header">
-                        <div class="flex justify-between items-center mb-4">
-                            <div class="event-badge">
-                                <i class="fas fa-calendar"></i>
-                                <span>${AppState.currentEvent ? AppState.currentEvent.name : 'No Event Selected'}</span>
-                            </div>
-                            <button class="btn btn-primary btn-small" onclick="Router.navigateTo('events')">
-                                <i class="fas fa-search"></i> Find Events
-                            </button>
+                        <div class="event-badge">
+                            <i class="fas fa-calendar"></i>
+                            <span>${AppState.currentEvent ? AppState.currentEvent.name : 'No Event'}</span>
                         </div>
                     </div>
                     
                     <div class="card-stack">
                         <div class="card-container">
-                            <div class="profile-card">
-                                <div class="card-content" style="background: var(--bg-tertiary);">
-                                    <div class="profile-info" style="padding: 40px;">
-                                        <i class="fas fa-users" style="font-size: 48px; color: var(--gray-400); margin-bottom: 20px;"></i>
-                                        <h2 style="color: var(--white);">No Profiles Available</h2>
-                                        <p style="color: var(--gray-300);">Check into an event to see profiles</p>
-                                        <button class="btn btn-primary mt-6" onclick="CheckIn.start()">
-                                            <i class="fas fa-qrcode"></i> Check into Event
-                                        </button>
-                                    </div>
+                            <div class="empty-state text-center py-12">
+                                <i class="fas fa-user-friends" 
+                                   style="font-size: 80px; color: var(--gray-600); margin-bottom: 24px; opacity: 0.5;">
+                                </i>
+                                <h3 class="mb-3">No More Profiles</h3>
+                                <p class="text-gray-400 mb-6">
+                                    You've seen everyone at this event!<br>
+                                    Check back later or try adjusting your filters.
+                                </p>
+                                <div class="flex flex-col gap-3">
+                                    <button class="btn btn-primary" onclick="Router.navigateTo('events')">
+                                        <i class="fas fa-calendar"></i> Browse Events
+                                    </button>
+                                    <button class="btn btn-outline" onclick="AppUI.showFiltersModal()">
+                                        <i class="fas fa-filter"></i> Adjust Filters
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -5320,6 +6279,8 @@ const Router = {
                 </div>
             `;
         }
+        
+        const currentProfile = availableProfiles[0];
         
         return `
             <div class="swipe-interface">
@@ -5392,11 +6353,6 @@ const Router = {
                     <button class="action-button rewind" onclick="Swipe.undo()" ${AppState.rewindCount <= 0 ? 'disabled' : ''}>
                         <i class="fas fa-undo"></i>
                         <span>Rewind</span>
-                    </button>
-                    
-                    <button class="action-button refresh" onclick="Swipe.reset()">
-                        <i class="fas fa-redo"></i>
-                        <span>Refresh</span>
                     </button>
                     
                     <button class="action-button like" onclick="Swipe.right()">
@@ -5737,6 +6693,8 @@ const Router = {
         }
         
         const event = AppState.currentEventDetail;
+        const communityPhotos = AppState.communityPhotos?.filter(p => p.eventId === event.id && p.approved) || [];
+        
         return `
             <div class="event-detail-page">
                 <div class="event-detail-header">
@@ -5798,41 +6756,74 @@ const Router = {
                                     <i class="fas fa-camera"></i> Add Photos
                                 </button>
                             </div>
-                            <div class="photos-grid" id="communityPhotosGrid">
-                                <!-- Photos will be loaded here -->
-                                <div class="text-center py-6">
-                                    <i class="fas fa-images" style="font-size: 48px; color: var(--gray-600); margin-bottom: 12px;"></i>
-                                    <p class="text-gray-400">No photos yet. Be the first to upload!</p>
+                            <div class="photos-horizontal-scroll">
+                                <div class="photos-grid-horizontal">
+                                    ${this.renderCommunityPhotosGrid(communityPhotos)}
                                 </div>
                             </div>
                         </div>
                         
-                        <!-- Community Chat Section (Only for checked-in users) -->
-                        ${AppState.currentEvent && AppState.currentEvent.id === event.id ? `
-                            <div class="community-chat-section mt-8" id="communityChat">
-                                <div class="section-header">
-                                    <h4>Community Chat</h4>
-                                    <span class="text-sm text-gray-400">${Math.floor(Math.random() * 50)} participants</span>
-                                </div>
-                                <div class="chat-messages" id="communityChatMessages" style="max-height: 300px; overflow-y: auto;">
-                                    <!-- Chat messages will be loaded here -->
-                                    <div class="text-center py-6">
-                                        <i class="fas fa-comments" style="font-size: 48px; color: var(--gray-600); margin-bottom: 12px;"></i>
-                                        <p class="text-gray-400">Start the conversation!</p>
-                                    </div>
-                                </div>
-                                <div class="chat-input mt-4">
-                                    <input type="text" class="form-control" id="communityMessageInput" placeholder="Join the conversation...">
-                                    <button class="btn btn-primary btn-icon" onclick="CommunityChat.sendMessage()">
-                                        <i class="fas fa-paper-plane"></i>
-                                    </button>
+                        <!-- Community Chat Section -->
+                        <div class="community-chat-section mt-8" id="communityChat">
+                            <div class="section-header">
+                                <h4>Community Chat</h4>
+                                <span class="text-sm text-gray-400">
+                                    <i class="fas fa-users"></i> ${event.attendees} in chat
+                                </span>
+                            </div>
+                            <div class="community-chat-messages" id="communityChatMessages">
+                                <div class="text-center py-6">
+                                    <i class="fas fa-comments" style="font-size: 48px; color: var(--gray-600); margin-bottom: 12px;"></i>
+                                    <p class="text-gray-400">Start the conversation!</p>
                                 </div>
                             </div>
-                        ` : ''}
+                            <div class="community-chat-input">
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="communityChatInput" 
+                                       placeholder="Join the conversation..."
+                                       onkeypress="if(event.key === 'Enter') CommunityChat.send()">
+                                <button class="btn btn-primary btn-icon" onclick="CommunityChat.send()">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
                     ` : ''}
                 </div>
             </div>
         `;
+    },
+    
+    renderCommunityPhotosGrid(photos) {
+        if (photos.length === 0) {
+            return `
+                <div class="photo-column">
+                    <div class="photo-item" style="grid-column: span 2;">
+                        <div class="text-center py-12">
+                            <i class="fas fa-images" style="font-size: 32px; color: var(--gray-600); margin-bottom: 8px;"></i>
+                            <p class="text-gray-400">No photos yet</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        let html = '';
+        for (let i = 0; i < photos.length; i += 2) {
+            const colPhotos = photos.slice(i, i + 2);
+            html += `
+                <div class="photo-column">
+                    ${colPhotos.map((photo, index) => `
+                        <div class="photo-item" onclick="CommunityPhotos.viewPhoto(${photo.id})">
+                            <img src="${photo.imageData}" alt="Community photo">
+                            <div class="watermark">AMPS</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+        
+        return html;
     },
     
     navigateToEventDetail(eventId) {
@@ -5841,6 +6832,11 @@ const Router = {
             AppState.currentEventDetail = event;
             AppState.currentPage = 'event-detail';
             this.renderPage();
+            
+            // Initialize community chat
+            setTimeout(() => {
+                CommunityChat.init(eventId);
+            }, 100);
         }
     },
     
@@ -5859,7 +6855,7 @@ const Router = {
                 AppState.map = new mapboxgl.Map({
                     container: 'map',
                     style: AppState.userProfile.theme === 'light' ? 'mapbox://styles/mapbox/light-v11' : 'mapbox://styles/mapbox/dark-v11',
-                    center: [17.0658, -22.5609], // Windhoek, Namibia
+                    center: [17.0658, -22.5609],
                     zoom: 12
                 });
                 
@@ -5868,7 +6864,6 @@ const Router = {
                     this.updateMapMarkers();
                     this.addUserLocationMarker();
                     
-                    // Add geofence circles for events
                     AppState.events.forEach(event => {
                         if (event.geoFencing && event.coordinates) {
                             this.addGeofenceCircle(event);
@@ -5876,7 +6871,6 @@ const Router = {
                     });
                 });
                 
-                // Add map controls
                 AppState.map.addControl(new mapboxgl.NavigationControl());
             }
         } catch (error) {
@@ -5894,68 +6888,93 @@ const Router = {
         
         let startY = 0;
         let currentY = 0;
+        let startPosition = 0;
         let isDragging = false;
         
-        const onMouseDown = (e) => {
+        const getPositionPercentage = () => {
+            const rect = container.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            const headerHeight = 64;
+            const navHeight = 65;
+            const availableHeight = windowHeight - headerHeight - navHeight;
+            
+            return 1 - (rect.top - headerHeight) / availableHeight;
+        };
+        
+        const setPosition = (percentage) => {
+            percentage = Math.max(0.25, Math.min(1, percentage));
+            const offset = (1 - percentage) * 100;
+            container.style.transform = `translateY(${offset}%)`;
+            AppState.mapDrawerPosition = percentage;
+        };
+        
+        const snapToNearestPosition = (percentage) => {
+            if (percentage < 0.375) {
+                return 0.25;
+            } else if (percentage < 0.75) {
+                return 0.5;
+            } else {
+                return 1;
+            }
+        };
+        
+        const onStart = (e) => {
             isDragging = true;
             startY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
             currentY = startY;
+            startPosition = getPositionPercentage();
             container.classList.add('dragging');
+            container.style.transition = 'none';
             e.preventDefault();
         };
         
-        const onMouseMove = (e) => {
+        const onMove = (e) => {
             if (!isDragging) return;
             
             const clientY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
-            const deltaY = clientY - currentY;
-            currentY = clientY;
+            const deltaY = clientY - startY;
+            const windowHeight = window.innerHeight;
+            const headerHeight = 64;
+            const navHeight = 65;
+            const availableHeight = windowHeight - headerHeight - navHeight;
             
-            const rect = container.getBoundingClientRect();
-            const newTop = Math.max(60, Math.min(window.innerHeight - 100, rect.top + deltaY));
+            const deltaPercentage = -deltaY / availableHeight;
+            const newPosition = startPosition + deltaPercentage;
             
-            const percentage = 1 - (newTop - 60) / (window.innerHeight - 160);
-            AppState.mapDrawerPosition = percentage;
-            
-            container.style.transform = `translateY(${(1 - percentage) * 100}%)`;
+            setPosition(newPosition);
         };
         
-        const onMouseUp = () => {
+        const onEnd = () => {
             if (!isDragging) return;
             
             isDragging = false;
             container.classList.remove('dragging');
+            container.style.transition = 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
             
-            // Snap to positions: 25%, 50%, or full with improved snapping
-            if (AppState.mapDrawerPosition > 0.75) {
-                // Full view
-                container.classList.add('full');
-                container.classList.remove('half', 'minimum');
-                container.style.transform = `translateY(calc(var(--header-height) + 20px))`;
-                AppState.mapDrawerPosition = 1;
-            } else if (AppState.mapDrawerPosition > 0.35) {
-                // Half view
-                container.classList.add('half');
-                container.classList.remove('full', 'minimum');
-                container.style.transform = 'translateY(50%)';
-                AppState.mapDrawerPosition = 0.5;
-            } else {
-                // Minimum view (25%)
+            const currentPosition = getPositionPercentage();
+            const snappedPosition = snapToNearestPosition(currentPosition);
+            setPosition(snappedPosition);
+            
+            container.classList.remove('minimum', 'half', 'full');
+            if (snappedPosition === 0.25) {
                 container.classList.add('minimum');
-                container.classList.remove('full', 'half');
-                container.style.transform = 'translateY(75%)';
-                AppState.mapDrawerPosition = 0.25;
+            } else if (snappedPosition === 0.5) {
+                container.classList.add('half');
+            } else {
+                container.classList.add('full');
             }
         };
         
-        handle.addEventListener('mousedown', onMouseDown);
-        handle.addEventListener('touchstart', onMouseDown);
+        handle.addEventListener('mousedown', onStart);
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onEnd);
         
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('touchmove', onMouseMove);
+        handle.addEventListener('touchstart', onStart, { passive: false });
+        document.addEventListener('touchmove', onMove, { passive: false });
+        document.addEventListener('touchend', onEnd);
         
-        document.addEventListener('mouseup', onMouseUp);
-        document.addEventListener('touchend', onMouseUp);
+        setPosition(0.25);
+        container.classList.add('minimum');
     },
     
     initEventSearch() {
@@ -5973,76 +6992,78 @@ const Router = {
         
         let startX = 0;
         let startY = 0;
+        let currentX = 0;
+        let currentY = 0;
         let isDragging = false;
         
-        const onMouseDown = (e) => {
+        const resetCard = () => {
+            card.style.transition = 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s';
+            card.style.transform = 'translate(0, 0) rotate(0deg)';
+            card.style.opacity = '1';
+        };
+        
+        const onStart = (e) => {
             isDragging = true;
             startX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
             startY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
             card.style.transition = 'none';
+            e.preventDefault();
         };
         
-        const onMouseMove = (e) => {
+        const onMove = (e) => {
             if (!isDragging) return;
             
-            const clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
-            const clientY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+            currentX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+            currentY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
             
-            const deltaX = clientX - startX;
-            const deltaY = clientY - startY;
-            
+            const deltaX = currentX - startX;
+            const deltaY = currentY - startY;
             const rotate = deltaX * 0.1;
             
             card.style.transform = `translate(${deltaX}px, ${deltaY}px) rotate(${rotate}deg)`;
             
-            // Change opacity based on swipe direction
-            if (deltaX > 50) {
-                card.style.opacity = Math.max(0.5, 1 - Math.abs(deltaX) / 200);
-            } else if (deltaX < -50) {
-                card.style.opacity = Math.max(0.5, 1 - Math.abs(deltaX) / 200);
-            }
+            const distance = Math.abs(deltaX);
+            const opacity = Math.max(0.5, 1 - distance / 300);
+            card.style.opacity = opacity;
+            
+            e.preventDefault();
         };
         
-        const onMouseUp = () => {
+        const onEnd = () => {
             if (!isDragging) return;
             
             isDragging = false;
-            card.style.transition = 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s';
+            const deltaX = currentX - startX;
             
-            const rect = card.getBoundingClientRect();
-            const centerX = window.innerWidth / 2;
-            
-            if (rect.left < centerX - 150) {
-                // Swipe left
-                card.style.transform = `translateX(-500px) rotate(-30deg)`;
-                card.style.opacity = '0';
-                setTimeout(() => Swipe.left(), 300);
-            } else if (rect.left > centerX + 150) {
-                // Swipe right
-                card.style.transform = `translateX(500px) rotate(30deg)`;
-                card.style.opacity = '0';
-                setTimeout(() => Swipe.right(), 300);
+            if (Math.abs(deltaX) > 100) {
+                card.style.transition = 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s';
+                
+                if (deltaX > 0) {
+                    card.style.transform = `translateX(500px) rotate(30deg)`;
+                    card.style.opacity = '0';
+                    setTimeout(() => Swipe.right(), 400);
+                } else {
+                    card.style.transform = `translateX(-500px) rotate(-30deg)`;
+                    card.style.opacity = '0';
+                    setTimeout(() => Swipe.left(), 400);
+                }
             } else {
-                // Return to center
-                card.style.transform = 'translate(0, 0) rotate(0deg)';
-                card.style.opacity = '1';
+                resetCard();
             }
         };
         
-        card.addEventListener('mousedown', onMouseDown);
-        card.addEventListener('touchstart', onMouseDown);
+        card.addEventListener('mousedown', onStart);
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onEnd);
         
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('touchmove', onMouseMove);
-        
-        document.addEventListener('mouseup', onMouseUp);
-        document.addEventListener('touchend', onMouseUp);
+        card.addEventListener('touchstart', onStart, { passive: false });
+        document.addEventListener('touchmove', onMove, { passive: false });
+        document.addEventListener('touchend', onEnd);
     },
     
     addUserLocationMarker() {
         if (!AppState.map) return;
         
-        // Use default Windhoek location for demo
         const userLocation = NAMIBIA_COORDINATES.windhoek;
         
         const el = document.createElement('div');
@@ -6056,7 +7077,6 @@ const Router = {
         
         AppState.userMarker = marker;
         
-        // Center map on user location
         AppState.map.flyTo({
             center: [userLocation.lng, userLocation.lat],
             zoom: 14,
@@ -6067,13 +7087,11 @@ const Router = {
     updateMapMarkers() {
         if (!AppState.map) return;
         
-        // Clear existing markers
         if (AppState.mapMarkers) {
             AppState.mapMarkers.forEach(marker => marker.remove());
         }
         AppState.mapMarkers = [];
         
-        // Add markers for each event
         AppState.events.forEach(event => {
             const el = document.createElement('div');
             el.className = 'event-marker';
@@ -6086,7 +7104,6 @@ const Router = {
                 this.navigateToEventDetail(event.id);
             });
             
-            // Create popup content
             const popupContent = document.createElement('div');
             popupContent.className = 'map-popup';
             popupContent.innerHTML = `
@@ -6096,12 +7113,10 @@ const Router = {
                 <button onclick="Router.navigateToEventDetail(${event.id})">View Details</button>
             `;
             
-            // Create marker
             const marker = new mapboxgl.Marker(el)
                 .setLngLat([event.coordinates.lng, event.coordinates.lat])
                 .addTo(AppState.map);
             
-            // Add popup
             const popup = new mapboxgl.Popup({
                 offset: 25,
                 closeButton: true,
@@ -6110,8 +7125,6 @@ const Router = {
                 .setDOMContent(popupContent);
             
             marker.setPopup(popup);
-            
-            // Store reference to marker
             AppState.mapMarkers.push(marker);
         });
     },
@@ -6122,11 +7135,9 @@ const Router = {
         const sourceId = `geofence-${event.id}`;
         const layerId = `geofence-layer-${event.id}`;
         
-        // Remove existing layers/sources if they exist
         if (AppState.map.getLayer(layerId)) AppState.map.removeLayer(layerId);
         if (AppState.map.getSource(sourceId)) AppState.map.removeSource(sourceId);
         
-        // Convert meters to degrees (approximate)
         const radiusInDegrees = event.geofenceRadius / 111320;
         const coordinates = [];
         const steps = 64;
@@ -6137,8 +7148,6 @@ const Router = {
             const lng = event.coordinates.lng + radiusInDegrees * Math.sin(angle) / Math.cos(event.coordinates.lat * Math.PI / 180);
             coordinates.push([lng, lat]);
         }
-        
-        // Close the circle
         coordinates.push(coordinates[0]);
         
         AppState.map.addSource(sourceId, {
@@ -6162,6 +7171,129 @@ const Router = {
                 'fill-outline-color': event.customTheme || '#8B5CF6'
             }
         });
+    }
+};
+
+// ===== CAROUSEL SYSTEM =====
+const EventsCarousel = {
+    currentSlide: { myEvents: 0, featured: 0 },
+    
+    init(carouselId) {
+        const track = document.getElementById(`${carouselId}Track`);
+        if (!track) return;
+        
+        this.setupTouchHandlers(carouselId);
+        this.updateDots(carouselId);
+    },
+    
+    next(carouselId) {
+        const track = document.getElementById(`${carouselId}Track`);
+        const slides = track?.querySelectorAll('.carousel-slide');
+        if (!slides) return;
+        
+        this.currentSlide[carouselId] = 
+            (this.currentSlide[carouselId] + 1) % slides.length;
+        this.updatePosition(carouselId);
+    },
+    
+    prev(carouselId) {
+        const track = document.getElementById(`${carouselId}Track`);
+        const slides = track?.querySelectorAll('.carousel-slide');
+        if (!slides) return;
+        
+        this.currentSlide[carouselId] = 
+            (this.currentSlide[carouselId] - 1 + slides.length) % slides.length;
+        this.updatePosition(carouselId);
+    },
+    
+    goToSlide(carouselId, slideIndex) {
+        const track = document.getElementById(`${carouselId}Track`);
+        const slides = track?.querySelectorAll('.carousel-slide');
+        if (!slides || slideIndex < 0 || slideIndex >= slides.length) return;
+        
+        this.currentSlide[carouselId] = slideIndex;
+        this.updatePosition(carouselId);
+    },
+    
+    updatePosition(carouselId) {
+        const track = document.getElementById(`${carouselId}Track`);
+        if (!track) return;
+        
+        const offset = -this.currentSlide[carouselId] * 100;
+        track.style.transform = `translateX(${offset}%)`;
+        this.updateDots(carouselId);
+    },
+    
+    updateDots(carouselId) {
+        const dotsContainer = document.getElementById(`${carouselId}Dots`);
+        if (!dotsContainer) return;
+        
+        const dots = dotsContainer.querySelectorAll('.dot');
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === this.currentSlide[carouselId]);
+        });
+    },
+    
+    setupTouchHandlers(carouselId) {
+        const carousel = document.getElementById(`${carouselId}Carousel`);
+        if (!carousel) return;
+        
+        let startX = 0;
+        let currentX = 0;
+        let isDragging = false;
+        
+        carousel.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+        });
+        
+        carousel.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            currentX = e.touches[0].clientX;
+        });
+        
+        carousel.addEventListener('touchend', () => {
+            if (!isDragging) return;
+            isDragging = false;
+            
+            const diff = startX - currentX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    this.next(carouselId);
+                } else {
+                    this.prev(carouselId);
+                }
+            }
+        });
+    }
+};
+
+const FeaturedCarousel = {
+    intervalId: null,
+    isPaused: false,
+    
+    start() {
+        this.stop();
+        this.intervalId = setInterval(() => {
+            if (!this.isPaused) {
+                EventsCarousel.next('featured');
+            }
+        }, 5000);
+    },
+    
+    stop() {
+        if (this.intervalId) {
+            clearInterval(this.intervalId);
+            this.intervalId = null;
+        }
+    },
+    
+    pause() {
+        this.isPaused = true;
+    },
+    
+    resume() {
+        this.isPaused = false;
     }
 };
 
@@ -6210,7 +7342,6 @@ const Auth = {
             createdAt: new Date().toISOString()
         };
         
-        // Update user profile with form data if signing up
         const authTab = document.querySelector('.auth-tab.active');
         if (authTab && authTab.textContent === 'Sign Up') {
             const name = form.querySelector('#authName')?.value || email?.split('@')[0] || 'User';
@@ -6235,7 +7366,6 @@ const Auth = {
             createdAt: new Date().toISOString()
         };
         
-        // Add demo matches
         AppState.matches = [
             {
                 id: 1,
@@ -6249,7 +7379,6 @@ const Auth = {
             }
         ];
         
-        // Add demo tickets
         AppState.tickets = [
             {
                 id: 1,
@@ -6876,7 +8005,7 @@ const AppUI = {
             <h3 class="mb-2">${event.name}</h3>
             <p class="text-gray-400 mb-4">${event.date} • ${event.location}</p>
             <div class="price-display">
-                <span>Price:</span>
+                <span>Price per ticket:</span>
                 <span class="text-gradient font-bold text-xl">${formatCurrency(event.price, AppState.currency)}</span>
             </div>
         `;
@@ -7343,18 +8472,6 @@ const AppUI = {
 
 // ===== EVENTS =====
 const Events = {
-    openMapView() {
-        Router.navigateTo('events');
-        setTimeout(() => {
-            const container = document.getElementById('eventsContainer');
-            if (container) {
-                container.classList.add('half');
-                AppState.mapDrawerPosition = 0.5;
-                container.style.transform = 'translateY(50%)';
-            }
-        }, 100);
-    },
-    
     showWizard() {
         if (!AppState.isPro && !AppState.isMax) {
             AppUI.showProModal();
@@ -7364,27 +8481,19 @@ const Events = {
         console.log('✨ Showing event wizard');
         const modal = document.getElementById('eventWizardModal');
         if (modal) {
-            // Reset wizard progress to new simplified steps
-            const wizardProgress = modal.querySelector('.wizard-progress');
-            if (wizardProgress) {
-                wizardProgress.innerHTML = `
-                    <div class="progress-step active" data-step="1">1. Info</div>
-                    <div class="progress-step" data-step="2">2. Location</div>
-                    <div class="progress-step" data-step="3">3. Style</div>
-                    <div class="progress-step" data-step="4">4. Review</div>
-                `;
-            }
-            
-            // Reset wizard
             document.querySelectorAll('.wizard-step').forEach(step => {
                 step.classList.remove('active');
             });
             document.getElementById('wizardStep1').classList.add('active');
             
+            document.querySelectorAll('.progress-step').forEach(step => {
+                step.classList.remove('active');
+            });
+            document.querySelector('[data-step="1"]').classList.add('active');
+            
             AppState.isWizardActive = true;
             AppState.wizardStep = 1;
             
-            // Reset wizard data
             AppState.wizardData = {
                 geofenceRadius: 100,
                 coordinates: null,
@@ -7410,7 +8519,6 @@ const Events = {
         document.getElementById('eventWizardModal').classList.remove('active');
         AppState.isWizardActive = false;
         
-        // Clean up map
         if (AppState.wizardMap) {
             AppState.wizardMap.remove();
             AppState.wizardMap = null;
@@ -7424,7 +8532,6 @@ const Events = {
         const currentStep = document.querySelector('.wizard-step.active');
         const currentStepId = parseInt(currentStep.id.replace('wizardStep', ''));
         
-        // Validate current step
         if (currentStepId === 1) {
             const name = document.getElementById('eventName')?.value;
             const description = document.getElementById('eventDescription')?.value;
@@ -7433,7 +8540,6 @@ const Events = {
                 return;
             }
             
-            // Save data
             AppState.wizardData.eventName = name;
             AppState.wizardData.eventDescription = description;
             AppState.wizardData.eventCategory = document.getElementById('eventCategory')?.value || 'tech';
@@ -7452,36 +8558,25 @@ const Events = {
             AppState.wizardData.eventLocation = location;
         }
         
-        if (currentStepId === 3) {
-            // Customization step - nothing to validate
-        }
-        
-        // Map old steps to new simplified steps
-        const stepMap = {1: 1, 2: 2, 3: 2, 4: 3, 5: 4};
-        const newStepId = stepMap[currentStepId + 1] || currentStepId + 1;
-        
-        if (currentStepId < 4) {
+        if (currentStepId < 5) {
             currentStep.classList.remove('active');
-            const nextStep = document.getElementById(`wizardStep${newStepId}`);
+            const nextStep = document.getElementById(`wizardStep${currentStepId + 1}`);
             if (nextStep) {
                 nextStep.classList.add('active');
             }
             
-            // Update progress steps
             document.querySelectorAll('.progress-step').forEach(step => {
                 const stepNum = parseInt(step.dataset.step);
-                step.classList.toggle('active', stepNum <= newStepId);
+                step.classList.toggle('active', stepNum <= currentStepId + 1);
             });
             
-            AppState.wizardStep = newStepId;
+            AppState.wizardStep = currentStepId + 1;
             
-            // Initialize map on step 2 (which includes geofencing)
-            if (newStepId === 2) {
+            if (currentStepId + 1 === 2) {
                 this.initWizardMap();
             }
             
-            // Update review step
-            if (newStepId === 4) {
+            if (currentStepId + 1 === 5) {
                 this.updateReviewStep();
             }
         }
@@ -7493,25 +8588,19 @@ const Events = {
         const currentStep = document.querySelector('.wizard-step.active');
         const currentStepId = parseInt(currentStep.id.replace('wizardStep', ''));
         
-        // Map old steps to new simplified steps
-        const stepMap = {1: 1, 2: 2, 3: 2, 4: 3, 5: 4};
-        const oldStepMap = {1: 1, 2: 2, 3: 4, 4: 5};
-        const prevStepId = oldStepMap[currentStepId - 1] || currentStepId - 1;
-        
         if (currentStepId > 1) {
             currentStep.classList.remove('active');
-            const prevStep = document.getElementById(`wizardStep${prevStepId}`);
+            const prevStep = document.getElementById(`wizardStep${currentStepId - 1}`);
             if (prevStep) {
                 prevStep.classList.add('active');
             }
             
-            // Update progress steps
             document.querySelectorAll('.progress-step').forEach(step => {
                 const stepNum = parseInt(step.dataset.step);
-                step.classList.toggle('active', stepNum <= prevStepId);
+                step.classList.toggle('active', stepNum <= currentStepId - 1);
             });
             
-            AppState.wizardStep = prevStepId;
+            AppState.wizardStep = currentStepId - 1;
         }
     },
     
@@ -7524,7 +8613,6 @@ const Events = {
         }
         
         try {
-            // Remove existing map if any
             if (AppState.wizardMap) {
                 AppState.wizardMap.remove();
             }
@@ -7539,8 +8627,6 @@ const Events = {
             
             AppState.wizardMap.on('load', () => {
                 console.log('✅ Wizard map loaded');
-                
-                // Add navigation controls
                 AppState.wizardMap.addControl(new mapboxgl.NavigationControl());
             });
             
@@ -7556,12 +8642,10 @@ const Events = {
     placeWizardPin(lngLat) {
         console.log('📍 Placing wizard pin at:', lngLat);
         
-        // Clear existing pin
         if (AppState.wizardMarker) {
             AppState.wizardMarker.remove();
         }
         
-        // Create new pin
         const el = document.createElement('div');
         el.className = 'event-marker';
         el.innerHTML = `<i class="fas fa-map-pin"></i>`;
@@ -7572,20 +8656,16 @@ const Events = {
             .setLngLat(lngLat)
             .addTo(AppState.wizardMap);
         
-        // Update wizard data
         AppState.wizardData.coordinates = {
             lat: lngLat.lat,
             lng: lngLat.lng
         };
         
-        // Update location input
         const locationInput = document.getElementById('eventLocationSearch');
         if (locationInput) {
-            // Reverse geocode to get location name
             this.searchLocationReverse(lngLat.lng, lngLat.lat);
         }
         
-        // Update geofence circle
         this.updateWizardGeofence();
     },
     
@@ -7638,7 +8718,6 @@ const Events = {
         document.getElementById('eventLocationSearch').value = placeName;
         document.getElementById('locationSuggestions').style.display = 'none';
         
-        // Update map and place pin
         if (AppState.wizardMap) {
             AppState.wizardMap.flyTo({ center: [lng, lat], zoom: 14 });
             this.placeWizardPin({ lng, lat });
@@ -7647,8 +8726,7 @@ const Events = {
     
     updateWizardRadius(value) {
         AppState.wizardData.geofenceRadius = parseInt(value);
-        document.getElementById('wizardRadiusValue').textContent = 
-            value < 1000 ? `${value} meters` : `${(value/1000).toFixed(2)} km`;
+        document.getElementById('wizardRadiusValue').textContent = `${value} meters`;
         this.updateWizardGeofence();
     },
     
@@ -7658,7 +8736,6 @@ const Events = {
         const sourceId = 'wizard-geofence';
         const layerId = 'wizard-geofence-layer';
         
-        // Remove existing
         if (AppState.wizardMap.getLayer(layerId)) {
             AppState.wizardMap.removeLayer(layerId);
         }
@@ -7669,9 +8746,8 @@ const Events = {
             AppState.wizardMap.removeSource(sourceId);
         }
         
-        // Create circle
         const center = AppState.wizardData.coordinates;
-        const radius = AppState.wizardData.geofenceRadius / 111320; // Convert to degrees
+        const radius = AppState.wizardData.geofenceRadius / 111320;
         const points = 64;
         const coordinates = [];
         
@@ -7731,39 +8807,10 @@ const Events = {
             preview.style.background = color;
         }
         
-        // Update map marker and geofence if exists
         if (AppState.wizardMarker) {
             AppState.wizardMarker.getElement().style.color = color;
             this.updateWizardGeofence();
         }
-    },
-    
-    handlePosterUpload(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-        
-        if (file.size > 10 * 1024 * 1024) {
-            AppUI.showNotification('File too large. Max 10MB', 'error');
-            return;
-        }
-        
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            AppState.wizardData.posterUrl = e.target.result;
-            AppState.wizardData.posterType = file.type.startsWith('video/') ? 'video' : 'image';
-            
-            // Update preview
-            const preview = document.getElementById('posterPreview');
-            const placeholder = document.getElementById('posterPlaceholder');
-            const image = document.getElementById('posterImage');
-            
-            if (preview && placeholder && image) {
-                image.src = e.target.result;
-                preview.style.display = 'block';
-                placeholder.style.display = 'none';
-            }
-        };
-        reader.readAsDataURL(file);
     },
     
     updateReviewStep() {
@@ -7776,7 +8823,6 @@ const Events = {
     publishEvent() {
         console.log('🎉 Publishing event');
         
-        // Get coordinates or use default
         let coordinates = AppState.wizardData.coordinates || NAMIBIA_COORDINATES.windhoek;
         
         const newEvent = {
@@ -7809,28 +8855,118 @@ const Events = {
         };
         
         AppState.events.push(newEvent);
+        
+        if (!AppState.userProfile.createdEvents) {
+            AppState.userProfile.createdEvents = [];
+        }
+        AppState.userProfile.createdEvents.push(newEvent);
+        
         this.closeWizard();
-        AppUI.showNotification(`Event "${newEvent.name}" created successfully!`, 'success');
         
-        // Auto-create a ticket for the organizer
-        const ticket = {
-            id: Date.now(),
-            eventId: newEvent.id,
-            eventName: newEvent.name,
-            purchaseDate: new Date().toISOString(),
-            price: 0,
-            currency: newEvent.currency,
-            qrCode: newEvent.qrCode + '_ORG',
-            status: 'active'
-        };
-        
-        AppState.tickets.push(ticket);
+        this.generateEventQRCode(newEvent);
+        this.showEventQRModal(newEvent);
         
         saveState();
-        
-        // Refresh events page
-        if (AppState.currentPage === 'events') {
-            Router.renderPage();
+    },
+    
+    generateEventQRCode(event) {
+        const qrCanvas = document.createElement('canvas');
+        QRCode.toCanvas(qrCanvas, event.qrCode, {
+            width: 300,
+            margin: 2,
+            color: {
+                dark: '#000000',
+                light: '#FFFFFF'
+            }
+        }, (error) => {
+            if (error) {
+                console.error('QR generation error:', error);
+            } else {
+                event.qrCodeImage = qrCanvas.toDataURL();
+            }
+        });
+    },
+    
+    showEventQRModal(event) {
+        const modal = document.createElement('div');
+        modal.className = 'modal-backdrop active';
+        modal.innerHTML = `
+            <div class="modal-content text-center">
+                <button class="modal-close" onclick="this.closest('.modal-backdrop').remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+                
+                <div class="mb-4">
+                    <i class="fas fa-check-circle" style="font-size: 48px; color: var(--accent-green);"></i>
+                </div>
+                
+                <h2 class="mb-2">Event Created!</h2>
+                <h3 class="mb-4">${event.name}</h3>
+                
+                <p class="text-gray-400 mb-4">Use this QR code for event check-ins</p>
+                
+                <div class="qr-code-display mb-4">
+                    <img src="${event.qrCodeImage}" alt="Event QR Code" 
+                         style="max-width: 300px; border-radius: var(--radius-lg);">
+                </div>
+                
+                <div class="event-code-display mb-4">
+                    <p class="text-sm text-gray-400">Event Code</p>
+                    <p class="font-mono text-lg">${event.qrCode}</p>
+                    <button class="btn btn-outline btn-small mt-2" 
+                            onclick="Events.copyEventCode('${event.qrCode}')">
+                        <i class="fas fa-copy"></i> Copy Code
+                    </button>
+                </div>
+                
+                <div class="flex gap-3 mt-6">
+                    <button class="btn btn-outline flex-1" 
+                            onclick="Events.downloadQRCode('${event.qrCodeImage}', '${event.name}')">
+                        <i class="fas fa-download"></i> Download
+                    </button>
+                    <button class="btn btn-primary flex-1" 
+                            onclick="Events.shareQRCode('${event.qrCodeImage}'); this.closest('.modal-backdrop').remove();">
+                        <i class="fas fa-share"></i> Share
+                    </button>
+                </div>
+                
+                <button class="btn btn-glass btn-block mt-3" 
+                        onclick="this.closest('.modal-backdrop').remove(); Router.navigateTo('home');">
+                    Done
+                </button>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    },
+    
+    copyEventCode(code) {
+        navigator.clipboard.writeText(code).then(() => {
+            AppUI.showNotification('Event code copied!', 'success');
+        });
+    },
+    
+    downloadQRCode(imageData, eventName) {
+        const link = document.createElement('a');
+        link.download = `${eventName.replace(/[^a-z0-9]/gi, '_')}_QR.png`;
+        link.href = imageData;
+        link.click();
+        AppUI.showNotification('QR code downloaded', 'success');
+    },
+    
+    shareQRCode(imageData) {
+        if (navigator.share) {
+            fetch(imageData)
+                .then(res => res.blob())
+                .then(blob => {
+                    const file = new File([blob], 'event_qr.png', { type: 'image/png' });
+                    navigator.share({
+                        files: [file],
+                        title: 'Event QR Code',
+                        text: 'Scan to check in!'
+                    });
+                });
+        } else {
+            AppUI.showNotification('Sharing not supported on this device', 'info');
         }
     },
     
@@ -7869,11 +9005,8 @@ const Events = {
         );
         
         eventsList.innerHTML = filteredEvents.map(event => `
-            <div class="event-card-featured" data-theme-color="${event.customTheme}" 
-                 style="--theme-color: ${event.customTheme}; --theme-color-glow: ${event.customTheme}40;"
-                 onclick="Router.navigateToEventDetail(${event.id})">
+            <div class="event-card-featured" onclick="Router.navigateToEventDetail(${event.id})">
                 <div class="event-card-image" style="background: linear-gradient(135deg, ${event.customTheme || '#8B5CF6'}, ${event.customTheme ? 'rgba(255,255,255,0.8)' : '#EC4899'});">
-                    <!-- Attendee Count at Bottom Left -->
                     <div class="attendee-count">
                         <i class="fas fa-users"></i> ${event.attendees}
                     </div>
@@ -7891,69 +9024,11 @@ const Events = {
                         <span class="text-yellow-500">${formatCurrency(event.price, AppState.currency)}</span>
                     </div>
                 </div>
-                <!-- Bookmark Badge at Bottom Right -->
                 <button class="bookmark-btn ${event.bookmarked ? 'active' : ''}" onclick="Events.toggleBookmark(${event.id}); event.stopPropagation();">
                     <i class="fas fa-bookmark"></i>
                 </button>
             </div>
         `).join('');
-    },
-    
-    applyFiltersToEvents() {
-        const filtered = AppState.events.filter(event => {
-            // Distance filter (mock - in real app would use geolocation)
-            const distance = Math.random() * 100; // Mock distance
-            if (distance > AppState.filters.distance) return false;
-            
-            // Search query
-            if (AppState.filters.searchQuery) {
-                const query = AppState.filters.searchQuery.toLowerCase();
-                if (!event.name.toLowerCase().includes(query) &&
-                    !event.description.toLowerCase().includes(query) &&
-                    !event.location.toLowerCase().includes(query)) {
-                    return false;
-                }
-            }
-            
-            return true;
-        });
-        
-        // Re-render events list
-        const eventsList = document.getElementById('eventsList');
-        if (eventsList) {
-            eventsList.innerHTML = filtered.map(event => `
-                <div class="event-card-featured" data-theme-color="${event.customTheme}" 
-                     style="--theme-color: ${event.customTheme}; --theme-color-glow: ${event.customTheme}40;"
-                     onclick="Router.navigateToEventDetail(${event.id})">
-                    <div class="event-card-image" style="background: linear-gradient(135deg, ${event.customTheme || '#8B5CF6'}, ${event.customTheme ? 'rgba(255,255,255,0.8)' : '#EC4899'});">
-                        <!-- Attendee Count at Bottom Left -->
-                        <div class="attendee-count">
-                            <i class="fas fa-users"></i> ${event.attendees}
-                        </div>
-                    </div>
-                    <div class="event-card-content">
-                        <h4 class="mb-2">${event.name}</h4>
-                        <p class="text-gray-400 text-sm mb-2">
-                            <i class="fas fa-map-marker-alt"></i> ${event.location}
-                        </p>
-                        <div class="flex items-center gap-4 text-sm">
-                            <span class="text-gradient">
-                                <i class="fas fa-users"></i> ${event.attendees}
-                            </span>
-                            <span class="text-gray-400">${event.date}</span>
-                            <span class="text-yellow-500">${formatCurrency(event.price, AppState.currency)}</span>
-                        </div>
-                    </div>
-                    <!-- Bookmark Badge at Bottom Right -->
-                    <button class="bookmark-btn ${event.bookmarked ? 'active' : ''}" onclick="Events.toggleBookmark(${event.id}); event.stopPropagation();">
-                        <i class="fas fa-bookmark"></i>
-                    </button>
-                </div>
-            `).join('');
-        }
-        
-        // Update map markers
-        Router.updateMapMarkers();
     },
     
     showLocationMap(eventId) {
@@ -7977,7 +9052,6 @@ const Events = {
                 </p>
                 
                 <div id="locationMapContainer" style="height: 300px; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 20px;">
-                    <!-- Map will be initialized here -->
                     <div class="map-preview" style="height: 100%; display: flex; align-items: center; justify-content: center;">
                         <p>Loading map...</p>
                     </div>
@@ -8002,7 +9076,6 @@ const Events = {
         
         document.body.appendChild(modal);
         
-        // Initialize map after modal is added to DOM
         setTimeout(() => {
             this.initLocationMap(event, 'locationMapContainer');
         }, 100);
@@ -8021,7 +9094,6 @@ const Events = {
             });
             
             locationMap.on('load', () => {
-                // Add event marker
                 const el = document.createElement('div');
                 el.className = 'event-marker';
                 el.innerHTML = `<i class="fas fa-map-marker-alt"></i>`;
@@ -8031,12 +9103,10 @@ const Events = {
                     .setLngLat([event.coordinates.lng, event.coordinates.lat])
                     .addTo(locationMap);
                 
-                // Add user location marker
                 const userEl = document.createElement('div');
                 userEl.className = 'user-marker';
                 userEl.innerHTML = `<i class="fas fa-user"></i>`;
                 
-                // Add geofence circle
                 if (event.geofenceRadius) {
                     const radius = event.geofenceRadius / 111320;
                     const coordinates = [];
@@ -8080,7 +9150,7 @@ const Events = {
 
 // ===== CHECK-IN FLOW =====
 const CheckIn = {
-    start() {
+    async start() {
         console.log('🔐 Starting check-in flow');
         AppState.checkInFlow = {
             active: true,
@@ -8090,25 +9160,106 @@ const CheckIn = {
             livePhoto: null
         };
         
-        AppUI.openCameraForScanning();
+        await this.openCameraForQRScan();
+    },
+    
+    async openCameraForQRScan() {
+        const modal = document.getElementById('cameraModal');
+        modal.classList.add('active');
+        
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({
+                video: { facingMode: 'environment' }
+            });
+            
+            const video = document.getElementById('cameraVideo');
+            video.srcObject = stream;
+            video.play();
+            
+            AppState.cameraStream = stream;
+            
+            this.startQRDetection(video);
+            
+        } catch (error) {
+            console.error('Camera access error:', error);
+            AppUI.showNotification('Camera access denied. Use manual code entry.', 'error');
+            this.showManualEntryFallback();
+        }
+    },
+    
+    startQRDetection(video) {
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        
+        const scanInterval = setInterval(() => {
+            if (!AppState.checkInFlow.active) {
+                clearInterval(scanInterval);
+                return;
+            }
+            
+            if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                
+                const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                const code = jsQR(imageData.data, imageData.width, imageData.height);
+                
+                if (code) {
+                    clearInterval(scanInterval);
+                    this.handleQRCodeDetected(code.data);
+                }
+            }
+        }, 100);
+    },
+    
+    handleQRCodeDetected(qrData) {
+        console.log('✅ QR Code detected:', qrData);
+        
+        if (navigator.vibrate) {
+            navigator.vibrate(200);
+        }
+        
+        const event = AppState.events.find(e => e.qrCode === qrData);
+        
+        if (event) {
+            AppState.checkInFlow.eventId = event.id;
+            AppUI.showNotification(`Detected: ${event.name}`, 'success');
+            
+            this.closeCamera();
+            this.checkGeofenceAndProceed(event);
+        } else {
+            AppUI.showNotification('Invalid event QR code', 'error');
+        }
+    },
+    
+    showManualEntryFallback() {
+        const modal = document.getElementById('cameraModal');
+        const controls = modal.querySelector('.camera-controls');
+        
+        controls.innerHTML = `
+            <button class="btn btn-outline" onclick="CheckIn.closeCamera()">
+                <i class="fas fa-times"></i> Cancel
+            </button>
+            <button class="btn btn-primary" onclick="CheckIn.enterEventCodeManually()">
+                <i class="fas fa-keyboard"></i> Enter Code Manually
+            </button>
+        `;
     },
     
     simulateQRScan() {
         console.log('🔢 Simulating QR scan');
         AppUI.closeCamera();
         
-        // For demo, pick a random event
         const randomEvent = AppState.events[Math.floor(Math.random() * AppState.events.length)];
         AppState.checkInFlow.eventId = randomEvent.id;
         
-        // Check if user is within geofence
         this.checkGeofenceAndProceed(randomEvent);
     },
     
     enterEventCodeManually() {
         const code = prompt('Enter event code (e.g., AMPS_TECH_2024_001):');
         if (code) {
-            // Find event by QR code
             const event = AppState.events.find(e => e.qrCode === code);
             if (event) {
                 AppState.checkInFlow.eventId = event.id;
@@ -8124,8 +9275,7 @@ const CheckIn = {
         console.log('📍 Checking geofence for event:', event.name);
         
         if (event.geoFencing) {
-            // Simulate geofence check
-            const isWithinGeofence = Math.random() > 0.2; // 80% success rate for demo
+            const isWithinGeofence = Math.random() > 0.2;
             
             if (isWithinGeofence) {
                 AppUI.showNotification(`Within ${event.geofenceRadius}m of ${event.name}`, 'success');
@@ -8173,17 +9323,72 @@ const CheckIn = {
     
     takeLivePhoto() {
         console.log('📸 Taking live photo');
-        AppUI.closeCamera();
+        const video = document.getElementById('livePhotoVideo');
+        if (!video) return;
         
-        // Generate a temporary live photo
-        const colors = ['#8B5CF6', '#EC4899', '#3B82F6', '#10B981', '#F59E0B'];
-        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        const canvas = document.createElement('canvas');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const context = canvas.getContext('2d');
+        context.drawImage(video, 0, 0);
         
-        AppState.checkInFlow.livePhoto = `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="${randomColor}"/><text x="100" y="110" font-size="24" text-anchor="middle" fill="white">Live Photo</text></svg>`;
+        const photoData = canvas.toDataURL('image/jpeg', 0.9);
         
-        // Create temporary profile for the event
+        this.closeLivePhotoCamera();
+        this.showPhotoConfirmation(photoData);
+    },
+    
+    showPhotoConfirmation(photoData) {
+        const modal = document.createElement('div');
+        modal.className = 'modal-backdrop active';
+        modal.id = 'photoConfirmModal';
+        modal.innerHTML = `
+            <div class="modal-content text-center">
+                <h2 class="mb-4">Use this photo?</h2>
+                <p class="text-gray-400 mb-4">This will be your profile photo for matching</p>
+                
+                <div class="photo-preview mb-6">
+                    <img src="${photoData}" alt="Live Photo" 
+                         style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover; border: 4px solid var(--primary);">
+                </div>
+                
+                <div class="flex flex-col gap-3">
+                    <button class="btn btn-primary btn-block" 
+                            onclick="CheckIn.confirmPhoto('${photoData}')">
+                        <i class="fas fa-check"></i> Yes, use this photo
+                    </button>
+                    <button class="btn btn-outline btn-block" 
+                            onclick="CheckIn.retakePhoto()">
+                        <i class="fas fa-redo"></i> No, take again
+                    </button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    },
+    
+    confirmPhoto(photoData) {
+        AppState.checkInFlow.livePhoto = photoData;
+        document.getElementById('photoConfirmModal')?.remove();
+        
+        this.completePublicCheckIn();
+    },
+    
+    retakePhoto() {
+        document.getElementById('photoConfirmModal')?.remove();
+        this.openCameraForLivePhoto();
+    },
+    
+    completePublicCheckIn() {
+        console.log('👤 Completing public check-in');
+        
         const event = AppState.events.find(e => e.id === AppState.checkInFlow.eventId);
         if (event) {
+            const colors = ['#8B5CF6', '#EC4899', '#3B82F6', '#10B981', '#F59E0B'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            AppState.checkInFlow.livePhoto = `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="${randomColor}"/><text x="100" y="110" font-size="24" text-anchor="middle" fill="white">Live Photo</text></svg>`;
+            
             const tempProfile = {
                 id: Date.now(),
                 name: AppState.userProfile.name,
@@ -8203,20 +9408,15 @@ const CheckIn = {
                 userId: AppState.currentUser?.id
             };
             
-            // Add to mock profiles for this session
             MOCK_PROFILES.push(tempProfile);
-            
-            // Set as current event
             AppState.currentEvent = event;
             
-            // Track analytics
             AppState.analytics.eventViews.total++;
             const today = new Date().toISOString().split('T')[0];
             AppState.analytics.eventViews.byDate[today] = (AppState.analytics.eventViews.byDate[today] || 0) + 1;
             
             AppUI.showNotification(`Welcome to ${event.name}! Your profile is live.`, 'success');
             
-            // Navigate to connect page
             setTimeout(() => Router.navigateTo('connect'), 1000);
         }
         
@@ -8231,14 +9431,12 @@ const CheckIn = {
         if (event) {
             AppState.currentEvent = event;
             
-            // Track analytics
             AppState.analytics.eventViews.total++;
             const today = new Date().toISOString().split('T')[0];
             AppState.analytics.eventViews.byDate[today] = (AppState.analytics.eventViews.byDate[today] || 0) + 1;
             
             AppUI.showNotification(`Welcome to ${event.name}! You're browsing privately.`, 'success');
             
-            // Navigate to connect page (will show no profiles since private)
             setTimeout(() => Router.navigateTo('connect'), 1000);
         }
         
