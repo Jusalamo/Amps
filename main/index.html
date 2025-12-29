@@ -610,8 +610,8 @@ body {
 /* Bookmark Button Position */
 .bookmark-btn {
     position: absolute;
-    bottom: 12px;
-    right: 12px;
+    top: 12px;        
+    right: 12px;      
     width: 40px;
     height: 40px;
     background: rgba(0, 0, 0, 0.7);
@@ -1434,6 +1434,34 @@ body {
     backdrop-filter: blur(20px);
 }
 
+/* Notification badge with counter */
+.notification-badge {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notification-count {
+    position: absolute;
+    top: -8px;          /* Position above the badge */
+    right: -8px;        /* Position to the right of the badge */
+    background: var(--danger-color, #ef4444);
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    min-width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 6px;
+    border: 2px solid var(--bg-card, #1a1a1a); /* Border to make it stand out */
+    z-index: 1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
 .notifications-header {
     padding: 16px 20px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -1469,7 +1497,6 @@ body {
     background-position: center;
     flex-shrink: 0;
 }
-
 /* ===== ANALYTICS ===== */
 .analytics-grid {
     display: grid;
@@ -5157,102 +5184,139 @@ const NAMIBIA_COORDINATES = {
     katimaMulilo: { lat: -17.5036, lng: 24.2756 }
 };
 
-// ===== ENHANCED MOCK DATA =====
-const MOCK_PROFILES = [
-    {
-        id: 1,
-        name: 'Nadia',
-        age: 24,
-        bio: 'Event Photographer & Dancer. Love capturing moments and moving to the beat.',
-        interests: ['Photography', 'Dance', 'Art', 'Music'],
-        eventId: 1,
-        location: 'Main Stage',
-        online: true,
-        verified: true,
-        cardColor: 'var(--card-purple)',
-        livePhoto: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="%23C4B5FD"/><text x="100" y="110" font-size="24" text-anchor="middle" fill="white">Live Photo</text></svg>',
-        distance: '15m away',
-        gender: 'female',
-        isPublic: true,
-        tempProfile: true
-    },
-    {
-        id: 2,
-        name: 'David',
-        age: 28,
-        bio: 'Tech Entrepreneur at Windhoek Startup Hub. Love connecting innovators.',
-        interests: ['Technology', 'Startups', 'Networking', 'Coffee'],
-        eventId: 1,
-        location: 'VIP Lounge',
-        online: true,
-        verified: true,
-        cardColor: 'var(--card-blue)',
-        livePhoto: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="%23BAE6FD"/><text x="100" y="110" font-size="24" text-anchor="middle" fill="white">Live Photo</text></svg>',
-        distance: '25m away',
-        gender: 'male',
-        isPublic: true,
-        tempProfile: true
-    }
-];
+// ===== DATA ARCHITECTURE: SEPARATE DEMO AND REAL USER DATA =====
+const DEMO_DATA = {
+    events: [
+        {
+            id: 1,
+            name: 'Windhoek Tech Summit 2024',
+            location: 'Windhoek Country Club Resort',
+            address: '123 Luxury Street, Windhoek, Namibia',
+            date: 'Tonight',
+            time: '6:00 PM - 11:00 PM',
+            attendees: 156,
+            maxAttendees: 200,
+            description: 'The premier tech networking event in Namibia. Connect with tech entrepreneurs, developers, and investors from across the country.',
+            category: 'Technology',
+            coverImage: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&h=300&fit=crop',
+            qrCode: 'AMPS_TECH_2024_001',
+            radius: 100,
+            organizerId: 1,
+            coordinates: { lat: -22.5609, lng: 17.0658 },
+            price: 150.00,
+            currency: 'NAD',
+            ageRange: '18-45',
+            genderPreference: 'Everyone',
+            tags: ['Tech', 'Networking', 'Startups', 'AI', 'Innovation'],
+            bookmarked: true,
+            rsvp: 'going',
+            geoFencing: true,
+            customTheme: '#8B5CF6',
+            isFeatured: true,
+            geofenceRadius: 100,
+            connectionProfiles: []
+        },
+        {
+            id: 2,
+            name: 'Namibian Art & Culture Festival',
+            location: 'National Theatre of Namibia',
+            address: 'Robert Mugabe Ave, Windhoek, Namibia',
+            date: 'Tomorrow',
+            time: '5:00 PM - 10:00 PM',
+            attendees: 89,
+            maxAttendees: 150,
+            description: 'Celebrate Namibian heritage through art exhibitions, traditional dance, and cultural performances.',
+            category: 'Art & Culture',
+            coverImage: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&h=300&fit=crop',
+            qrCode: 'AMPS_ART_2024_002',
+            radius: 80,
+            organizerId: 2,
+            coordinates: { lat: -22.5690, lng: 17.0836 },
+            price: 80.00,
+            currency: 'NAD',
+            ageRange: '16+',
+            genderPreference: 'Everyone',
+            tags: ['Art', 'Culture', 'Heritage', 'Traditional', 'Exhibition'],
+            bookmarked: true,
+            rsvp: 'maybe',
+            geoFencing: true,
+            customTheme: '#EC4899',
+            isFeatured: true,
+            geofenceRadius: 80,
+            connectionProfiles: []
+        }
+    ],
+    profiles: [
+        {
+            id: 1,
+            name: 'Nadia',
+            age: 24,
+            bio: 'Event Photographer & Dancer. Love capturing moments and moving to the beat.',
+            interests: ['Photography', 'Dance', 'Art', 'Music'],
+            eventId: 1,
+            location: 'Main Stage',
+            online: true,
+            verified: true,
+            cardColor: 'var(--card-purple)',
+            livePhoto: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="%23C4B5FD"/><text x="100" y="110" font-size="24" text-anchor="middle" fill="white">Live Photo</text></svg>',
+            distance: '15m away',
+            gender: 'female',
+            isPublic: true,
+            tempProfile: true
+        },
+        {
+            id: 2,
+            name: 'David',
+            age: 28,
+            bio: 'Tech Entrepreneur at Windhoek Startup Hub. Love connecting innovators.',
+            interests: ['Technology', 'Startups', 'Networking', 'Coffee'],
+            eventId: 1,
+            location: 'VIP Lounge',
+            online: true,
+            verified: true,
+            cardColor: 'var(--card-blue)',
+            livePhoto: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="%23BAE6FD"/><text x="100" y="110" font-size="24" text-anchor="middle" fill="white">Live Photo</text></svg>',
+            distance: '25m away',
+            gender: 'male',
+            isPublic: true,
+            tempProfile: true
+        }
+    ],
+    matches: [
+        {
+            id: 1,
+            userId: 'demo_user',
+            matchId: 2,
+            timestamp: new Date().toISOString(),
+            eventId: 1,
+            lastMessage: 'Hey! How\'s the event?',
+            lastMessageTime: '2:15 PM',
+            unread: true
+        }
+    ],
+    tickets: [
+        {
+            id: 1,
+            eventId: 1,
+            eventName: 'Windhoek Tech Summit 2024',
+            purchaseDate: new Date().toISOString(),
+            price: 150.00,
+            currency: 'NAD',
+            qrCode: 'AMPS_TECH_2024_001_DEMO',
+            status: 'active',
+            quantity: 1
+        }
+    ]
+};
 
-const MOCK_EVENTS = [
-    {
-        id: 1,
-        name: 'Windhoek Tech Summit 2024',
-        location: 'Windhoek Country Club Resort',
-        address: '123 Luxury Street, Windhoek, Namibia',
-        date: 'Tonight',
-        time: '6:00 PM - 11:00 PM',
-        attendees: 156,
-        maxAttendees: 200,
-        description: 'The premier tech networking event in Namibia. Connect with tech entrepreneurs, developers, and investors from across the country.',
-        category: 'Tech Networking',
-        coverImage: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&h=300&fit=crop',
-        qrCode: 'AMPS_TECH_2024_001',
-        radius: 100,
-        organizerId: 1,
-        coordinates: { lat: -22.5609, lng: 17.0658 },
-        price: 150.00,
-        currency: 'NAD',
-        ageRange: '18-45',
-        genderPreference: 'Everyone',
-        tags: ['Tech', 'Networking', 'Startups', 'AI', 'Innovation'],
-        bookmarked: true,
-        rsvp: 'going',
-        geoFencing: true,
-        customTheme: '#8B5CF6',
-        isFeatured: true,
-        geofenceRadius: 100
-    },
-    {
-        id: 2,
-        name: 'Namibian Art & Culture Festival',
-        location: 'National Theatre of Namibia',
-        address: 'Robert Mugabe Ave, Windhoek, Namibia',
-        date: 'Tomorrow',
-        time: '5:00 PM - 10:00 PM',
-        attendees: 89,
-        maxAttendees: 150,
-        description: 'Celebrate Namibian heritage through art exhibitions, traditional dance, and cultural performances.',
-        category: 'Art & Culture',
-        coverImage: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&h=300&fit=crop',
-        qrCode: 'AMPS_ART_2024_002',
-        radius: 80,
-        organizerId: 2,
-        coordinates: { lat: -22.5690, lng: 17.0836 },
-        price: 80.00,
-        currency: 'NAD',
-        ageRange: '16+',
-        genderPreference: 'Everyone',
-        tags: ['Art', 'Culture', 'Heritage', 'Traditional', 'Exhibition'],
-        bookmarked: true,
-        rsvp: 'maybe',
-        geoFencing: true,
-        customTheme: '#EC4899',
-        isFeatured: true,
-        geofenceRadius: 80
-    }
-];
+// Initialize empty USER_DATA structure for real users
+const initializeUserData = () => ({
+    events: [],
+    profiles: [],
+    matches: [],
+    tickets: [],
+    connectionProfiles: []
+});
 
 const CURRENCIES = [
     { code: 'NAD', symbol: 'N$', name: 'Namibian Dollar', conversionRate: 1 },
@@ -5272,9 +5336,8 @@ let AppState = {
     dailyLikes: 10,
     isPro: false,
     isMax: false,
-    matches: [],
-    events: MOCK_EVENTS,
-    attendees: MOCK_PROFILES,
+    isDemoMode: false,
+    data: initializeUserData(),
     cameraStream: null,
     facingMode: 'user',
     history: ['landing'],
@@ -5283,19 +5346,19 @@ let AppState = {
     lastMatch: null,
     chatMessages: {},
     userProfile: {
-        name: 'Demo User',
-        email: 'demo@amps.com',
-        age: 28,
-        occupation: 'Software Engineer',
-        company: 'Tech Corp Namibia',
-        bio: 'Passionate about technology and building meaningful connections at events in Namibia.',
-        interests: ['Technology', 'Music', 'Travel', 'Fitness', 'Photography'],
-        profilePhoto: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="%238B5CF6"/><text x="100" y="120" font-size="24" text-anchor="middle" fill="white">User</text></svg>',
-        phone: '+264 81 123 4567',
-        location: 'Windhoek, Namibia',
-        gender: 'male',
+        name: '',
+        email: '',
+        age: null,
+        occupation: '',
+        company: '',
+        bio: '',
+        interests: [],
+        profilePhoto: null,
+        phone: '',
+        location: '',
+        gender: '',
         visibility: 'public',
-        bookmarkedEvents: [1, 2],
+        bookmarkedEvents: [],
         notifications: {
             matches: true,
             messages: true,
@@ -5323,12 +5386,12 @@ let AppState = {
         verifiedOnly: false,
         searchQuery: ''
     },
-    tickets: [],
     currency: 'NAD',
     notifications: [],
     map: null,
     wizardMap: null,
     wizardMarker: null,
+    geofenceLayer: null,
     mapDrawerOpen: false,
     mapDrawerPosition: 0,
     isDraggingMap: false,
@@ -5350,64 +5413,22 @@ let AppState = {
     wizardData: {
         geofenceRadius: 100,
         coordinates: null,
+        locationName: '',
         eventName: '',
         eventDescription: '',
-        eventLocation: '',
-        eventCategory: 'tech',
         eventPrice: 0,
         eventCurrency: 'NAD',
+        eventCategory: 'tech',
         eventMaxAttendees: 100,
         posterUrl: null,
         posterType: null,
-        customTheme: '#8B5CF6',
         eventTags: ''
     },
     analytics: {
-        profileViews: {
-            total: 1245,
-            byDate: {
-                '2024-12-24': 145,
-                '2024-12-25': 189,
-                '2024-12-26': 210,
-                '2024-12-27': 256,
-                '2024-12-28': 298,
-                '2024-12-29': 147
-            }
-        },
-        eventViews: {
-            total: 567,
-            byDate: {
-                '2024-12-24': 45,
-                '2024-12-25': 67,
-                '2024-12-26': 89,
-                '2024-12-27': 123,
-                '2024-12-28': 156,
-                '2024-12-29': 87
-            }
-        },
-        matches: {
-            total: 24,
-            byDate: {
-                '2024-12-24': 3,
-                '2024-12-25': 5,
-                '2024-12-26': 4,
-                '2024-12-27': 6,
-                '2024-12-28': 4,
-                '2024-12-29': 2
-            }
-        },
-        messages: {
-            sent: 89,
-            received: 124,
-            byDate: {
-                '2024-12-24': 15,
-                '2024-12-25': 23,
-                '2024-12-26': 28,
-                '2024-12-27': 45,
-                '2024-12-28': 56,
-                '2024-12-29': 46
-            }
-        }
+        profileViews: { total: 0, byDate: {} },
+        eventViews: { total: 0, byDate: {} },
+        matches: { total: 0, byDate: {} },
+        messages: { sent: 0, received: 0, byDate: {} }
     }
 };
 
@@ -5542,7 +5563,18 @@ function loadState() {
         const savedState = localStorage.getItem('amps_state');
         if (savedState) {
             const parsed = JSON.parse(savedState);
-            AppState = { ...AppState, ...parsed };
+            
+            // Preserve data separation
+            if (parsed.isDemoMode) {
+                AppState.data = DEMO_DATA;
+            } else if (parsed.data) {
+                AppState.data = parsed.data;
+            }
+            
+            // Merge other state properties
+            const { data, ...otherState } = parsed;
+            AppState = { ...AppState, ...otherState };
+            
             console.log('📂 State loaded from localStorage');
         }
     } catch (error) {
@@ -5584,6 +5616,47 @@ function showErrorFallback() {
         `;
     }
 }
+
+// ===== AUTO-ROTATING CAROUSELS =====
+const CarouselAutoplay = {
+    intervals: {},
+    
+    start(carouselId, delay = 5000) {
+        this.stop(carouselId);
+        this.intervals[carouselId] = setInterval(() => {
+            EventsCarousel.next(carouselId);
+        }, delay);
+    },
+    
+    stop(carouselId) {
+        if (this.intervals[carouselId]) {
+            clearInterval(this.intervals[carouselId]);
+            delete this.intervals[carouselId];
+        }
+    },
+    
+    pause(carouselId) {
+        this.stop(carouselId);
+    },
+    
+    resume(carouselId, delay = 5000) {
+        this.start(carouselId, delay);
+    },
+    
+    initAutoPlayForPage() {
+        if (AppState.currentPage === 'home') {
+            // Start both carousels
+            setTimeout(() => {
+                if (document.getElementById('myEventsCarousel')) {
+                    this.start('myEvents', 5000);
+                }
+                if (document.getElementById('featuredCarousel')) {
+                    this.start('featured', 5000);
+                }
+            }, 1000);
+        }
+    }
+};
 
 // ===== ROUTER =====
 const Router = {
@@ -5640,6 +5713,11 @@ const Router = {
             
             // Initialize page-specific functionality
             this.initPageFunctionality();
+            
+            // Initialize carousel autoplay for home page
+            if (AppState.currentPage === 'home') {
+                setTimeout(() => CarouselAutoplay.initAutoPlayForPage(), 500);
+            }
         } catch (error) {
             console.error('❌ Render error:', error);
             content.innerHTML = `
@@ -5671,8 +5749,20 @@ const Router = {
                 setTimeout(() => {
                     this.initHomePageFeatures();
                     EventsCarousel.init('myEvents');
-                    if (AppState.events.filter(e => e.isFeatured).length > 0) {
-                        FeaturedCarousel.start();
+                    EventsCarousel.init('featured');
+                    
+                    // Setup carousel pause on hover
+                    const myEventsCarousel = document.getElementById('myEventsCarousel');
+                    const featuredCarousel = document.getElementById('featuredCarousel');
+                    
+                    if (myEventsCarousel) {
+                        myEventsCarousel.addEventListener('mouseenter', () => CarouselAutoplay.pause('myEvents'));
+                        myEventsCarousel.addEventListener('mouseleave', () => CarouselAutoplay.resume('myEvents'));
+                    }
+                    
+                    if (featuredCarousel) {
+                        featuredCarousel.addEventListener('mouseenter', () => CarouselAutoplay.pause('featured'));
+                        featuredCarousel.addEventListener('mouseleave', () => CarouselAutoplay.resume('featured'));
                     }
                 }, 100);
                 break;
@@ -5680,21 +5770,10 @@ const Router = {
     },
     
     initHomePageFeatures() {
-        this.renderBookmarkedEvents();
-        
         // Initialize carousels
         setTimeout(() => {
             EventsCarousel.init('myEvents');
             EventsCarousel.init('featured');
-            
-            // Setup featured carousel pause on hover
-            const featuredCarousel = document.getElementById('featuredCarousel');
-            if (featuredCarousel) {
-                featuredCarousel.addEventListener('mouseenter', () => FeaturedCarousel.pause());
-                featuredCarousel.addEventListener('mouseleave', () => FeaturedCarousel.resume());
-                featuredCarousel.addEventListener('touchstart', () => FeaturedCarousel.pause());
-                featuredCarousel.addEventListener('touchend', () => setTimeout(() => FeaturedCarousel.resume(), 3000));
-            }
         }, 500);
     },
     
@@ -5753,7 +5832,7 @@ const Router = {
         
         // Update bottom nav
         if (AppState.currentUser && ['home', 'events', 'connect', 'matches', 'profile'].includes(AppState.currentPage)) {
-            const unreadCount = AppState.matches.filter(m => m.unread).length;
+            const unreadCount = AppState.data.matches.filter(m => m.unread).length;
             bottomNav.innerHTML = `
                 <div class="bottom-nav">
                     <button class="nav-item ${AppState.currentPage === 'home' ? 'active' : ''}" onclick="Router.navigateTo('home')">
@@ -5822,7 +5901,7 @@ const Router = {
         }
     },
     
-    // Page Renderers
+    // ===== PAGE RENDERERS =====
     renderLandingPage() {
         return `
             <div class="hero">
@@ -5924,17 +6003,15 @@ const Router = {
     },
     
     renderHomePage() {
-        const bookmarkedEvents = AppState.events.filter(e => e.bookmarked);
+        const bookmarkedEvents = AppState.data.events.filter(e => e.bookmarked);
         const userEvents = AppState.userProfile.createdEvents || [];
         const showMyEvents = (AppState.isPro || AppState.isMax) && userEvents.length > 0;
         
         return `
             <div class="profile-header">
-                <div class="avatar ${AppState.isPro ? 'pro' : AppState.isMax ? 'pro-plus' : ''}" 
-                     style="background-image: url('${AppState.userProfile.profilePhoto}'); background-size: cover; background-position: center;">
-                </div>
-                <h2>${AppState.userProfile.name}</h2>
-                <p class="text-gradient">Event Enthusiast • Amps User</p>
+                ${this.renderProfilePicture(AppState.userProfile.profilePhoto)}
+                <h2>${AppState.userProfile.name || 'Welcome!'}</h2>
+                <p class="text-gradient">${AppState.userProfile.name ? 'Event Enthusiast • Amps User' : 'Complete your profile to get started'}</p>
                 ${AppState.isPro ? 
                     '<div class="pro-badge mt-2"><i class="fas fa-crown"></i> PRO MEMBER</div>' : 
                     AppState.isMax ?
@@ -5945,11 +6022,11 @@ const Router = {
             
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-value">${AppState.events.length}</div>
+                    <div class="stat-value">${AppState.data.events.length}</div>
                     <div class="stat-label">Events</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value">${AppState.matches.length}</div>
+                    <div class="stat-value">${AppState.data.matches.length}</div>
                     <div class="stat-label">Matches</div>
                 </div>
                 <div class="stat-card">
@@ -6007,7 +6084,7 @@ const Router = {
             
             <h3 class="mt-6 mb-4">Quick Actions</h3>
             <div class="quick-actions">
-                <div class="action-card primary" onclick="CheckIn.start()">
+                <div class="action-card primary" onclick="CheckIn.startScan()">
                     <i class="fas fa-qrcode"></i>
                     <h4>Check In</h4>
                     <p class="text-gray-400">Scan event QR</p>
@@ -6061,16 +6138,34 @@ const Router = {
         `;
     },
     
+    renderProfilePicture(photoUrl) {
+        if (!photoUrl || photoUrl.includes('data:image/svg+xml')) {
+            return `
+                <div class="avatar avatar-placeholder" onclick="Profile.uploadPhoto()">
+                    <i class="fas fa-camera"></i>
+                    <span>Add Photo</span>
+                </div>
+            `;
+        }
+        return `
+            <div class="avatar" style="background-image: url('${photoUrl}'); background-size: cover; background-position: center;">
+                <button class="absolute bottom-0 right-0 bg-primary text-white p-2 rounded-full" onclick="Profile.uploadPhoto()">
+                    <i class="fas fa-camera"></i>
+                </button>
+            </div>
+        `;
+    },
+    
     renderMyEventsCarouselSlides() {
-        const bookmarkedEvents = AppState.events.filter(e => e.bookmarked);
+        const bookmarkedEvents = AppState.data.events.filter(e => e.bookmarked);
         if (bookmarkedEvents.length === 0) {
             return `
                 <div class="carousel-slide">
                     <div class="event-card-featured" onclick="Router.navigateTo('events')" style="grid-column: span 2;">
                         <div class="event-card-content text-center py-12">
                             <i class="fas fa-bookmark" style="font-size: 48px; color: var(--gray-400); margin-bottom: 16px;"></i>
-                            <h4 class="mb-2">No Bookmarked Events</h4>
-                            <p class="text-gray-400">Browse events and save your favorites</p>
+                            <h4 class="mb-2">${AppState.isDemoMode ? 'Bookmarked Events' : 'No Bookmarked Events'}</h4>
+                            <p class="text-gray-400">${AppState.isDemoMode ? 'Demo events shown' : 'Browse events and save your favorites'}</p>
                         </div>
                     </div>
                 </div>
@@ -6116,15 +6211,15 @@ const Router = {
     },
     
     renderFeaturedEventsCarouselSlides() {
-        const featuredEvents = AppState.events.filter(e => e.isFeatured);
+        const featuredEvents = AppState.data.events.filter(e => e.isFeatured);
         if (featuredEvents.length === 0) {
             return `
                 <div class="carousel-slide">
                     <div class="event-card-featured" onclick="Router.navigateTo('events')">
                         <div class="event-card-content text-center py-12">
                             <i class="fas fa-star" style="font-size: 48px; color: var(--gray-400); margin-bottom: 16px;"></i>
-                            <h4 class="mb-2">No Featured Events</h4>
-                            <p class="text-gray-400">Check back soon for featured events</p>
+                            <h4 class="mb-2">${AppState.isDemoMode ? 'Featured Events' : 'No Featured Events'}</h4>
+                            <p class="text-gray-400">${AppState.isDemoMode ? 'Demo events shown' : 'Check back soon for featured events'}</p>
                         </div>
                     </div>
                 </div>
@@ -6162,9 +6257,9 @@ const Router = {
     renderCarouselDots(carouselId) {
         let eventCount = 0;
         if (carouselId === 'myEvents') {
-            eventCount = AppState.events.filter(e => e.bookmarked).length;
+            eventCount = AppState.data.events.filter(e => e.bookmarked).length;
         } else if (carouselId === 'featured') {
-            eventCount = AppState.events.filter(e => e.isFeatured).length;
+            eventCount = AppState.data.events.filter(e => e.isFeatured).length;
         }
         
         const slides = carouselId === 'myEvents' ? Math.ceil(eventCount / 2) : eventCount;
@@ -6205,31 +6300,47 @@ const Router = {
                     </div>
                 </div>
                 <div class="events-list" id="eventsList">
-                    ${AppState.events.map(event => `
-                        <div class="event-card-featured" onclick="Router.navigateToEventDetail(${event.id})">
-                            <div class="event-card-image" style="background: linear-gradient(135deg, ${event.customTheme || '#8B5CF6'}, ${event.customTheme ? 'rgba(255,255,255,0.8)' : '#EC4899'});">
-                                <div class="attendee-count">
-                                    <i class="fas fa-users"></i> ${event.attendees}
-                                </div>
-                            </div>
-                            <div class="event-card-content">
-                                <h4 class="mb-2">${event.name}</h4>
-                                <p class="text-gray-400 text-sm mb-2">
-                                    <i class="fas fa-map-marker-alt"></i> ${event.location}
-                                </p>
-                                <div class="flex items-center gap-4 text-sm">
-                                    <span class="text-gradient">
+                    ${AppState.data.events.length > 0 ? 
+                        AppState.data.events.map(event => `
+                            <div class="event-card-featured" onclick="Router.navigateToEventDetail(${event.id})">
+                                <div class="event-card-image" style="background: linear-gradient(135deg, ${event.customTheme || '#8B5CF6'}, ${event.customTheme ? 'rgba(255,255,255,0.8)' : '#EC4899'});">
+                                    <div class="attendee-count">
                                         <i class="fas fa-users"></i> ${event.attendees}
-                                    </span>
-                                    <span class="text-gray-400">${event.date}</span>
-                                    <span class="text-yellow-500">${formatCurrency(event.price, AppState.currency)}</span>
+                                    </div>
                                 </div>
+                                <div class="event-card-content">
+                                    <h4 class="mb-2">${event.name}</h4>
+                                    <p class="text-gray-400 text-sm mb-2">
+                                        <i class="fas fa-map-marker-alt"></i> ${event.location}
+                                    </p>
+                                    <div class="flex items-center gap-4 text-sm">
+                                        <span class="text-gradient">
+                                            <i class="fas fa-users"></i> ${event.attendees}
+                                        </span>
+                                        <span class="text-gray-400">${event.date}</span>
+                                        <span class="text-yellow-500">${formatCurrency(event.price, AppState.currency)}</span>
+                                    </div>
+                                </div>
+                                <button class="bookmark-btn ${event.bookmarked ? 'active' : ''}" onclick="Events.toggleBookmark(${event.id}); event.stopPropagation();">
+                                    <i class="fas fa-bookmark"></i>
+                                </button>
                             </div>
-                            <button class="bookmark-btn ${event.bookmarked ? 'active' : ''}" onclick="Events.toggleBookmark(${event.id}); event.stopPropagation();">
-                                <i class="fas fa-bookmark"></i>
-                            </button>
+                        `).join('') :
+                        `
+                        <div class="empty-state text-center py-12">
+                            <i class="fas fa-calendar" style="font-size: 64px; color: var(--gray-600); margin-bottom: 16px;"></i>
+                            <h3 class="mb-2">${AppState.isDemoMode ? 'Demo Events' : 'No Events Yet'}</h3>
+                            <p class="text-gray-400 mb-6">
+                                ${AppState.isDemoMode ? 'Demo events are shown. Create your own events when you upgrade to Pro!' : 'Browse featured events or create your own!'}
+                            </p>
+                            ${!AppState.isDemoMode ? `
+                                <button class="btn btn-primary" onclick="${AppState.isPro || AppState.isMax ? 'Events.showWizard()' : 'AppUI.showProModal()'}">
+                                    <i class="fas fa-plus"></i> Create Your First Event
+                                </button>
+                            ` : ''}
                         </div>
-                    `).join('')}
+                        `
+                    }
                 </div>
             </div>
             
@@ -6242,7 +6353,10 @@ const Router = {
     },
     
     renderConnectPage() {
-        const availableProfiles = getAvailableProfiles();
+        // Get profiles from current event's connection pool
+        const availableProfiles = AppState.currentEvent?.connectionProfiles?.filter(p => 
+            p.userId !== AppState.currentUser?.id && p.isPublic === true
+        ) || [];
         
         if (availableProfiles.length === 0) {
             return `
@@ -6260,17 +6374,18 @@ const Router = {
                                 <i class="fas fa-user-friends" 
                                    style="font-size: 80px; color: var(--gray-600); margin-bottom: 24px; opacity: 0.5;">
                                 </i>
-                                <h3 class="mb-3">No More Profiles</h3>
+                                <h3 class="mb-3">${AppState.currentEvent ? 'No One Here Yet' : 'Not Checked In'}</h3>
                                 <p class="text-gray-400 mb-6">
-                                    You've seen everyone at this event!<br>
-                                    Check back later or try adjusting your filters.
+                                    ${AppState.currentEvent ? 
+                                        'Be the first to check in! Others will appear here soon.' : 
+                                        'Check in to an event to start connecting with attendees.'}
                                 </p>
                                 <div class="flex flex-col gap-3">
-                                    <button class="btn btn-primary" onclick="Router.navigateTo('events')">
-                                        <i class="fas fa-calendar"></i> Browse Events
+                                    <button class="btn btn-primary" onclick="CheckIn.startScan()">
+                                        <i class="fas fa-qrcode"></i> Check In to Event
                                     </button>
-                                    <button class="btn btn-outline" onclick="AppUI.showFiltersModal()">
-                                        <i class="fas fa-filter"></i> Adjust Filters
+                                    <button class="btn btn-outline" onclick="Router.navigateTo('events')">
+                                        <i class="fas fa-calendar"></i> Browse Events
                                     </button>
                                 </div>
                             </div>
@@ -6314,27 +6429,24 @@ const Router = {
                 
                 <div class="card-stack">
                     <div class="card-container">
-                        <div class="profile-card" id="profileCard1" style="background: ${currentProfile.cardColor};">
+                        <div class="profile-card" id="profileCard1" style="background: #8B5CF6;">
                             <div class="card-frame"></div>
-                            <div class="card-content" style="background: ${currentProfile.cardColor};">
-                                <div class="profile-image" style="background: linear-gradient(135deg, ${currentProfile.cardColor}, rgba(255,255,255,0.8));">
-                                    ${currentProfile.online ? `
-                                        <div class="live-badge">
-                                            <i class="fas fa-camera"></i>
-                                            <span>LIVE</span>
-                                        </div>
+                            <div class="card-content" style="background: #8B5CF6;">
+                                <div class="profile-image" style="background: linear-gradient(135deg, #8B5CF6, rgba(255,255,255,0.8));">
+                                    ${currentProfile.photo ? `
+                                        <img src="${currentProfile.photo}" alt="${currentProfile.name}" style="width: 100%; height: 100%; object-fit: cover;">
                                     ` : ''}
                                 </div>
                                 <div class="profile-info">
                                     <h2>${currentProfile.name}, ${currentProfile.age}</h2>
                                     <p class="text-gray-600 mb-4">
-                                        <i class="fas fa-map-marker-alt"></i> ${currentProfile.location} • ${currentProfile.distance}
+                                        <i class="fas fa-map-marker-alt"></i> ${currentProfile.location || AppState.currentEvent.location}
                                     </p>
                                     
-                                    <p class="mb-4">${currentProfile.bio}</p>
+                                    <p class="mb-4">${currentProfile.bio || 'Looking to connect!'}</p>
                                     
                                     <div class="interests mb-6">
-                                        ${currentProfile.interests.map(interest => `
+                                        ${currentProfile.interests.slice(0, 5).map(interest => `
                                             <span class="interest-tag">${interest}</span>
                                         `).join('')}
                                     </div>
@@ -6368,14 +6480,14 @@ const Router = {
         return `
             <h2 class="mb-4">Your Matches</h2>
             
-            ${AppState.matches.length > 0 ? `
+            ${AppState.data.matches.length > 0 ? `
                 <div class="matches-list">
-                    ${AppState.matches.map(match => {
-                        const profile = MOCK_PROFILES.find(p => p.id === match.matchId);
-                        if (!profile) return '';
+                    ${AppState.data.matches.map(match => {
+                        const profile = AppState.data.profiles.find(p => p.id === match.matchId) || 
+                                       { name: 'User', age: '' };
                         return `
                             <div class="match-item" onclick="Chat.open(${match.matchId})">
-                                <div class="match-avatar" style="background: ${profile.cardColor};"></div>
+                                <div class="match-avatar" style="background: ${profile.cardColor || '#8B5CF6'};"></div>
                                 <div class="match-info">
                                     <h4>${profile.name}, ${profile.age}</h4>
                                     <p class="text-gray-400 text-sm">${match.lastMessage || 'New match!'}</p>
@@ -6405,14 +6517,9 @@ const Router = {
     renderProfilePage() {
         return `
             <div class="profile-header">
-                <div class="avatar ${AppState.isPro ? 'pro' : AppState.isMax ? 'pro-plus' : ''}" 
-                     style="background-image: url('${AppState.userProfile.profilePhoto}'); background-size: cover; background-position: center;">
-                    <button class="absolute bottom-0 right-0 bg-primary text-white p-2 rounded-full">
-                        <i class="fas fa-camera"></i>
-                    </button>
-                </div>
-                <h2>${AppState.userProfile.name}, ${AppState.userProfile.age}</h2>
-                <p class="text-gradient">${AppState.userProfile.occupation} • ${AppState.userProfile.location}</p>
+                ${this.renderProfilePicture(AppState.userProfile.profilePhoto)}
+                <h2>${AppState.userProfile.name || 'Complete Your Profile'}, ${AppState.userProfile.age || ''}</h2>
+                <p class="text-gradient">${AppState.userProfile.occupation || 'Add occupation'} • ${AppState.userProfile.location || 'Add location'}</p>
                 
                 <div class="flex gap-3 mt-4">
                     ${AppState.isPro ? 
@@ -6430,28 +6537,31 @@ const Router = {
             
             <div class="card mb-4">
                 <h3 class="mb-4">About</h3>
-                <p class="text-gray-300 mb-4">${AppState.userProfile.bio}</p>
+                <p class="text-gray-300 mb-4">${AppState.userProfile.bio || 'Add a bio to tell others about yourself'}</p>
                 <div class="flex flex-wrap gap-2">
-                    ${AppState.userProfile.interests.map(interest => `
-                        <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">${interest}</span>
-                    `).join('')}
+                    ${AppState.userProfile.interests.length > 0 ? 
+                        AppState.userProfile.interests.map(interest => `
+                            <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">${interest}</span>
+                        `).join('') :
+                        '<span class="text-gray-400 text-sm">Add interests to find better matches</span>'
+                    }
                 </div>
                 <button class="btn btn-outline btn-block mt-4" onclick="Router.navigateTo('edit-profile')">
-                    <i class="fas fa-edit"></i> Edit Profile
+                    <i class="fas fa-edit"></i> ${AppState.userProfile.name ? 'Edit Profile' : 'Complete Profile'}
                 </button>
             </div>
             
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-value">${AppState.events.length}</div>
+                    <div class="stat-value">${AppState.data.events.length}</div>
                     <div class="stat-label">Events</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value">${AppState.matches.length}</div>
+                    <div class="stat-value">${AppState.data.matches.length}</div>
                     <div class="stat-label">Matches</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value">89%</div>
+                    <div class="stat-value">${AppState.userProfile.name ? '89%' : '0%'}</div>
                     <div class="stat-label">Response</div>
                 </div>
             </div>
@@ -6494,8 +6604,7 @@ const Router = {
             <h2 class="mb-6">Edit Profile</h2>
             
             <div class="profile-photo-upload mb-6">
-                <div class="avatar" style="background-image: url('${AppState.userProfile.profilePhoto}'); background-size: cover; background-position: center; width: 120px; height: 120px;">
-                </div>
+                ${this.renderProfilePicture(AppState.userProfile.profilePhoto)}
                 <button class="upload-button" onclick="document.getElementById('profilePhotoUpload').click()">
                     <i class="fas fa-camera"></i>
                 </button>
@@ -6505,34 +6614,34 @@ const Router = {
             
             <div class="form-group">
                 <label class="form-label">Full Name</label>
-                <input type="text" class="form-control" id="editName" value="${AppState.userProfile.name}">
+                <input type="text" class="form-control" id="editName" value="${AppState.userProfile.name || ''}">
             </div>
             
             <div class="form-group">
                 <label class="form-label">Bio</label>
-                <textarea class="form-control" id="editBio" rows="3">${AppState.userProfile.bio}</textarea>
-                <div class="text-right text-xs text-gray-400" id="bioCounter">${AppState.userProfile.bio.length}/200</div>
+                <textarea class="form-control" id="editBio" rows="3">${AppState.userProfile.bio || ''}</textarea>
+                <div class="text-right text-xs text-gray-400" id="bioCounter">${AppState.userProfile.bio?.length || 0}/200</div>
             </div>
             
             <div class="form-group">
                 <label class="form-label">Occupation</label>
-                <input type="text" class="form-control" id="editOccupation" value="${AppState.userProfile.occupation}">
+                <input type="text" class="form-control" id="editOccupation" value="${AppState.userProfile.occupation || ''}">
             </div>
             
             <div class="form-group">
                 <label class="form-label">Company</label>
-                <input type="text" class="form-control" id="editCompany" value="${AppState.userProfile.company}">
+                <input type="text" class="form-control" id="editCompany" value="${AppState.userProfile.company || ''}">
             </div>
             
             <div class="form-group">
                 <label class="form-label">Location</label>
-                <input type="text" class="form-control" id="editLocation" value="${AppState.userProfile.location}">
+                <input type="text" class="form-control" id="editLocation" value="${AppState.userProfile.location || ''}">
             </div>
             
             <div class="form-group">
                 <label class="form-label">Interests</label>
                 <div class="flex flex-wrap gap-2 mb-3" id="interestsContainer">
-                    ${AppState.userProfile.interests.map(interest => `
+                    ${(AppState.userProfile.interests || []).map(interest => `
                         <span class="interest-tag">${interest} <i class="fas fa-times" onclick="Profile.removeInterest('${interest}')"></i></span>
                     `).join('')}
                 </div>
@@ -6658,12 +6767,12 @@ const Router = {
             ${blockedUsers.length > 0 ? `
                 <div class="space-y-3">
                     ${blockedUsers.map(userId => {
-                        const user = MOCK_PROFILES.find(p => p.id === userId) || 
+                        const user = AppState.data.profiles.find(p => p.id === userId) || 
                                     { name: 'Unknown User', id: userId };
                         return `
                             <div class="card flex justify-between items-center">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-12 h-12 rounded-full" style="background: ${user.cardColor || 'linear-gradient(135deg, #8B5CF6, #EC4899)'};"></div>
+                                    <div class="w-12 h-12 rounded-full" style="background: ${user.cardColor || '#8B5CF6'};"></div>
                                     <div>
                                         <h4>${user.name}</h4>
                                         <p class="text-sm text-gray-400">Blocked</p>
@@ -6736,7 +6845,7 @@ const Router = {
                     </div>
                     
                     <div class="event-detail-actions">
-                        <button class="btn btn-primary btn-block mb-3" onclick="CheckIn.start()">
+                        <button class="btn btn-primary btn-block mb-3" onclick="CheckIn.startScan()">
                             <i class="fas fa-qrcode"></i> Check In
                         </button>
                         <button class="btn btn-outline btn-block" onclick="Tickets.purchaseTicket(${event.id})">
@@ -6826,20 +6935,7 @@ const Router = {
         return html;
     },
     
-    navigateToEventDetail(eventId) {
-        const event = AppState.events.find(e => e.id === eventId);
-        if (event) {
-            AppState.currentEventDetail = event;
-            AppState.currentPage = 'event-detail';
-            this.renderPage();
-            
-            // Initialize community chat
-            setTimeout(() => {
-                CommunityChat.init(eventId);
-            }, 100);
-        }
-    },
-    
+    // ===== MAP FUNCTIONS WITH FIXED PINS =====
     initMap() {
         console.log('🗺️ Initializing map');
         
@@ -6863,18 +6959,98 @@ const Router = {
                     console.log('✅ Map loaded');
                     this.updateMapMarkers();
                     this.addUserLocationMarker();
-                    
-                    AppState.events.forEach(event => {
-                        if (event.geoFencing && event.coordinates) {
-                            this.addGeofenceCircle(event);
-                        }
-                    });
                 });
                 
                 AppState.map.addControl(new mapboxgl.NavigationControl());
             }
         } catch (error) {
             console.error('❌ Map initialization error:', error);
+        }
+    },
+    
+    updateMapMarkers() {
+        if (!AppState.map) return;
+        
+        if (AppState.mapMarkers) {
+            AppState.mapMarkers.forEach(marker => marker.remove());
+        }
+        AppState.mapMarkers = [];
+        
+        AppState.data.events.forEach(event => {
+            if (!event.coordinates) return;
+            
+            const el = document.createElement('div');
+            el.className = 'event-pin-fixed';
+            el.innerHTML = `<i class="fas fa-map-marker-alt"></i>`;
+            el.style.color = event.customTheme || '#8B5CF6';
+            el.style.cursor = 'pointer';
+            
+            el.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.navigateToEventDetail(event.id);
+            });
+            
+            // CRITICAL: Use anchor: 'bottom' for fixed positioning
+            const marker = new mapboxgl.Marker({
+                element: el,
+                anchor: 'bottom',
+                draggable: false
+            })
+                .setLngLat([event.coordinates.lng, event.coordinates.lat])
+                .addTo(AppState.map);
+            
+            const popupContent = document.createElement('div');
+            popupContent.className = 'map-popup';
+            popupContent.innerHTML = `
+                <h3>${event.name}</h3>
+                <p><i class="fas fa-map-marker-alt"></i> ${event.location}</p>
+                <p><i class="fas fa-calendar"></i> ${event.date}</p>
+                <button onclick="Router.navigateToEventDetail(${event.id})">View Details</button>
+            `;
+            
+            const popup = new mapboxgl.Popup({
+                offset: 25,
+                closeButton: true,
+                closeOnClick: true
+            }).setDOMContent(popupContent);
+            
+            marker.setPopup(popup);
+            AppState.mapMarkers.push(marker);
+        });
+    },
+    
+    addUserLocationMarker() {
+        if (!AppState.map) return;
+        
+        const userLocation = NAMIBIA_COORDINATES.windhoek;
+        
+        const el = document.createElement('div');
+        el.className = 'user-pin-fixed';
+        el.innerHTML = `<i class="fas fa-user"></i>`;
+        el.style.cursor = 'pointer';
+        
+        const marker = new mapboxgl.Marker({
+            element: el,
+            anchor: 'bottom'
+        })
+            .setLngLat([userLocation.lng, userLocation.lat])
+            .addTo(AppState.map);
+        
+        AppState.userMarker = marker;
+        
+        AppState.map.flyTo({
+            center: [userLocation.lng, userLocation.lat],
+            zoom: 14,
+            essential: true
+        });
+    },
+    
+    navigateToEventDetail(eventId) {
+        const event = AppState.data.events.find(e => e.id === eventId);
+        if (event) {
+            AppState.currentEventDetail = event;
+            AppState.currentPage = 'event-detail';
+            this.renderPage();
         }
     },
     
@@ -7059,118 +7235,6 @@ const Router = {
         card.addEventListener('touchstart', onStart, { passive: false });
         document.addEventListener('touchmove', onMove, { passive: false });
         document.addEventListener('touchend', onEnd);
-    },
-    
-    addUserLocationMarker() {
-        if (!AppState.map) return;
-        
-        const userLocation = NAMIBIA_COORDINATES.windhoek;
-        
-        const el = document.createElement('div');
-        el.className = 'user-marker';
-        el.innerHTML = `<i class="fas fa-user"></i>`;
-        el.style.cursor = 'pointer';
-        
-        const marker = new mapboxgl.Marker(el)
-            .setLngLat([userLocation.lng, userLocation.lat])
-            .addTo(AppState.map);
-        
-        AppState.userMarker = marker;
-        
-        AppState.map.flyTo({
-            center: [userLocation.lng, userLocation.lat],
-            zoom: 14,
-            essential: true
-        });
-    },
-    
-    updateMapMarkers() {
-        if (!AppState.map) return;
-        
-        if (AppState.mapMarkers) {
-            AppState.mapMarkers.forEach(marker => marker.remove());
-        }
-        AppState.mapMarkers = [];
-        
-        AppState.events.forEach(event => {
-            const el = document.createElement('div');
-            el.className = 'event-marker';
-            el.innerHTML = `<i class="fas fa-map-marker-alt"></i>`;
-            el.style.color = event.customTheme || '#8B5CF6';
-            el.style.cursor = 'pointer';
-            
-            el.addEventListener('click', (e) => {
-                e.stopPropagation();
-                this.navigateToEventDetail(event.id);
-            });
-            
-            const popupContent = document.createElement('div');
-            popupContent.className = 'map-popup';
-            popupContent.innerHTML = `
-                <h3>${event.name}</h3>
-                <p><i class="fas fa-map-marker-alt"></i> ${event.location}</p>
-                <p><i class="fas fa-calendar"></i> ${event.date}</p>
-                <button onclick="Router.navigateToEventDetail(${event.id})">View Details</button>
-            `;
-            
-            const marker = new mapboxgl.Marker(el)
-                .setLngLat([event.coordinates.lng, event.coordinates.lat])
-                .addTo(AppState.map);
-            
-            const popup = new mapboxgl.Popup({
-                offset: 25,
-                closeButton: true,
-                closeOnClick: true
-            })
-                .setDOMContent(popupContent);
-            
-            marker.setPopup(popup);
-            AppState.mapMarkers.push(marker);
-        });
-    },
-    
-    addGeofenceCircle(event) {
-        if (!AppState.map || !event.geofenceRadius) return;
-        
-        const sourceId = `geofence-${event.id}`;
-        const layerId = `geofence-layer-${event.id}`;
-        
-        if (AppState.map.getLayer(layerId)) AppState.map.removeLayer(layerId);
-        if (AppState.map.getSource(sourceId)) AppState.map.removeSource(sourceId);
-        
-        const radiusInDegrees = event.geofenceRadius / 111320;
-        const coordinates = [];
-        const steps = 64;
-        
-        for (let i = 0; i < steps; i++) {
-            const angle = (i / steps) * 2 * Math.PI;
-            const lat = event.coordinates.lat + radiusInDegrees * Math.cos(angle);
-            const lng = event.coordinates.lng + radiusInDegrees * Math.sin(angle) / Math.cos(event.coordinates.lat * Math.PI / 180);
-            coordinates.push([lng, lat]);
-        }
-        coordinates.push(coordinates[0]);
-        
-        AppState.map.addSource(sourceId, {
-            type: 'geojson',
-            data: {
-                type: 'Feature',
-                geometry: {
-                    type: 'Polygon',
-                    coordinates: [coordinates]
-                }
-            }
-        });
-        
-        AppState.map.addLayer({
-            id: layerId,
-            type: 'fill',
-            source: sourceId,
-            paint: {
-                'fill-color': event.customTheme || '#8B5CF6',
-                'fill-opacity': 0.1,
-                'fill-outline-color': event.customTheme || '#8B5CF6'
-            }
-        });
     }
 };
 
@@ -7245,6 +7309,7 @@ const EventsCarousel = {
         carousel.addEventListener('touchstart', (e) => {
             startX = e.touches[0].clientX;
             isDragging = true;
+            CarouselAutoplay.pause(carouselId);
         });
         
         carousel.addEventListener('touchmove', (e) => {
@@ -7264,36 +7329,1455 @@ const EventsCarousel = {
                     this.prev(carouselId);
                 }
             }
+            
+            setTimeout(() => CarouselAutoplay.resume(carouselId), 3000);
         });
+        
+        carousel.addEventListener('mouseenter', () => CarouselAutoplay.pause(carouselId));
+        carousel.addEventListener('mouseleave', () => CarouselAutoplay.resume(carouselId));
     }
 };
 
-const FeaturedCarousel = {
-    intervalId: null,
-    isPaused: false,
+// ===== EVENT CREATION WIZARD COMPLETE REBUILD =====
+const Events = {
+    wizardMap: null,
+    wizardMarker: null,
+    geofenceLayer: null,
     
-    start() {
-        this.stop();
-        this.intervalId = setInterval(() => {
-            if (!this.isPaused) {
-                EventsCarousel.next('featured');
-            }
-        }, 5000);
-    },
-    
-    stop() {
-        if (this.intervalId) {
-            clearInterval(this.intervalId);
-            this.intervalId = null;
+    showWizard() {
+        if (!AppState.isPro && !AppState.isMax) {
+            AppUI.showProModal();
+            return;
+        }
+        
+        console.log('✨ Showing event wizard');
+        const modal = document.getElementById('eventWizardModal');
+        if (modal) {
+            // Reset wizard state
+            document.querySelectorAll('.wizard-step').forEach(step => {
+                step.classList.remove('active');
+            });
+            document.getElementById('wizardStep1').classList.add('active');
+            
+            document.querySelectorAll('.progress-step').forEach(step => {
+                step.classList.remove('active');
+            });
+            document.querySelector('[data-step="1"]').classList.add('active');
+            
+            AppState.isWizardActive = true;
+            AppState.wizardStep = 1;
+            
+            // Reset wizard data
+            AppState.wizardData = {
+                geofenceRadius: 100,
+                coordinates: null,
+                locationName: '',
+                eventName: '',
+                eventDescription: '',
+                eventPrice: 0,
+                eventCurrency: 'NAD',
+                eventCategory: 'tech',
+                eventMaxAttendees: 100,
+                posterUrl: null,
+                posterType: null,
+                eventTags: ''
+            };
+            
+            modal.classList.add('active');
         }
     },
     
-    pause() {
-        this.isPaused = true;
+    closeWizard() {
+        console.log('✨ Closing event wizard');
+        document.getElementById('eventWizardModal').classList.remove('active');
+        AppState.isWizardActive = false;
+        
+        // Clean up map
+        if (AppState.wizardMap) {
+            AppState.wizardMap.remove();
+            AppState.wizardMap = null;
+        }
+        AppState.wizardMarker = null;
+        AppState.geofenceLayer = null;
     },
     
-    resume() {
-        this.isPaused = false;
+    nextWizardStep() {
+        console.log('➡️ Next wizard step');
+        
+        const currentStep = document.querySelector('.wizard-step.active');
+        const currentStepId = parseInt(currentStep.id.replace('wizardStep', ''));
+        
+        // Validate current step
+        if (currentStepId === 1 && !this.validateStep1()) return;
+        if (currentStepId === 2 && !this.validateStep2()) return;
+        
+        if (currentStepId < 4) {
+            currentStep.classList.remove('active');
+            const nextStep = document.getElementById(`wizardStep${currentStepId + 1}`);
+            if (nextStep) {
+                nextStep.classList.add('active');
+            }
+            
+            // Update progress steps
+            document.querySelectorAll('.progress-step').forEach(step => {
+                const stepNum = parseInt(step.dataset.step);
+                step.classList.toggle('active', stepNum <= currentStepId + 1);
+            });
+            
+            AppState.wizardStep = currentStepId + 1;
+            
+            // Initialize map for step 2
+            if (currentStepId + 1 === 2) {
+                setTimeout(() => this.initWizardMap(), 100);
+            }
+            
+            // Update review for step 4
+            if (currentStepId + 1 === 4) {
+                this.updateReviewStep();
+            }
+        }
+    },
+    
+    prevWizardStep() {
+        console.log('⬅️ Previous wizard step');
+        
+        const currentStep = document.querySelector('.wizard-step.active');
+        const currentStepId = parseInt(currentStep.id.replace('wizardStep', ''));
+        
+        if (currentStepId > 1) {
+            currentStep.classList.remove('active');
+            const prevStep = document.getElementById(`wizardStep${currentStepId - 1}`);
+            if (prevStep) {
+                prevStep.classList.add('active');
+            }
+            
+            document.querySelectorAll('.progress-step').forEach(step => {
+                const stepNum = parseInt(step.dataset.step);
+                step.classList.toggle('active', stepNum <= currentStepId - 1);
+            });
+            
+            AppState.wizardStep = currentStepId - 1;
+        }
+    },
+    
+    validateStep1() {
+        const name = document.getElementById('eventName')?.value.trim();
+        const description = document.getElementById('eventDescription')?.value.trim();
+        const price = document.getElementById('eventPrice')?.value;
+        const category = document.getElementById('eventCategory')?.value;
+        
+        if (!name || !description || price === '' || !category) {
+            AppUI.showNotification('Please fill in all required fields', 'error');
+            return false;
+        }
+        
+        if (parseFloat(price) < 0) {
+            AppUI.showNotification('Price cannot be negative', 'error');
+            return false;
+        }
+        
+        // Save step 1 data
+        AppState.wizardData.eventName = name;
+        AppState.wizardData.eventDescription = description;
+        AppState.wizardData.eventPrice = parseFloat(price) || 0;
+        AppState.wizardData.eventCategory = category;
+        AppState.wizardData.eventMaxAttendees = parseInt(document.getElementById('eventMaxAttendees')?.value || '100');
+        
+        return true;
+    },
+    
+    validateStep2() {
+        if (!AppState.wizardData.coordinates) {
+            AppUI.showNotification('Please select a location on the map', 'error');
+            return false;
+        }
+        
+        return true;
+    },
+    
+    // ===== STEP 2: INTERACTIVE MAP WITH LIVE GEOFENCE =====
+    initWizardMap() {
+        console.log('🗺️ Initializing wizard map');
+        
+        if (!mapboxgl || !MAPBOX_TOKEN) {
+            console.error('❌ Mapbox not loaded');
+            return;
+        }
+        
+        try {
+            // Remove old map if exists
+            if (AppState.wizardMap) {
+                AppState.wizardMap.remove();
+            }
+            
+            mapboxgl.accessToken = MAPBOX_TOKEN;
+            AppState.wizardMap = new mapboxgl.Map({
+                container: 'wizardMapContainer',
+                style: 'mapbox://styles/mapbox/streets-v12',
+                center: [17.0658, -22.5609], // Windhoek
+                zoom: 13
+            });
+            
+            AppState.wizardMap.addControl(new mapboxgl.NavigationControl());
+            
+            // Click to place pin
+            AppState.wizardMap.on('click', (e) => {
+                this.placeEventPin(e.lngLat);
+            });
+            
+            // Load existing coordinates if editing
+            if (AppState.wizardData.coordinates) {
+                setTimeout(() => {
+                    this.placeEventPin(AppState.wizardData.coordinates);
+                    AppState.wizardMap.flyTo({
+                        center: [AppState.wizardData.coordinates.lng, AppState.wizardData.coordinates.lat],
+                        zoom: 15
+                    });
+                }, 500);
+            }
+            
+        } catch (error) {
+            console.error('❌ Wizard map initialization error:', error);
+        }
+    },
+    
+    placeEventPin(lngLat) {
+        console.log('📍 Placing event pin at:', lngLat);
+        
+        // Remove old marker
+        if (AppState.wizardMarker) {
+            AppState.wizardMarker.remove();
+        }
+        
+        // Create fixed marker element
+        const el = document.createElement('div');
+        el.className = 'event-pin-fixed';
+        el.innerHTML = '<i class="fas fa-map-marker-alt"></i>';
+        el.style.color = '#8B5CF6';
+        el.style.fontSize = '32px';
+        el.style.filter = 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))';
+        
+        // Add new marker with FIXED positioning
+        AppState.wizardMarker = new mapboxgl.Marker({
+            element: el,
+            anchor: 'bottom',
+            draggable: false
+        })
+            .setLngLat([lngLat.lng, lngLat.lat])
+            .addTo(AppState.wizardMap);
+        
+        // Store coordinates
+        AppState.wizardData.coordinates = {
+            lng: lngLat.lng,
+            lat: lngLat.lat
+        };
+        
+        // Update geofence circle
+        this.updateGeofenceCircle();
+        
+        // Reverse geocode to get address
+        this.reverseGeocode(lngLat.lng, lngLat.lat);
+    },
+    
+    searchLocation(query) {
+        if (!query || query.length < 3) {
+            document.getElementById('locationResults').style.display = 'none';
+            return;
+        }
+        
+        fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${MAPBOX_TOKEN}&country=NA`)
+            .then(res => res.json())
+            .then(data => {
+                const results = document.getElementById('locationResults');
+                if (!results) return;
+                
+                if (data.features && data.features.length > 0) {
+                    results.innerHTML = data.features.slice(0, 5).map(feature => `
+                        <div class="search-result-item" onclick="Events.selectLocation('${feature.place_name.replace(/'/g, "\\'")}', ${feature.center[1]}, ${feature.center[0]})">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${feature.place_name}</span>
+                        </div>
+                    `).join('');
+                    results.style.display = 'block';
+                } else {
+                    results.style.display = 'none';
+                }
+            })
+            .catch(error => {
+                console.error('Geocoding error:', error);
+                document.getElementById('locationResults').style.display = 'none';
+            });
+    },
+    
+    selectLocation(placeName, lat, lng) {
+        console.log('📍 Selecting location:', placeName, lat, lng);
+        
+        const searchInput = document.getElementById('locationSearch');
+        if (searchInput) {
+            searchInput.value = placeName;
+        }
+        
+        const results = document.getElementById('locationResults');
+        if (results) {
+            results.style.display = 'none';
+        }
+        
+        AppState.wizardData.locationName = placeName;
+        
+        // Fly to location and place pin
+        if (AppState.wizardMap) {
+            AppState.wizardMap.flyTo({
+                center: [lng, lat],
+                zoom: 15
+            });
+            
+            setTimeout(() => {
+                this.placeEventPin({ lng, lat });
+            }, 500);
+        }
+    },
+    
+    updateGeofenceRadius(value) {
+        const radius = parseInt(value);
+        AppState.wizardData.geofenceRadius = radius;
+        
+        const radiusValue = document.getElementById('radiusValue');
+        if (radiusValue) {
+            radiusValue.textContent = `${radius}m`;
+        }
+        
+        this.updateGeofenceCircle();
+    },
+    
+    updateGeofenceCircle() {
+        if (!AppState.wizardMap || !AppState.wizardData.coordinates) return;
+        
+        const center = AppState.wizardData.coordinates;
+        const radiusMeters = AppState.wizardData.geofenceRadius || 100;
+        
+        // Remove old layers
+        if (AppState.geofenceLayer) {
+            if (AppState.wizardMap.getLayer('geofence-fill')) {
+                AppState.wizardMap.removeLayer('geofence-fill');
+            }
+            if (AppState.wizardMap.getLayer('geofence-outline')) {
+                AppState.wizardMap.removeLayer('geofence-outline');
+            }
+            if (AppState.wizardMap.getSource('geofence')) {
+                AppState.wizardMap.removeSource('geofence');
+            }
+        }
+        
+        // Create circle coordinates
+        const radiusDegrees = radiusMeters / 111320; // Convert meters to degrees
+        const points = 64;
+        const coordinates = [];
+        
+        for (let i = 0; i < points; i++) {
+            const angle = (i / points) * 2 * Math.PI;
+            const lat = center.lat + radiusDegrees * Math.cos(angle);
+            const lng = center.lng + (radiusDegrees * Math.sin(angle)) / Math.cos(center.lat * Math.PI / 180);
+            coordinates.push([lng, lat]);
+        }
+        coordinates.push(coordinates[0]); // Close the circle
+        
+        // Add circle to map
+        AppState.wizardMap.addSource('geofence', {
+            type: 'geojson',
+            data: {
+                type: 'Feature',
+                geometry: {
+                    type: 'Polygon',
+                    coordinates: [coordinates]
+                }
+            }
+        });
+        
+        // Fill layer
+        AppState.wizardMap.addLayer({
+            id: 'geofence-fill',
+            type: 'fill',
+            source: 'geofence',
+            paint: {
+                'fill-color': '#8B5CF6',
+                'fill-opacity': 0.2
+            }
+        });
+        
+        // Outline layer
+        AppState.wizardMap.addLayer({
+            id: 'geofence-outline',
+            type: 'line',
+            source: 'geofence',
+            paint: {
+                'line-color': '#8B5CF6',
+                'line-width': 2
+            }
+        });
+        
+        AppState.geofenceLayer = true;
+    },
+    
+    reverseGeocode(lng, lat) {
+        fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${MAPBOX_TOKEN}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.features && data.features[0]) {
+                    const placeName = data.features[0].place_name;
+                    const searchInput = document.getElementById('locationSearch');
+                    if (searchInput) {
+                        searchInput.value = placeName;
+                    }
+                    AppState.wizardData.locationName = placeName;
+                }
+            })
+            .catch(error => {
+                console.error('Reverse geocoding error:', error);
+            });
+    },
+    
+    // ===== STEP 3: GRAPHICS UPLOAD =====
+    handleGraphicsUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        
+        // Validate file size
+        if (file.size > 10 * 1024 * 1024) {
+            AppUI.showNotification('File too large. Max 10MB', 'error');
+            return;
+        }
+        
+        // Validate file type
+        const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'video/mp4', 'video/webm'];
+        if (!validTypes.includes(file.type)) {
+            AppUI.showNotification('Invalid file type. Use images (JPG, PNG, GIF) or videos (MP4, WebM)', 'error');
+            return;
+        }
+        
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            AppState.wizardData.posterUrl = e.target.result;
+            AppState.wizardData.posterType = file.type.startsWith('image/') ? 'image' : 'video';
+            
+            // Show preview
+            const preview = document.getElementById('graphicsPreview');
+            if (preview) {
+                preview.classList.remove('hidden');
+                if (AppState.wizardData.posterType === 'image') {
+                    preview.innerHTML = `
+                        <img src="${AppState.wizardData.posterUrl}" alt="Event poster" 
+                             style="max-width: 100%; border-radius: 8px;">
+                    `;
+                } else {
+                    preview.innerHTML = `
+                        <video controls style="max-width: 100%; border-radius: 8px;">
+                            <source src="${AppState.wizardData.posterUrl}" type="${file.type}">
+                        </video>
+                    `;
+                }
+            }
+            
+            AppUI.showNotification('File uploaded successfully', 'success');
+        };
+        
+        reader.readAsDataURL(file);
+    },
+    
+    // ===== STEP 4: REVIEW & PUBLISH =====
+    updateReviewStep() {
+        document.getElementById('reviewEventName').textContent = AppState.wizardData.eventName;
+        document.getElementById('reviewEventDescription').textContent = AppState.wizardData.eventDescription;
+        document.getElementById('reviewEventLocation').textContent = AppState.wizardData.locationName || 'Location not set';
+        document.getElementById('reviewEventRadius').textContent = `${AppState.wizardData.geofenceRadius}m radius`;
+        document.getElementById('reviewEventPrice').textContent = formatCurrency(AppState.wizardData.eventPrice, AppState.wizardData.eventCurrency);
+        document.getElementById('reviewEventCategory').textContent = this.getCategoryName(AppState.wizardData.eventCategory);
+    },
+    
+    getCategoryName(category) {
+        const categories = {
+            'tech': 'Technology',
+            'music': 'Music',
+            'art': 'Art & Culture',
+            'sports': 'Sports',
+            'food': 'Food & Drink',
+            'networking': 'Networking'
+        };
+        return categories[category] || category;
+    },
+    
+    publishEvent() {
+        console.log('🎉 Publishing event');
+        
+        // Generate QR code
+        const qrCode = 'AMPS_' + Math.random().toString(36).substring(2, 10).toUpperCase();
+        
+        // Create new event
+        const newEvent = {
+            id: Date.now(),
+            name: AppState.wizardData.eventName,
+            description: AppState.wizardData.eventDescription,
+            location: AppState.wizardData.locationName,
+            address: AppState.wizardData.locationName,
+            date: 'Soon',
+            time: 'TBD',
+            attendees: 0,
+            maxAttendees: AppState.wizardData.eventMaxAttendees,
+            qrCode: qrCode,
+            radius: AppState.wizardData.geofenceRadius,
+            organizerId: AppState.currentUser?.id || 1,
+            coordinates: AppState.wizardData.coordinates || NAMIBIA_COORDINATES.windhoek,
+            price: AppState.wizardData.eventPrice,
+            currency: AppState.wizardData.eventCurrency,
+            ageRange: '18+',
+            genderPreference: 'Everyone',
+            tags: [AppState.wizardData.eventCategory],
+            bookmarked: false,
+            rsvp: 'none',
+            geoFencing: true,
+            customTheme: '#8B5CF6',
+            coverImage: AppState.wizardData.posterUrl || 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&h=300&fit=crop',
+            isFeatured: Math.random() > 0.7,
+            geofenceRadius: AppState.wizardData.geofenceRadius,
+            category: this.getCategoryName(AppState.wizardData.eventCategory),
+            connectionProfiles: []
+        };
+        
+        // Add to events
+        AppState.data.events.push(newEvent);
+        
+        // Add to user's created events
+        if (!AppState.userProfile.createdEvents) {
+            AppState.userProfile.createdEvents = [];
+        }
+        AppState.userProfile.createdEvents.push(newEvent);
+        
+        // Close wizard
+        this.closeWizard();
+        
+        // Generate and show QR code
+        this.generateEventQRCode(newEvent);
+        
+        // Show success message
+        AppUI.showNotification(`Event "${newEvent.name}" created successfully!`, 'success');
+        
+        // Navigate to events page
+        setTimeout(() => Router.navigateTo('events'), 1000);
+        
+        saveState();
+    },
+    
+    generateEventQRCode(event) {
+        // Simple QR code generation using canvas
+        const canvas = document.createElement('canvas');
+        canvas.width = 300;
+        canvas.height = 300;
+        const ctx = canvas.getContext('2d');
+        
+        // Draw simple QR pattern
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0, 0, 300, 300);
+        
+        ctx.fillStyle = '#000000';
+        const data = event.qrCode;
+        
+        // Simple pattern generation
+        for (let i = 0; i < data.length; i++) {
+            const charCode = data.charCodeAt(i);
+            const x = (i % 20) * 15;
+            const y = Math.floor(i / 20) * 15;
+            
+            if (charCode % 2 === 0) {
+                ctx.fillRect(x, y, 10, 10);
+            }
+        }
+        
+        // Add text
+        ctx.fillStyle = '#000000';
+        ctx.font = '12px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('SCAN TO CHECK IN', 150, 290);
+        
+        event.qrCodeImage = canvas.toDataURL();
+        
+        // Show QR code modal
+        this.showEventQRModal(event);
+    },
+    
+    showEventQRModal(event) {
+        const modal = document.createElement('div');
+        modal.className = 'modal-backdrop active';
+        modal.innerHTML = `
+            <div class="modal-content text-center">
+                <button class="modal-close" onclick="this.closest('.modal-backdrop').remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+                
+                <div class="mb-4">
+                    <i class="fas fa-check-circle" style="font-size: 48px; color: var(--accent-green);"></i>
+                </div>
+                
+                <h2 class="mb-2">Event Created!</h2>
+                <h3 class="mb-4">${event.name}</h3>
+                
+                <p class="text-gray-400 mb-4">Use this QR code for event check-ins</p>
+                
+                <div class="qr-code-display mb-4">
+                    <img src="${event.qrCodeImage}" alt="Event QR Code" 
+                         style="max-width: 300px; border-radius: var(--radius-lg);">
+                </div>
+                
+                <div class="event-code-display mb-4">
+                    <p class="text-sm text-gray-400">Event Code</p>
+                    <p class="font-mono text-lg">${event.qrCode}</p>
+                    <button class="btn btn-outline btn-small mt-2" 
+                            onclick="Events.copyEventCode('${event.qrCode}')">
+                        <i class="fas fa-copy"></i> Copy Code
+                    </button>
+                </div>
+                
+                <div class="flex gap-3 mt-6">
+                    <button class="btn btn-outline flex-1" 
+                            onclick="Events.downloadQRCode('${event.qrCodeImage}', '${event.name}')">
+                        <i class="fas fa-download"></i> Download
+                    </button>
+                    <button class="btn btn-primary flex-1" 
+                            onclick="this.closest('.modal-backdrop').remove();">
+                        <i class="fas fa-check"></i> Done
+                    </button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    },
+    
+    copyEventCode(code) {
+        navigator.clipboard.writeText(code).then(() => {
+            AppUI.showNotification('Event code copied to clipboard!', 'success');
+        }).catch(() => {
+            AppUI.showNotification('Failed to copy code', 'error');
+        });
+    },
+    
+    downloadQRCode(imageData, eventName) {
+        const link = document.createElement('a');
+        link.download = `${eventName.replace(/[^a-z0-9]/gi, '_')}_QR.png`;
+        link.href = imageData;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        AppUI.showNotification('QR code downloaded', 'success');
+    },
+    
+    toggleBookmark(eventId) {
+        const event = AppState.data.events.find(e => e.id === eventId);
+        if (event) {
+            event.bookmarked = !event.bookmarked;
+            
+            if (event.bookmarked) {
+                if (!AppState.userProfile.bookmarkedEvents.includes(eventId)) {
+                    AppState.userProfile.bookmarkedEvents.push(eventId);
+                }
+                AppUI.showNotification('Event bookmarked', 'success');
+            } else {
+                const index = AppState.userProfile.bookmarkedEvents.indexOf(eventId);
+                if (index > -1) {
+                    AppState.userProfile.bookmarkedEvents.splice(index, 1);
+                }
+                AppUI.showNotification('Event removed from bookmarks', 'info');
+            }
+            
+            saveState();
+            Router.renderPage();
+        }
+    },
+    
+    filterEvents(searchQuery) {
+        const eventsList = document.getElementById('eventsList');
+        if (!eventsList) return;
+        
+        const filteredEvents = AppState.data.events.filter(event => 
+            event.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            event.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            event.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            (event.tags && event.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())))
+        );
+        
+        if (filteredEvents.length === 0) {
+            eventsList.innerHTML = `
+                <div class="empty-state text-center py-12">
+                    <i class="fas fa-search" style="font-size: 64px; color: var(--gray-600); margin-bottom: 16px;"></i>
+                    <h3 class="mb-2">No Events Found</h3>
+                    <p class="text-gray-400 mb-6">Try different search terms</p>
+                </div>
+            `;
+        } else {
+            eventsList.innerHTML = filteredEvents.map(event => `
+                <div class="event-card-featured" onclick="Router.navigateToEventDetail(${event.id})">
+                    <div class="event-card-image" style="background: linear-gradient(135deg, ${event.customTheme || '#8B5CF6'}, ${event.customTheme ? 'rgba(255,255,255,0.8)' : '#EC4899'});">
+                        <div class="attendee-count">
+                            <i class="fas fa-users"></i> ${event.attendees}
+                        </div>
+                    </div>
+                    <div class="event-card-content">
+                        <h4 class="mb-2">${event.name}</h4>
+                        <p class="text-gray-400 text-sm mb-2">
+                            <i class="fas fa-map-marker-alt"></i> ${event.location}
+                        </p>
+                        <div class="flex items-center gap-4 text-sm">
+                            <span class="text-gradient">
+                                <i class="fas fa-users"></i> ${event.attendees}
+                            </span>
+                            <span class="text-gray-400">${event.date}</span>
+                            <span class="text-yellow-500">${formatCurrency(event.price, AppState.currency)}</span>
+                        </div>
+                    </div>
+                    <button class="bookmark-btn ${event.bookmarked ? 'active' : ''}" onclick="Events.toggleBookmark(${event.id}); event.stopPropagation();">
+                        <i class="fas fa-bookmark"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+    },
+    
+    openMapView() {
+        console.log('🗺️ Opening map view');
+        
+        // In a real implementation, you would:
+        // 1. Open the events page
+        // 2. Expand the map drawer
+        // 3. Fly to user's location
+        Router.navigateTo('events');
+        
+        setTimeout(() => {
+            const container = document.getElementById('eventsContainer');
+            if (container) {
+                container.style.transform = 'translateY(0%)';
+                container.classList.add('full');
+                AppState.mapDrawerPosition = 1;
+            }
+            
+            if (AppState.map) {
+                AppState.map.flyTo({
+                    center: [17.0658, -22.5609],
+                    zoom: 14,
+                    essential: true
+                });
+            }
+        }, 500);
+    },
+    
+    openEventManagement(eventId) {
+        console.log('📋 Opening event management for:', eventId);
+        
+        const event = AppState.data.events.find(e => e.id === eventId);
+        if (!event) return;
+        
+        const modal = document.createElement('div');
+        modal.className = 'modal-backdrop active';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <button class="modal-close" onclick="this.closest('.modal-backdrop').remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h2 class="mb-4">Manage Event</h2>
+                
+                <div class="mb-6">
+                    <h3>${event.name}</h3>
+                    <p class="text-gray-400">${event.location}</p>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">${event.attendees}</div>
+                        <div class="stat-label">Attendees</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${event.maxAttendees}</div>
+                        <div class="stat-label">Capacity</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${formatCurrency(event.price, event.currency)}</div>
+                        <div class="stat-label">Price</div>
+                    </div>
+                </div>
+                
+                <div class="space-y-3 mt-6">
+                    <button class="btn btn-outline btn-block" onclick="Events.showEventQRCode(${event.id})">
+                        <i class="fas fa-qrcode"></i> View QR Code
+                    </button>
+                    <button class="btn btn-outline btn-block" onclick="Events.editEvent(${event.id})">
+                        <i class="fas fa-edit"></i> Edit Event
+                    </button>
+                    <button class="btn btn-outline btn-block text-red-400" onclick="Events.deleteEvent(${event.id})">
+                        <i class="fas fa-trash"></i> Delete Event
+                    </button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    },
+    
+    showEventManagement() {
+        console.log('📋 Showing event management');
+        
+        const userEvents = AppState.userProfile.createdEvents || [];
+        
+        if (userEvents.length === 0) {
+            AppUI.showNotification('You haven\'t created any events yet', 'info');
+            return;
+        }
+        
+        const modal = document.createElement('div');
+        modal.className = 'modal-backdrop active';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <button class="modal-close" onclick="this.closest('.modal-backdrop').remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h2 class="mb-4">My Events</h2>
+                
+                <div class="space-y-4">
+                    ${userEvents.map(event => `
+                        <div class="event-manage-card">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h4>${event.name}</h4>
+                                    <p class="text-gray-400 text-sm">${event.location}</p>
+                                    <p class="text-gray-400 text-sm">${event.date} • ${event.attendees} attending</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-gradient font-bold">${formatCurrency(event.price, event.currency)}</p>
+                                    <button class="btn btn-primary btn-small mt-2" 
+                                            onclick="Events.openEventManagement(${event.id}); this.closest('.modal-backdrop').remove();">
+                                        Manage
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    },
+    
+    showEventQRCode(eventId) {
+        const event = AppState.data.events.find(e => e.id === eventId);
+        if (!event) return;
+        
+        this.showEventQRModal(event);
+    },
+    
+    editEvent(eventId) {
+        console.log('✏️ Editing event:', eventId);
+        AppUI.showNotification('Edit event functionality coming soon!', 'info');
+    },
+    
+    deleteEvent(eventId) {
+        if (!confirm('Are you sure you want to delete this event? This cannot be undone.')) {
+            return;
+        }
+        
+        // Remove event from data
+        AppState.data.events = AppState.data.events.filter(e => e.id !== eventId);
+        
+        // Remove from user's created events
+        AppState.userProfile.createdEvents = AppState.userProfile.createdEvents.filter(e => e.id !== eventId);
+        
+        // Remove from bookmarks
+        AppState.userProfile.bookmarkedEvents = AppState.userProfile.bookmarkedEvents.filter(id => id !== eventId);
+        
+        AppUI.showNotification('Event deleted successfully', 'success');
+        
+        // Close any open modals
+        document.querySelectorAll('.modal-backdrop').forEach(m => m.remove());
+        
+        // Refresh page
+        Router.renderPage();
+        saveState();
+    },
+    
+    showLocationMap(eventId) {
+        console.log('🗺️ Showing location map for event:', eventId);
+        
+        const event = AppState.data.events.find(e => e.id === eventId);
+        if (!event) return;
+        
+        const modal = document.createElement('div');
+        modal.className = 'modal-backdrop active';
+        modal.id = 'locationMapModal';
+        
+        modal.innerHTML = `
+            <div class="modal-content">
+                <button class="modal-close" onclick="this.closest('.modal-backdrop').remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h2 class="mb-4">${event.name}</h2>
+                <p class="text-gray-400 mb-4">
+                    <i class="fas fa-map-marker-alt"></i> ${event.location}
+                </p>
+                
+                <div id="locationMapContainer" style="height: 300px; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 20px;">
+                    <div class="map-preview" style="height: 100%; display: flex; align-items: center; justify-content: center;">
+                        <p>Loading map...</p>
+                    </div>
+                </div>
+                
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <p class="text-sm text-gray-400">Geofence radius</p>
+                        <p class="font-bold">${event.geofenceRadius}m</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-400">Distance from you</p>
+                        <p class="font-bold">${Math.floor(Math.random() * 5) + 1}km</p>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary btn-block" onclick="window.open('https://maps.google.com/?q=${event.coordinates.lat},${event.coordinates.lng}', '_blank')">
+                    <i class="fas fa-directions"></i> Get Directions
+                </button>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        setTimeout(() => {
+            this.initLocationMap(event, 'locationMapContainer');
+        }, 100);
+    },
+    
+    initLocationMap(event, containerId) {
+        if (!mapboxgl || !MAPBOX_TOKEN) return;
+        
+        try {
+            mapboxgl.accessToken = MAPBOX_TOKEN;
+            const locationMap = new mapboxgl.Map({
+                container: containerId,
+                style: AppState.userProfile.theme === 'light' ? 'mapbox://styles/mapbox/light-v11' : 'mapbox://styles/mapbox/dark-v11',
+                center: [event.coordinates.lng, event.coordinates.lat],
+                zoom: 14
+            });
+            
+            locationMap.on('load', () => {
+                const el = document.createElement('div');
+                el.className = 'event-pin-fixed';
+                el.innerHTML = `<i class="fas fa-map-marker-alt"></i>`;
+                el.style.color = event.customTheme || '#8B5CF6';
+                
+                new mapboxgl.Marker({
+                    element: el,
+                    anchor: 'bottom'
+                })
+                    .setLngLat([event.coordinates.lng, event.coordinates.lat])
+                    .addTo(locationMap);
+                
+                if (event.geofenceRadius) {
+                    const radius = event.geofenceRadius / 111320;
+                    const coordinates = [];
+                    const steps = 64;
+                    
+                    for (let i = 0; i < steps; i++) {
+                        const angle = (i / steps) * 2 * Math.PI;
+                        const lat = event.coordinates.lat + radius * Math.cos(angle);
+                        const lng = event.coordinates.lng + radius * Math.sin(angle) / Math.cos(event.coordinates.lat * Math.PI / 180);
+                        coordinates.push([lng, lat]);
+                    }
+                    coordinates.push(coordinates[0]);
+                    
+                    locationMap.addSource('geofence', {
+                        type: 'geojson',
+                        data: {
+                            type: 'Feature',
+                            geometry: {
+                                type: 'Polygon',
+                                coordinates: [coordinates]
+                            }
+                        }
+                    });
+                    
+                    locationMap.addLayer({
+                        id: 'geofence-fill',
+                        type: 'fill',
+                        source: 'geofence',
+                        paint: {
+                            'fill-color': event.customTheme || '#8B5CF6',
+                            'fill-opacity': 0.1
+                        }
+                    });
+                }
+            });
+        } catch (error) {
+            console.error('Location map error:', error);
+        }
+    }
+};
+
+// ===== QR CODE SCANNING FLOW WITH FACE PHOTO CAPTURE =====
+const CheckIn = {
+    startScan() {
+        console.log('🔐 Starting check-in flow');
+        
+        if (AppState.isDemoMode) {
+            this.showDemoScanInterface();
+        } else {
+            this.startRealQRScanner();
+        }
+    },
+    
+    showDemoScanInterface() {
+        const modal = document.createElement('div');
+        modal.className = 'modal-backdrop active';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <h2 class="mb-4">Scan QR Code</h2>
+                <p class="text-gray-400 mb-4">Demo Mode: Select an event to join</p>
+                
+                <div class="demo-events-list">
+                    ${DEMO_DATA.events.map(event => `
+                        <div class="event-option" onclick="CheckIn.joinEvent(${event.id}, true)">
+                            <div class="event-option-image" style="background: ${event.customTheme || '#8B5CF6'}"></div>
+                            <div class="event-option-info">
+                                <h4>${event.name}</h4>
+                                <p class="text-gray-400 text-sm">${event.location}</p>
+                                <p class="text-gray-400 text-sm">${event.date} • ${event.time}</p>
+                            </div>
+                            <i class="fas fa-chevron-right text-gray-400"></i>
+                        </div>
+                    `).join('')}
+                </div>
+                
+                <button class="btn btn-outline btn-block mt-4" onclick="this.closest('.modal-backdrop').remove()">
+                    Cancel
+                </button>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    },
+    
+    startRealQRScanner() {
+        // Show camera modal for QR scanning
+        const modal = document.getElementById('cameraModal');
+        if (!modal) {
+            AppUI.showNotification('Camera not available', 'error');
+            return;
+        }
+        
+        modal.classList.add('active');
+        
+        // Setup QR scanning UI
+        const cameraPreview = modal.querySelector('.camera-preview');
+        if (cameraPreview) {
+            cameraPreview.innerHTML = `
+                <div class="qr-scan-overlay">
+                    <div class="qr-frame"></div>
+                    <p class="qr-instruction">Align QR code within frame</p>
+                </div>
+                <video class="camera-video" id="cameraVideo" autoplay playsinline></video>
+                <div class="live-badge" style="position: absolute; top: 16px; right: 16px;">
+                    <i class="fas fa-qrcode"></i>
+                    <span>SCAN QR</span>
+                </div>
+            `;
+        }
+        
+        // Setup camera controls
+        const cameraControls = modal.querySelector('.camera-controls');
+        if (cameraControls) {
+            cameraControls.innerHTML = `
+                <button class="btn btn-outline" onclick="CheckIn.closeCamera()">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+                <button class="btn btn-primary" onclick="CheckIn.simulateQRScan()">
+                    <i class="fas fa-qrcode"></i> Test Scan
+                </button>
+            `;
+        }
+        
+        // Start camera
+        this.startCameraForQR();
+    },
+    
+    startCameraForQR() {
+        navigator.mediaDevices.getUserMedia({
+            video: { facingMode: 'environment' }
+        }).then(stream => {
+            const video = document.getElementById('cameraVideo');
+            video.srcObject = stream;
+            AppState.cameraStream = stream;
+            
+            // Start QR detection
+            this.startQRDetection(video);
+        }).catch(error => {
+            console.error('Camera access error:', error);
+            AppUI.showNotification('Camera access required to scan QR codes', 'error');
+            CheckIn.closeCamera();
+        });
+    },
+    
+    startQRDetection(video) {
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        
+        const scanInterval = setInterval(() => {
+            if (!video.srcObject || video.readyState !== video.HAVE_ENOUGH_DATA) {
+                return;
+            }
+            
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            // Simple QR detection simulation
+            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+            
+            // In a real app, you would use a QR library here
+            // For demo, we'll simulate detection after a delay
+        }, 100);
+        
+        // Store interval for cleanup
+        AppState.qrScanInterval = scanInterval;
+    },
+    
+    simulateQRScan() {
+        console.log('🔢 Simulating QR scan');
+        
+        // Close camera
+        this.closeCamera();
+        
+        // Find a random event
+        const events = AppState.data.events.length > 0 ? AppState.data.events : DEMO_DATA.events;
+        const randomEvent = events[Math.floor(Math.random() * events.length)];
+        
+        // Show join event modal
+        this.showJoinEventModal(randomEvent);
+    },
+    
+    joinEvent(eventId, isDemo = false) {
+        const events = isDemo ? DEMO_DATA.events : AppState.data.events;
+        const event = events.find(e => e.id === eventId);
+        
+        if (!event) {
+            AppUI.showNotification('Event not found', 'error');
+            return;
+        }
+        
+        // Close any open modals
+        document.querySelectorAll('.modal-backdrop').forEach(m => m.remove());
+        
+        // Show join event modal
+        this.showJoinEventModal(event, isDemo);
+    },
+    
+    showJoinEventModal(event, isDemo = false) {
+        const modal = document.createElement('div');
+        modal.className = 'modal-backdrop active';
+        modal.innerHTML = `
+            <div class="modal-content text-center">
+                <h2>Join Event?</h2>
+                <h3 class="mt-4 mb-2">${event.name}</h3>
+                <p class="text-gray-400">${event.location}</p>
+                <p class="text-gray-400">${event.date} • ${event.time}</p>
+                
+                ${isDemo ? '<p class="text-yellow-500 text-sm mt-2"><i class="fas fa-info-circle"></i> Demo Mode</p>' : ''}
+                
+                <div class="flex gap-3 mt-6">
+                    <button class="btn btn-outline flex-1" onclick="this.closest('.modal-backdrop').remove()">
+                        Cancel
+                    </button>
+                    <button class="btn btn-primary flex-1" onclick="CheckIn.confirmJoin(${event.id}, ${isDemo})">
+                        Yes, Join
+                    </button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    },
+    
+    confirmJoin(eventId, isDemo = false) {
+        // Close modal
+        document.querySelectorAll('.modal-backdrop').forEach(m => m.remove());
+        
+        // Show privacy choice
+        this.showPrivacyChoice(eventId, isDemo);
+    },
+    
+    showPrivacyChoice(eventId, isDemo = false) {
+        const modal = document.createElement('div');
+        modal.className = 'modal-backdrop active';
+        modal.innerHTML = `
+            <div class="modal-content text-center">
+                <h2>How do you want to appear?</h2>
+                <p class="text-gray-400 mb-6">Choose how others will see you at the event</p>
+                
+                <div class="privacy-options">
+                    <div class="privacy-option" onclick="CheckIn.choosePublic(${eventId}, ${isDemo})">
+                        <div class="privacy-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="privacy-info">
+                            <h4>Public</h4>
+                            <p>Others can see your profile and photo</p>
+                            <small class="text-green-500">Best for networking</small>
+                        </div>
+                    </div>
+                    
+                    <div class="privacy-option" onclick="CheckIn.choosePrivate(${eventId}, ${isDemo})">
+                        <div class="privacy-icon">
+                            <i class="fas fa-user-secret"></i>
+                        </div>
+                        <div class="privacy-info">
+                            <h4>Private</h4>
+                            <p>Browse anonymously</p>
+                            <small class="text-gray-500">Others won't see you</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-outline btn-block mt-4" onclick="this.closest('.modal-backdrop').remove()">
+                    Cancel
+                </button>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    },
+    
+    choosePublic(eventId, isDemo = false) {
+        // Close privacy modal
+        document.querySelectorAll('.modal-backdrop').forEach(m => m.remove());
+        
+        // Take face photo
+        this.takeFacePhoto(eventId, isDemo);
+    },
+    
+    choosePrivate(eventId, isDemo = false) {
+        // Close privacy modal
+        document.querySelectorAll('.modal-backdrop').forEach(m => m.remove());
+        
+        // Complete private check-in
+        this.completePrivateCheckIn(eventId, isDemo);
+    },
+    
+    takeFacePhoto(eventId, isDemo = false) {
+        const modal = document.createElement('div');
+        modal.className = 'modal-backdrop active';
+        modal.innerHTML = `
+            <div class="modal-content" style="padding: 0; max-width: 100%; height: 100%; max-height: 100%;">
+                <div class="camera-container">
+                    <video id="facePhotoVideo" class="camera-video" autoplay playsinline></video>
+                    <div class="camera-overlay">
+                        <div class="face-frame"></div>
+                        <p class="instruction">Position your face in the frame</p>
+                    </div>
+                    <div class="camera-controls">
+                        <button class="btn btn-outline" onclick="CheckIn.cancelPhoto()">
+                            Cancel
+                        </button>
+                        <button class="btn btn-primary camera-btn" onclick="CheckIn.captureFacePhoto(${eventId}, ${isDemo})">
+                            <i class="fas fa-camera"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        
+        // Start front camera
+        navigator.mediaDevices.getUserMedia({
+            video: { facingMode: 'user' }
+        }).then(stream => {
+            const video = document.getElementById('facePhotoVideo');
+            video.srcObject = stream;
+            AppState.cameraStream = stream;
+        }).catch(error => {
+            console.error('Camera error:', error);
+            AppUI.showNotification('Camera access required for face photo', 'error');
+            CheckIn.cancelPhoto();
+        });
+    },
+    
+    captureFacePhoto(eventId, isDemo = false) {
+        const video = document.getElementById('facePhotoVideo');
+        if (!video) return;
+        
+        const canvas = document.createElement('canvas');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(video, 0, 0);
+        
+        const photoData = canvas.toDataURL('image/jpeg', 0.9);
+        
+        // Stop camera
+        if (AppState.cameraStream) {
+            AppState.cameraStream.getTracks().forEach(track => track.stop());
+            AppState.cameraStream = null;
+        }
+        
+        // Close camera modal
+        document.querySelectorAll('.modal-backdrop').forEach(m => m.remove());
+        
+        // Show connection card preview
+        this.showConnectionCardPreview(eventId, photoData, isDemo);
+    },
+    
+    cancelPhoto() {
+        // Stop camera
+        if (AppState.cameraStream) {
+            AppState.cameraStream.getTracks().forEach(track => track.stop());
+            AppState.cameraStream = null;
+        }
+        
+        // Close modals
+        document.querySelectorAll('.modal-backdrop').forEach(m => m.remove());
+    },
+    
+    showConnectionCardPreview(eventId, photoData, isDemo = false) {
+        const modal = document.createElement('div');
+        modal.className = 'modal-backdrop active';
+        modal.innerHTML = `
+            <div class="modal-content text-center">
+                <h2>Your Connection Card</h2>
+                <p class="text-gray-400 mb-4">This is how others will see you at the event</p>
+                
+                <div class="connection-card-preview">
+                    <div class="profile-card" style="max-width: 300px; margin: 0 auto;">
+                        <div class="card-content" style="background: #8B5CF6;">
+                            <div class="profile-image">
+                                <img src="${photoData}" alt="Your photo" 
+                                     style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                            </div>
+                            <div class="profile-info" style="padding: 16px;">
+                                <h2 style="margin: 0 0 8px 0;">${AppState.userProfile.name || 'You'}, ${AppState.userProfile.age || ''}</h2>
+                                <p style="margin: 0 0 12px 0; color: #E5E5EA;">${AppState.userProfile.bio || 'Looking to connect!'}</p>
+                                <div class="interests">
+                                    ${AppState.userProfile.interests.slice(0, 3).map(i => 
+                                        `<span class="interest-tag">${i}</span>`
+                                    ).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex gap-3 mt-6">
+                    <button class="btn btn-outline flex-1" onclick="CheckIn.retakeFacePhoto(${eventId}, ${isDemo})">
+                        <i class="fas fa-redo"></i> Retake
+                    </button>
+                    <button class="btn btn-primary flex-1" onclick="CheckIn.acceptCard(${eventId}, '${photoData}', ${isDemo})">
+                        <i class="fas fa-check"></i> Looks Good!
+                    </button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    },
+    
+    retakeFacePhoto(eventId, isDemo = false) {
+        document.querySelectorAll('.modal-backdrop').forEach(m => m.remove());
+        setTimeout(() => this.takeFacePhoto(eventId, isDemo), 300);
+    },
+    
+    acceptCard(eventId, photoData, isDemo = false) {
+        // Close all modals
+        document.querySelectorAll('.modal-backdrop').forEach(m => m.remove());
+        
+        // Complete check-in with photo
+        this.completePublicCheckIn(eventId, photoData, isDemo);
+    },
+    
+    completePublicCheckIn(eventId, photoData, isDemo = false) {
+        const events = isDemo ? DEMO_DATA.events : AppState.data.events;
+        const event = events.find(e => e.id === eventId);
+        
+        if (!event) {
+            AppUI.showNotification('Event not found', 'error');
+            return;
+        }
+        
+        // Create user's connection profile
+        const connectionProfile = {
+            id: Date.now(),
+            userId: AppState.currentUser?.id || 'demo_user',
+            name: AppState.userProfile.name || 'Demo User',
+            age: AppState.userProfile.age || 25,
+            bio: AppState.userProfile.bio || 'Looking to connect!',
+            interests: AppState.userProfile.interests.length > 0 ? AppState.userProfile.interests : ['Networking', 'Events', 'Meeting People'],
+            photo: photoData,
+            location: AppState.userProfile.location || event.location,
+            eventId: eventId,
+            isPublic: true,
+            createdAt: new Date().toISOString()
+        };
+        
+        // Add to event's connection pool
+        if (!event.connectionProfiles) {
+            event.connectionProfiles = [];
+        }
+        event.connectionProfiles.push(connectionProfile);
+        
+        // Set as current event
+        AppState.currentEvent = event;
+        
+        // Add user's profile to data
+        if (!isDemo) {
+            AppState.data.profiles.push({
+                ...connectionProfile,
+                cardColor: '#8B5CF6',
+                online: true,
+                verified: false,
+                distance: 'At event'
+            });
+        }
+        
+        // Update event attendance
+        event.attendees = (event.attendees || 0) + 1;
+        
+        // Navigate to connect page
+        AppUI.showNotification(`Welcome to ${event.name}! You're now visible to others.`, 'success');
+        Router.navigateTo('connect');
+        
+        saveState();
+    },
+    
+    completePrivateCheckIn(eventId, isDemo = false) {
+        const events = isDemo ? DEMO_DATA.events : AppState.data.events;
+        const event = events.find(e => e.id === eventId);
+        
+        if (!event) {
+            AppUI.showNotification('Event not found', 'error');
+            return;
+        }
+        
+        // Set as current event
+        AppState.currentEvent = event;
+        
+        // Update event attendance
+        event.attendees = (event.attendees || 0) + 1;
+        
+        // Navigate to connect page
+        AppUI.showNotification(`Welcome to ${event.name}! You're browsing privately.`, 'success');
+        Router.navigateTo('connect');
+        
+        saveState();
+    },
+    
+    closeCamera() {
+        // Stop QR scanning interval
+        if (AppState.qrScanInterval) {
+            clearInterval(AppState.qrScanInterval);
+            AppState.qrScanInterval = null;
+        }
+        
+        // Stop camera stream
+        if (AppState.cameraStream) {
+            AppState.cameraStream.getTracks().forEach(track => track.stop());
+            AppState.cameraStream = null;
+        }
+        
+        // Close camera modal
+        document.getElementById('cameraModal').classList.remove('active');
     }
 };
 
@@ -7336,25 +8820,81 @@ const Auth = {
             return;
         }
         
+        const authTab = document.querySelector('.auth-tab.active');
+        if (authTab && authTab.textContent === 'Sign Up') {
+            // Sign up flow
+            const name = form.querySelector('#authName')?.value || email?.split('@')[0] || 'User';
+            const age = form.querySelector('#authAge')?.value || 25;
+            
+            this.signup(email, password, name, parseInt(age));
+        } else {
+            // Sign in flow
+            this.login(email, password);
+        }
+    },
+    
+    signup(email, password, name, age) {
+        console.log('👤 Creating new account');
+        
+        const userId = 'user_' + Date.now();
+        
         AppState.currentUser = {
-            id: 'user_' + Date.now(),
-            email: email || 'demo@amps.com',
+            id: userId,
+            email: email || 'user@example.com',
             createdAt: new Date().toISOString()
         };
         
-        const authTab = document.querySelector('.auth-tab.active');
-        if (authTab && authTab.textContent === 'Sign Up') {
-            const name = form.querySelector('#authName')?.value || email?.split('@')[0] || 'User';
-            const age = form.querySelector('#authAge')?.value || 25;
-            AppState.userProfile.name = name;
-            AppState.userProfile.age = parseInt(age);
-            AppState.userProfile.email = email || 'demo@amps.com';
-        }
+        AppState.userProfile = {
+            name: name,
+            email: email,
+            age: age,
+            occupation: '',
+            company: '',
+            bio: '',
+            interests: [],
+            profilePhoto: null,
+            phone: '',
+            location: '',
+            gender: '',
+            visibility: 'public',
+            bookmarkedEvents: [],
+            notifications: {
+                matches: true,
+                messages: true,
+                events: true,
+                profileViews: true
+            },
+            privacy: {
+                searchable: true,
+                showDistance: true,
+                showOnline: true,
+                messageFrom: 'everyone',
+                shareAnalytics: true
+            },
+            blockedUsers: [],
+            theme: 'dark',
+            createdEvents: []
+        };
         
-        AppUI.showNotification('Welcome to Amps! ⚡', 'success');
+        AppState.data = initializeUserData();
+        AppState.isDemoMode = false;
+        
+        AppUI.showNotification('Welcome to Amps! Complete your profile to get started.', 'success');
         setTimeout(() => Router.navigateTo('home'), 1000);
         
         saveState();
+    },
+    
+    login(email, password) {
+        console.log('🔑 Signing in');
+        
+        // For demo purposes, we'll create a user if none exists
+        if (!AppState.currentUser) {
+            this.signup(email, password, email?.split('@')[0] || 'User', 25);
+        } else {
+            AppUI.showNotification('Welcome back!', 'success');
+            Router.navigateTo('home');
+        }
     },
     
     demoLogin() {
@@ -7366,31 +8906,41 @@ const Auth = {
             createdAt: new Date().toISOString()
         };
         
-        AppState.matches = [
-            {
-                id: 1,
-                userId: 'demo_user',
-                matchId: 2,
-                timestamp: new Date().toISOString(),
-                eventId: 1,
-                lastMessage: 'Hey! How\'s the event?',
-                lastMessageTime: '2:15 PM',
-                unread: true
-            }
-        ];
+        AppState.userProfile = {
+            name: 'Demo User',
+            email: 'demo@amps.com',
+            age: 28,
+            occupation: 'Software Engineer',
+            company: 'Tech Corp Namibia',
+            bio: 'Passionate about technology and building meaningful connections at events in Namibia.',
+            interests: ['Technology', 'Music', 'Travel', 'Fitness', 'Photography'],
+            profilePhoto: null,
+            phone: '+264 81 123 4567',
+            location: 'Windhoek, Namibia',
+            gender: 'male',
+            visibility: 'public',
+            bookmarkedEvents: [1, 2],
+            notifications: {
+                matches: true,
+                messages: true,
+                events: true,
+                profileViews: true
+            },
+            privacy: {
+                searchable: true,
+                showDistance: true,
+                showOnline: true,
+                messageFrom: 'everyone',
+                shareAnalytics: true
+            },
+            blockedUsers: [],
+            theme: 'dark',
+            createdEvents: []
+        };
         
-        AppState.tickets = [
-            {
-                id: 1,
-                eventId: 1,
-                eventName: 'Windhoek Tech Summit 2024',
-                purchaseDate: new Date().toISOString(),
-                price: 150.00,
-                currency: 'NAD',
-                qrCode: 'AMPS_TECH_2024_001_DEMO',
-                status: 'active'
-            }
-        ];
+        // Load demo data
+        AppState.data = JSON.parse(JSON.stringify(DEMO_DATA));
+        AppState.isDemoMode = true;
         
         AppUI.showNotification('Demo mode activated! Explore all features.', 'success');
         Router.navigateTo('home');
@@ -7402,10 +8952,10 @@ const Auth = {
         
         AppState.currentUser = null;
         AppState.currentPage = 'landing';
-        AppState.matches = [];
-        AppState.tickets = [];
+        AppState.data = initializeUserData();
         AppState.swipeCount = 0;
         AppState.rewindCount = 3;
+        AppState.isDemoMode = false;
         
         AppUI.showNotification('Successfully signed out', 'info');
         Router.renderPage();
@@ -7432,6 +8982,36 @@ const Profile = {
             saveState();
         };
         reader.readAsDataURL(file);
+    },
+    
+    uploadPhoto() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.style.display = 'none';
+        
+        input.onchange = (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            if (file.size > 5 * 1024 * 1024) {
+                AppUI.showNotification('Image too large. Max 5MB', 'error');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                AppState.userProfile.profilePhoto = e.target.result;
+                AppUI.showNotification('Profile photo updated', 'success');
+                Router.renderPage();
+                saveState();
+            };
+            reader.readAsDataURL(file);
+        };
+        
+        document.body.appendChild(input);
+        input.click();
+        document.body.removeChild(input);
     },
     
     addInterest() {
@@ -7504,7 +9084,7 @@ const BlockedUsers = {
             AppUI.showNotification('User blocked', 'success');
             
             // Remove from matches
-            AppState.matches = AppState.matches.filter(m => m.matchId !== userId);
+            AppState.data.matches = AppState.data.matches.filter(m => m.matchId !== userId);
             
             // Close any open chat
             if (AppState.currentMatch?.matchId === userId) {
@@ -7834,7 +9414,7 @@ const AppUI = {
         
         // Refresh events if on events page
         if (AppState.currentPage === 'events') {
-            Events.applyFiltersToEvents();
+            Events.filterEvents(AppState.eventSearchQuery || '');
         } else if (AppState.currentPage === 'connect') {
             Router.renderPage();
         }
@@ -7893,7 +9473,7 @@ const AppUI = {
         // Load active tickets
         const activeTicketsList = document.getElementById('activeTicketsList');
         if (activeTicketsList) {
-            const activeTickets = AppState.tickets.filter(t => t.status === 'active');
+            const activeTickets = AppState.data.tickets.filter(t => t.status === 'active');
             
             if (activeTickets.length === 0) {
                 activeTicketsList.innerHTML = `
@@ -7941,7 +9521,7 @@ const AppUI = {
         const list = document.getElementById('availableTicketsList');
         if (!list) return;
         
-        list.innerHTML = AppState.events.map(event => `
+        list.innerHTML = AppState.data.events.map(event => `
             <div class="ticket-card">
                 <h4 class="mb-2">${event.name}</h4>
                 <p class="text-gray-400 mb-3">${event.date} • ${event.location}</p>
@@ -7962,7 +9542,7 @@ const AppUI = {
         const list = document.getElementById('ticketHistoryList');
         if (!list) return;
         
-        const allTickets = [...AppState.tickets];
+        const allTickets = [...AppState.data.tickets];
         
         if (allTickets.length === 0) {
             list.innerHTML = `
@@ -7991,7 +9571,7 @@ const AppUI = {
     showTicketPurchaseModal(eventId) {
         console.log('🎟️ Showing ticket purchase modal for event:', eventId);
         
-        const event = AppState.events.find(e => e.id === eventId);
+        const event = AppState.data.events.find(e => e.id === eventId);
         if (!event) return;
         
         AppState.currentEvent = event;
@@ -8062,7 +9642,7 @@ const AppUI = {
             status: 'active'
         };
         
-        AppState.tickets.push(ticket);
+        AppState.data.tickets.push(ticket);
         
         // Update event attendance
         event.attendees += quantity;
@@ -8171,7 +9751,7 @@ const AppUI = {
         
         // Calculate match rate
         const totalLikes = AppState.swipeHistory.filter(s => s.action === 'like').length;
-        const totalMatches = AppState.matches.length;
+        const totalMatches = AppState.data.matches.length;
         const matchRate = totalLikes > 0 ? Math.round((totalMatches / totalLikes) * 100) : 0;
         
         // Calculate response rate
@@ -8449,14 +10029,6 @@ const AppUI = {
             read: false
         });
         
-        // Track analytics for profile views if notification is about profile views
-        if (message.includes('profile') && message.includes('view')) {
-            AppState.analytics.profileViews.total++;
-            const today = new Date().toISOString().split('T')[0];
-            AppState.analytics.profileViews.byDate[today] = (AppState.analytics.profileViews.byDate[today] || 0) + 1;
-            saveState();
-        }
-        
         setTimeout(() => {
             if (notification.parentNode) {
                 notification.style.opacity = '0';
@@ -8467,985 +10039,6 @@ const AppUI = {
                 }, 300);
             }
         }, 3000);
-    }
-};
-
-// ===== EVENTS =====
-const Events = {
-    showWizard() {
-        if (!AppState.isPro && !AppState.isMax) {
-            AppUI.showProModal();
-            return;
-        }
-        
-        console.log('✨ Showing event wizard');
-        const modal = document.getElementById('eventWizardModal');
-        if (modal) {
-            document.querySelectorAll('.wizard-step').forEach(step => {
-                step.classList.remove('active');
-            });
-            document.getElementById('wizardStep1').classList.add('active');
-            
-            document.querySelectorAll('.progress-step').forEach(step => {
-                step.classList.remove('active');
-            });
-            document.querySelector('[data-step="1"]').classList.add('active');
-            
-            AppState.isWizardActive = true;
-            AppState.wizardStep = 1;
-            
-            AppState.wizardData = {
-                geofenceRadius: 100,
-                coordinates: null,
-                eventName: '',
-                eventDescription: '',
-                eventLocation: '',
-                eventCategory: 'tech',
-                eventPrice: 0,
-                eventCurrency: 'NAD',
-                eventMaxAttendees: 100,
-                posterUrl: null,
-                posterType: null,
-                customTheme: '#8B5CF6',
-                eventTags: ''
-            };
-            
-            modal.classList.add('active');
-        }
-    },
-    
-    closeWizard() {
-        console.log('✨ Closing event wizard');
-        document.getElementById('eventWizardModal').classList.remove('active');
-        AppState.isWizardActive = false;
-        
-        if (AppState.wizardMap) {
-            AppState.wizardMap.remove();
-            AppState.wizardMap = null;
-        }
-        AppState.wizardMarker = null;
-    },
-    
-    nextWizardStep() {
-        console.log('➡️ Next wizard step');
-        
-        const currentStep = document.querySelector('.wizard-step.active');
-        const currentStepId = parseInt(currentStep.id.replace('wizardStep', ''));
-        
-        if (currentStepId === 1) {
-            const name = document.getElementById('eventName')?.value;
-            const description = document.getElementById('eventDescription')?.value;
-            if (!name || !description) {
-                AppUI.showNotification('Please fill in all required fields', 'error');
-                return;
-            }
-            
-            AppState.wizardData.eventName = name;
-            AppState.wizardData.eventDescription = description;
-            AppState.wizardData.eventCategory = document.getElementById('eventCategory')?.value || 'tech';
-            AppState.wizardData.eventPrice = parseFloat(document.getElementById('eventPrice')?.value || 0);
-            AppState.wizardData.eventCurrency = document.getElementById('eventCurrency')?.value || 'NAD';
-            AppState.wizardData.eventMaxAttendees = parseInt(document.getElementById('eventMaxAttendees')?.value || 100);
-        }
-        
-        if (currentStepId === 2) {
-            const location = document.getElementById('eventLocationSearch')?.value;
-            if (!location || !AppState.wizardData.coordinates) {
-                AppUI.showNotification('Please select a location on the map', 'error');
-                return;
-            }
-            
-            AppState.wizardData.eventLocation = location;
-        }
-        
-        if (currentStepId < 5) {
-            currentStep.classList.remove('active');
-            const nextStep = document.getElementById(`wizardStep${currentStepId + 1}`);
-            if (nextStep) {
-                nextStep.classList.add('active');
-            }
-            
-            document.querySelectorAll('.progress-step').forEach(step => {
-                const stepNum = parseInt(step.dataset.step);
-                step.classList.toggle('active', stepNum <= currentStepId + 1);
-            });
-            
-            AppState.wizardStep = currentStepId + 1;
-            
-            if (currentStepId + 1 === 2) {
-                this.initWizardMap();
-            }
-            
-            if (currentStepId + 1 === 5) {
-                this.updateReviewStep();
-            }
-        }
-    },
-    
-    prevWizardStep() {
-        console.log('⬅️ Previous wizard step');
-        
-        const currentStep = document.querySelector('.wizard-step.active');
-        const currentStepId = parseInt(currentStep.id.replace('wizardStep', ''));
-        
-        if (currentStepId > 1) {
-            currentStep.classList.remove('active');
-            const prevStep = document.getElementById(`wizardStep${currentStepId - 1}`);
-            if (prevStep) {
-                prevStep.classList.add('active');
-            }
-            
-            document.querySelectorAll('.progress-step').forEach(step => {
-                const stepNum = parseInt(step.dataset.step);
-                step.classList.toggle('active', stepNum <= currentStepId - 1);
-            });
-            
-            AppState.wizardStep = currentStepId - 1;
-        }
-    },
-    
-    initWizardMap() {
-        console.log('🗺️ Initializing wizard map');
-        
-        if (!mapboxgl || !MAPBOX_TOKEN) {
-            console.error('❌ Mapbox not loaded');
-            return;
-        }
-        
-        try {
-            if (AppState.wizardMap) {
-                AppState.wizardMap.remove();
-            }
-            
-            mapboxgl.accessToken = MAPBOX_TOKEN;
-            AppState.wizardMap = new mapboxgl.Map({
-                container: 'wizardMap',
-                style: AppState.userProfile.theme === 'light' ? 'mapbox://styles/mapbox/light-v11' : 'mapbox://styles/mapbox/dark-v11',
-                center: [17.0658, -22.5609],
-                zoom: 12
-            });
-            
-            AppState.wizardMap.on('load', () => {
-                console.log('✅ Wizard map loaded');
-                AppState.wizardMap.addControl(new mapboxgl.NavigationControl());
-            });
-            
-            AppState.wizardMap.on('click', (e) => {
-                this.placeWizardPin(e.lngLat);
-            });
-            
-        } catch (error) {
-            console.error('❌ Wizard map initialization error:', error);
-        }
-    },
-    
-    placeWizardPin(lngLat) {
-        console.log('📍 Placing wizard pin at:', lngLat);
-        
-        if (AppState.wizardMarker) {
-            AppState.wizardMarker.remove();
-        }
-        
-        const el = document.createElement('div');
-        el.className = 'event-marker';
-        el.innerHTML = `<i class="fas fa-map-pin"></i>`;
-        el.style.color = AppState.wizardData.customTheme || '#8B5CF6';
-        el.style.cursor = 'pointer';
-        
-        AppState.wizardMarker = new mapboxgl.Marker(el)
-            .setLngLat(lngLat)
-            .addTo(AppState.wizardMap);
-        
-        AppState.wizardData.coordinates = {
-            lat: lngLat.lat,
-            lng: lngLat.lng
-        };
-        
-        const locationInput = document.getElementById('eventLocationSearch');
-        if (locationInput) {
-            this.searchLocationReverse(lngLat.lng, lngLat.lat);
-        }
-        
-        this.updateWizardGeofence();
-    },
-    
-    searchLocationReverse(lng, lat) {
-        fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${MAPBOX_TOKEN}`)
-            .then(res => res.json())
-            .then(data => {
-                if (data.features && data.features[0]) {
-                    const locationInput = document.getElementById('eventLocationSearch');
-                    if (locationInput) {
-                        locationInput.value = data.features[0].place_name;
-                    }
-                }
-            })
-            .catch(error => {
-                console.error('Reverse geocoding error:', error);
-            });
-    },
-    
-    searchLocation(query) {
-        if (!query || query.length < 3) {
-            document.getElementById('locationSuggestions').style.display = 'none';
-            return;
-        }
-        
-        fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${MAPBOX_TOKEN}&country=NA`)
-            .then(res => res.json())
-            .then(data => {
-                const suggestions = document.getElementById('locationSuggestions');
-                if (!suggestions) return;
-                
-                if (data.features && data.features.length > 0) {
-                    suggestions.innerHTML = data.features.map(feature => `
-                        <div class="search-result-item" onclick="Events.selectLocation('${feature.place_name.replace(/'/g, "\\'")}', ${feature.center[1]}, ${feature.center[0]})">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>${feature.place_name}</span>
-                        </div>
-                    `).join('');
-                    suggestions.style.display = 'block';
-                } else {
-                    suggestions.style.display = 'none';
-                }
-            })
-            .catch(error => {
-                console.error('Geocoding error:', error);
-            });
-    },
-    
-    selectLocation(placeName, lat, lng) {
-        document.getElementById('eventLocationSearch').value = placeName;
-        document.getElementById('locationSuggestions').style.display = 'none';
-        
-        if (AppState.wizardMap) {
-            AppState.wizardMap.flyTo({ center: [lng, lat], zoom: 14 });
-            this.placeWizardPin({ lng, lat });
-        }
-    },
-    
-    updateWizardRadius(value) {
-        AppState.wizardData.geofenceRadius = parseInt(value);
-        document.getElementById('wizardRadiusValue').textContent = `${value} meters`;
-        this.updateWizardGeofence();
-    },
-    
-    updateWizardGeofence() {
-        if (!AppState.wizardMap || !AppState.wizardData.coordinates) return;
-        
-        const sourceId = 'wizard-geofence';
-        const layerId = 'wizard-geofence-layer';
-        
-        if (AppState.wizardMap.getLayer(layerId)) {
-            AppState.wizardMap.removeLayer(layerId);
-        }
-        if (AppState.wizardMap.getLayer(layerId + '-outline')) {
-            AppState.wizardMap.removeLayer(layerId + '-outline');
-        }
-        if (AppState.wizardMap.getSource(sourceId)) {
-            AppState.wizardMap.removeSource(sourceId);
-        }
-        
-        const center = AppState.wizardData.coordinates;
-        const radius = AppState.wizardData.geofenceRadius / 111320;
-        const points = 64;
-        const coordinates = [];
-        
-        for (let i = 0; i < points; i++) {
-            const angle = (i / points) * 2 * Math.PI;
-            const lat = center.lat + radius * Math.cos(angle);
-            const lng = center.lng + radius * Math.sin(angle) / Math.cos(center.lat * Math.PI / 180);
-            coordinates.push([lng, lat]);
-        }
-        coordinates.push(coordinates[0]);
-        
-        AppState.wizardMap.addSource(sourceId, {
-            type: 'geojson',
-            data: {
-                type: 'Feature',
-                geometry: {
-                    type: 'Polygon',
-                    coordinates: [coordinates]
-                }
-            }
-        });
-        
-        AppState.wizardMap.addLayer({
-            id: layerId,
-            type: 'fill',
-            source: sourceId,
-            paint: {
-                'fill-color': AppState.wizardData.customTheme || '#8B5CF6',
-                'fill-opacity': 0.2
-            }
-        });
-        
-        AppState.wizardMap.addLayer({
-            id: layerId + '-outline',
-            type: 'line',
-            source: sourceId,
-            paint: {
-                'line-color': AppState.wizardData.customTheme || '#8B5CF6',
-                'line-width': 2
-            }
-        });
-    },
-    
-    selectEventColor(color) {
-        console.log('🎨 Selecting event color:', color);
-        
-        document.querySelectorAll('.color-option').forEach(opt => {
-            opt.classList.remove('active');
-        });
-        
-        event.target.classList.add('active');
-        
-        AppState.wizardData.customTheme = color;
-        
-        const preview = document.getElementById('eventThemePreview');
-        if (preview) {
-            preview.style.background = color;
-        }
-        
-        if (AppState.wizardMarker) {
-            AppState.wizardMarker.getElement().style.color = color;
-            this.updateWizardGeofence();
-        }
-    },
-    
-    updateReviewStep() {
-        document.getElementById('reviewEventName').textContent = AppState.wizardData.eventName;
-        document.getElementById('reviewEventDescription').textContent = AppState.wizardData.eventDescription;
-        document.getElementById('reviewEventLocation').textContent = AppState.wizardData.eventLocation || 'Location not set';
-        document.getElementById('reviewEventRadius').textContent = `${AppState.wizardData.geofenceRadius}m radius`;
-    },
-    
-    publishEvent() {
-        console.log('🎉 Publishing event');
-        
-        let coordinates = AppState.wizardData.coordinates || NAMIBIA_COORDINATES.windhoek;
-        
-        const newEvent = {
-            id: AppState.events.length + 1,
-            name: AppState.wizardData.eventName,
-            description: AppState.wizardData.eventDescription,
-            location: AppState.wizardData.eventLocation,
-            address: AppState.wizardData.eventLocation,
-            date: 'Soon',
-            time: 'TBD',
-            attendees: 0,
-            maxAttendees: AppState.wizardData.eventMaxAttendees,
-            qrCode: 'AMPS_' + Math.random().toString(36).substr(2, 9).toUpperCase(),
-            radius: AppState.wizardData.geofenceRadius,
-            organizerId: AppState.currentUser?.id || 1,
-            coordinates: coordinates,
-            price: AppState.wizardData.eventPrice,
-            currency: AppState.wizardData.eventCurrency,
-            ageRange: '18+',
-            genderPreference: 'Everyone',
-            tags: AppState.wizardData.eventTags ? AppState.wizardData.eventTags.split(',').map(tag => tag.trim()) : ['New Event', AppState.wizardData.eventCategory],
-            bookmarked: false,
-            rsvp: 'none',
-            geoFencing: true,
-            customTheme: AppState.wizardData.customTheme,
-            coverImage: AppState.wizardData.posterUrl || 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&h=300&fit=crop',
-            isFeatured: Math.random() > 0.7,
-            geofenceRadius: AppState.wizardData.geofenceRadius,
-            category: AppState.wizardData.eventCategory.charAt(0).toUpperCase() + AppState.wizardData.eventCategory.slice(1)
-        };
-        
-        AppState.events.push(newEvent);
-        
-        if (!AppState.userProfile.createdEvents) {
-            AppState.userProfile.createdEvents = [];
-        }
-        AppState.userProfile.createdEvents.push(newEvent);
-        
-        this.closeWizard();
-        
-        this.generateEventQRCode(newEvent);
-        this.showEventQRModal(newEvent);
-        
-        saveState();
-    },
-    
-    generateEventQRCode(event) {
-        const qrCanvas = document.createElement('canvas');
-        QRCode.toCanvas(qrCanvas, event.qrCode, {
-            width: 300,
-            margin: 2,
-            color: {
-                dark: '#000000',
-                light: '#FFFFFF'
-            }
-        }, (error) => {
-            if (error) {
-                console.error('QR generation error:', error);
-            } else {
-                event.qrCodeImage = qrCanvas.toDataURL();
-            }
-        });
-    },
-    
-    showEventQRModal(event) {
-        const modal = document.createElement('div');
-        modal.className = 'modal-backdrop active';
-        modal.innerHTML = `
-            <div class="modal-content text-center">
-                <button class="modal-close" onclick="this.closest('.modal-backdrop').remove()">
-                    <i class="fas fa-times"></i>
-                </button>
-                
-                <div class="mb-4">
-                    <i class="fas fa-check-circle" style="font-size: 48px; color: var(--accent-green);"></i>
-                </div>
-                
-                <h2 class="mb-2">Event Created!</h2>
-                <h3 class="mb-4">${event.name}</h3>
-                
-                <p class="text-gray-400 mb-4">Use this QR code for event check-ins</p>
-                
-                <div class="qr-code-display mb-4">
-                    <img src="${event.qrCodeImage}" alt="Event QR Code" 
-                         style="max-width: 300px; border-radius: var(--radius-lg);">
-                </div>
-                
-                <div class="event-code-display mb-4">
-                    <p class="text-sm text-gray-400">Event Code</p>
-                    <p class="font-mono text-lg">${event.qrCode}</p>
-                    <button class="btn btn-outline btn-small mt-2" 
-                            onclick="Events.copyEventCode('${event.qrCode}')">
-                        <i class="fas fa-copy"></i> Copy Code
-                    </button>
-                </div>
-                
-                <div class="flex gap-3 mt-6">
-                    <button class="btn btn-outline flex-1" 
-                            onclick="Events.downloadQRCode('${event.qrCodeImage}', '${event.name}')">
-                        <i class="fas fa-download"></i> Download
-                    </button>
-                    <button class="btn btn-primary flex-1" 
-                            onclick="Events.shareQRCode('${event.qrCodeImage}'); this.closest('.modal-backdrop').remove();">
-                        <i class="fas fa-share"></i> Share
-                    </button>
-                </div>
-                
-                <button class="btn btn-glass btn-block mt-3" 
-                        onclick="this.closest('.modal-backdrop').remove(); Router.navigateTo('home');">
-                    Done
-                </button>
-            </div>
-        `;
-        document.body.appendChild(modal);
-    },
-    
-    copyEventCode(code) {
-        navigator.clipboard.writeText(code).then(() => {
-            AppUI.showNotification('Event code copied!', 'success');
-        });
-    },
-    
-    downloadQRCode(imageData, eventName) {
-        const link = document.createElement('a');
-        link.download = `${eventName.replace(/[^a-z0-9]/gi, '_')}_QR.png`;
-        link.href = imageData;
-        link.click();
-        AppUI.showNotification('QR code downloaded', 'success');
-    },
-    
-    shareQRCode(imageData) {
-        if (navigator.share) {
-            fetch(imageData)
-                .then(res => res.blob())
-                .then(blob => {
-                    const file = new File([blob], 'event_qr.png', { type: 'image/png' });
-                    navigator.share({
-                        files: [file],
-                        title: 'Event QR Code',
-                        text: 'Scan to check in!'
-                    });
-                });
-        } else {
-            AppUI.showNotification('Sharing not supported on this device', 'info');
-        }
-    },
-    
-    toggleBookmark(eventId) {
-        const event = AppState.events.find(e => e.id === eventId);
-        if (event) {
-            event.bookmarked = !event.bookmarked;
-            
-            if (event.bookmarked) {
-                if (!AppState.userProfile.bookmarkedEvents.includes(eventId)) {
-                    AppState.userProfile.bookmarkedEvents.push(eventId);
-                }
-                AppUI.showNotification('Event bookmarked', 'success');
-            } else {
-                const index = AppState.userProfile.bookmarkedEvents.indexOf(eventId);
-                if (index > -1) {
-                    AppState.userProfile.bookmarkedEvents.splice(index, 1);
-                }
-                AppUI.showNotification('Event removed from bookmarks', 'info');
-            }
-            
-            saveState();
-            Router.renderPage();
-        }
-    },
-    
-    filterEvents(searchQuery) {
-        const eventsList = document.getElementById('eventsList');
-        if (!eventsList) return;
-        
-        const filteredEvents = AppState.events.filter(event => 
-            event.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            event.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            event.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            event.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
-        );
-        
-        eventsList.innerHTML = filteredEvents.map(event => `
-            <div class="event-card-featured" onclick="Router.navigateToEventDetail(${event.id})">
-                <div class="event-card-image" style="background: linear-gradient(135deg, ${event.customTheme || '#8B5CF6'}, ${event.customTheme ? 'rgba(255,255,255,0.8)' : '#EC4899'});">
-                    <div class="attendee-count">
-                        <i class="fas fa-users"></i> ${event.attendees}
-                    </div>
-                </div>
-                <div class="event-card-content">
-                    <h4 class="mb-2">${event.name}</h4>
-                    <p class="text-gray-400 text-sm mb-2">
-                        <i class="fas fa-map-marker-alt"></i> ${event.location}
-                    </p>
-                    <div class="flex items-center gap-4 text-sm">
-                        <span class="text-gradient">
-                            <i class="fas fa-users"></i> ${event.attendees}
-                        </span>
-                        <span class="text-gray-400">${event.date}</span>
-                        <span class="text-yellow-500">${formatCurrency(event.price, AppState.currency)}</span>
-                    </div>
-                </div>
-                <button class="bookmark-btn ${event.bookmarked ? 'active' : ''}" onclick="Events.toggleBookmark(${event.id}); event.stopPropagation();">
-                    <i class="fas fa-bookmark"></i>
-                </button>
-            </div>
-        `).join('');
-    },
-    
-    showLocationMap(eventId) {
-        console.log('🗺️ Showing location map for event:', eventId);
-        
-        const event = AppState.events.find(e => e.id === eventId);
-        if (!event) return;
-        
-        const modal = document.createElement('div');
-        modal.className = 'modal-backdrop active';
-        modal.id = 'locationMapModal';
-        
-        modal.innerHTML = `
-            <div class="modal-content">
-                <button class="modal-close" onclick="this.closest('.modal-backdrop').remove()">
-                    <i class="fas fa-times"></i>
-                </button>
-                <h2 class="mb-4">${event.name}</h2>
-                <p class="text-gray-400 mb-4">
-                    <i class="fas fa-map-marker-alt"></i> ${event.location}
-                </p>
-                
-                <div id="locationMapContainer" style="height: 300px; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 20px;">
-                    <div class="map-preview" style="height: 100%; display: flex; align-items: center; justify-content: center;">
-                        <p>Loading map...</p>
-                    </div>
-                </div>
-                
-                <div class="flex justify-between items-center mb-4">
-                    <div>
-                        <p class="text-sm text-gray-400">Geofence radius</p>
-                        <p class="font-bold">${event.geofenceRadius}m</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-400">Distance from you</p>
-                        <p class="font-bold">${Math.floor(Math.random() * 5) + 1}km</p>
-                    </div>
-                </div>
-                
-                <button class="btn btn-primary btn-block" onclick="window.open('https://maps.google.com/?q=${event.coordinates.lat},${event.coordinates.lng}', '_blank')">
-                    <i class="fas fa-directions"></i> Get Directions
-                </button>
-            </div>
-        `;
-        
-        document.body.appendChild(modal);
-        
-        setTimeout(() => {
-            this.initLocationMap(event, 'locationMapContainer');
-        }, 100);
-    },
-    
-    initLocationMap(event, containerId) {
-        if (!mapboxgl || !MAPBOX_TOKEN) return;
-        
-        try {
-            mapboxgl.accessToken = MAPBOX_TOKEN;
-            const locationMap = new mapboxgl.Map({
-                container: containerId,
-                style: AppState.userProfile.theme === 'light' ? 'mapbox://styles/mapbox/light-v11' : 'mapbox://styles/mapbox/dark-v11',
-                center: [event.coordinates.lng, event.coordinates.lat],
-                zoom: 14
-            });
-            
-            locationMap.on('load', () => {
-                const el = document.createElement('div');
-                el.className = 'event-marker';
-                el.innerHTML = `<i class="fas fa-map-marker-alt"></i>`;
-                el.style.color = event.customTheme || '#8B5CF6';
-                
-                new mapboxgl.Marker(el)
-                    .setLngLat([event.coordinates.lng, event.coordinates.lat])
-                    .addTo(locationMap);
-                
-                const userEl = document.createElement('div');
-                userEl.className = 'user-marker';
-                userEl.innerHTML = `<i class="fas fa-user"></i>`;
-                
-                if (event.geofenceRadius) {
-                    const radius = event.geofenceRadius / 111320;
-                    const coordinates = [];
-                    const steps = 64;
-                    
-                    for (let i = 0; i < steps; i++) {
-                        const angle = (i / steps) * 2 * Math.PI;
-                        const lat = event.coordinates.lat + radius * Math.cos(angle);
-                        const lng = event.coordinates.lng + radius * Math.sin(angle) / Math.cos(event.coordinates.lat * Math.PI / 180);
-                        coordinates.push([lng, lat]);
-                    }
-                    coordinates.push(coordinates[0]);
-                    
-                    locationMap.addSource('geofence', {
-                        type: 'geojson',
-                        data: {
-                            type: 'Feature',
-                            geometry: {
-                                type: 'Polygon',
-                                coordinates: [coordinates]
-                            }
-                        }
-                    });
-                    
-                    locationMap.addLayer({
-                        id: 'geofence-fill',
-                        type: 'fill',
-                        source: 'geofence',
-                        paint: {
-                            'fill-color': event.customTheme || '#8B5CF6',
-                            'fill-opacity': 0.1
-                        }
-                    });
-                }
-            });
-        } catch (error) {
-            console.error('Location map error:', error);
-        }
-    }
-};
-
-// ===== CHECK-IN FLOW =====
-const CheckIn = {
-    async start() {
-        console.log('🔐 Starting check-in flow');
-        AppState.checkInFlow = {
-            active: true,
-            step: 'scan',
-            eventId: null,
-            privacyChoice: null,
-            livePhoto: null
-        };
-        
-        await this.openCameraForQRScan();
-    },
-    
-    async openCameraForQRScan() {
-        const modal = document.getElementById('cameraModal');
-        modal.classList.add('active');
-        
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({
-                video: { facingMode: 'environment' }
-            });
-            
-            const video = document.getElementById('cameraVideo');
-            video.srcObject = stream;
-            video.play();
-            
-            AppState.cameraStream = stream;
-            
-            this.startQRDetection(video);
-            
-        } catch (error) {
-            console.error('Camera access error:', error);
-            AppUI.showNotification('Camera access denied. Use manual code entry.', 'error');
-            this.showManualEntryFallback();
-        }
-    },
-    
-    startQRDetection(video) {
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d');
-        
-        const scanInterval = setInterval(() => {
-            if (!AppState.checkInFlow.active) {
-                clearInterval(scanInterval);
-                return;
-            }
-            
-            if (video.readyState === video.HAVE_ENOUGH_DATA) {
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
-                context.drawImage(video, 0, 0, canvas.width, canvas.height);
-                
-                const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-                const code = jsQR(imageData.data, imageData.width, imageData.height);
-                
-                if (code) {
-                    clearInterval(scanInterval);
-                    this.handleQRCodeDetected(code.data);
-                }
-            }
-        }, 100);
-    },
-    
-    handleQRCodeDetected(qrData) {
-        console.log('✅ QR Code detected:', qrData);
-        
-        if (navigator.vibrate) {
-            navigator.vibrate(200);
-        }
-        
-        const event = AppState.events.find(e => e.qrCode === qrData);
-        
-        if (event) {
-            AppState.checkInFlow.eventId = event.id;
-            AppUI.showNotification(`Detected: ${event.name}`, 'success');
-            
-            this.closeCamera();
-            this.checkGeofenceAndProceed(event);
-        } else {
-            AppUI.showNotification('Invalid event QR code', 'error');
-        }
-    },
-    
-    showManualEntryFallback() {
-        const modal = document.getElementById('cameraModal');
-        const controls = modal.querySelector('.camera-controls');
-        
-        controls.innerHTML = `
-            <button class="btn btn-outline" onclick="CheckIn.closeCamera()">
-                <i class="fas fa-times"></i> Cancel
-            </button>
-            <button class="btn btn-primary" onclick="CheckIn.enterEventCodeManually()">
-                <i class="fas fa-keyboard"></i> Enter Code Manually
-            </button>
-        `;
-    },
-    
-    simulateQRScan() {
-        console.log('🔢 Simulating QR scan');
-        AppUI.closeCamera();
-        
-        const randomEvent = AppState.events[Math.floor(Math.random() * AppState.events.length)];
-        AppState.checkInFlow.eventId = randomEvent.id;
-        
-        this.checkGeofenceAndProceed(randomEvent);
-    },
-    
-    enterEventCodeManually() {
-        const code = prompt('Enter event code (e.g., AMPS_TECH_2024_001):');
-        if (code) {
-            const event = AppState.events.find(e => e.qrCode === code);
-            if (event) {
-                AppState.checkInFlow.eventId = event.id;
-                this.checkGeofenceAndProceed(event);
-            } else {
-                AppUI.showNotification('Invalid event code', 'error');
-                AppState.checkInFlow.active = false;
-            }
-        }
-    },
-    
-    checkGeofenceAndProceed(event) {
-        console.log('📍 Checking geofence for event:', event.name);
-        
-        if (event.geoFencing) {
-            const isWithinGeofence = Math.random() > 0.2;
-            
-            if (isWithinGeofence) {
-                AppUI.showNotification(`Within ${event.geofenceRadius}m of ${event.name}`, 'success');
-                this.proceedToPrivacyChoice(event);
-            } else {
-                AppUI.showNotification(`You must be within ${event.geofenceRadius}m of the event location`, 'error');
-                AppState.checkInFlow.active = false;
-            }
-        } else {
-            this.proceedToPrivacyChoice(event);
-        }
-    },
-    
-    proceedToPrivacyChoice(event) {
-        console.log('🔒 Proceeding to privacy choice');
-        document.getElementById('privacyChoiceModal').classList.add('active');
-    },
-    
-    choosePrivacy(choice) {
-        console.log('🔐 Chose privacy:', choice);
-        AppState.checkInFlow.privacyChoice = choice;
-        this.closePrivacyChoice();
-        
-        if (choice === 'public') {
-            this.openCameraForLivePhoto();
-        } else {
-            this.completePrivateCheckIn();
-        }
-    },
-    
-    closePrivacyChoice() {
-        console.log('🔒 Closing privacy choice');
-        document.getElementById('privacyChoiceModal').classList.remove('active');
-    },
-    
-    openCameraForLivePhoto() {
-        console.log('📸 Opening camera for live photo');
-        document.getElementById('livePhotoCameraModal').classList.add('active');
-    },
-    
-    closeLivePhotoCamera() {
-        console.log('📸 Closing live photo camera');
-        document.getElementById('livePhotoCameraModal').classList.remove('active');
-    },
-    
-    takeLivePhoto() {
-        console.log('📸 Taking live photo');
-        const video = document.getElementById('livePhotoVideo');
-        if (!video) return;
-        
-        const canvas = document.createElement('canvas');
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        const context = canvas.getContext('2d');
-        context.drawImage(video, 0, 0);
-        
-        const photoData = canvas.toDataURL('image/jpeg', 0.9);
-        
-        this.closeLivePhotoCamera();
-        this.showPhotoConfirmation(photoData);
-    },
-    
-    showPhotoConfirmation(photoData) {
-        const modal = document.createElement('div');
-        modal.className = 'modal-backdrop active';
-        modal.id = 'photoConfirmModal';
-        modal.innerHTML = `
-            <div class="modal-content text-center">
-                <h2 class="mb-4">Use this photo?</h2>
-                <p class="text-gray-400 mb-4">This will be your profile photo for matching</p>
-                
-                <div class="photo-preview mb-6">
-                    <img src="${photoData}" alt="Live Photo" 
-                         style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover; border: 4px solid var(--primary);">
-                </div>
-                
-                <div class="flex flex-col gap-3">
-                    <button class="btn btn-primary btn-block" 
-                            onclick="CheckIn.confirmPhoto('${photoData}')">
-                        <i class="fas fa-check"></i> Yes, use this photo
-                    </button>
-                    <button class="btn btn-outline btn-block" 
-                            onclick="CheckIn.retakePhoto()">
-                        <i class="fas fa-redo"></i> No, take again
-                    </button>
-                </div>
-            </div>
-        `;
-        document.body.appendChild(modal);
-    },
-    
-    confirmPhoto(photoData) {
-        AppState.checkInFlow.livePhoto = photoData;
-        document.getElementById('photoConfirmModal')?.remove();
-        
-        this.completePublicCheckIn();
-    },
-    
-    retakePhoto() {
-        document.getElementById('photoConfirmModal')?.remove();
-        this.openCameraForLivePhoto();
-    },
-    
-    completePublicCheckIn() {
-        console.log('👤 Completing public check-in');
-        
-        const event = AppState.events.find(e => e.id === AppState.checkInFlow.eventId);
-        if (event) {
-            const colors = ['#8B5CF6', '#EC4899', '#3B82F6', '#10B981', '#F59E0B'];
-            const randomColor = colors[Math.floor(Math.random() * colors.length)];
-            
-            AppState.checkInFlow.livePhoto = `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="${randomColor}"/><text x="100" y="110" font-size="24" text-anchor="middle" fill="white">Live Photo</text></svg>`;
-            
-            const tempProfile = {
-                id: Date.now(),
-                name: AppState.userProfile.name,
-                age: AppState.userProfile.age,
-                bio: `At ${event.name}`,
-                interests: AppState.userProfile.interests.slice(0, 3),
-                eventId: event.id,
-                location: 'Checked in',
-                online: true,
-                verified: false,
-                cardColor: randomColor,
-                livePhoto: AppState.checkInFlow.livePhoto,
-                distance: 'Just arrived',
-                gender: AppState.userProfile.gender,
-                isPublic: true,
-                tempProfile: true,
-                userId: AppState.currentUser?.id
-            };
-            
-            MOCK_PROFILES.push(tempProfile);
-            AppState.currentEvent = event;
-            
-            AppState.analytics.eventViews.total++;
-            const today = new Date().toISOString().split('T')[0];
-            AppState.analytics.eventViews.byDate[today] = (AppState.analytics.eventViews.byDate[today] || 0) + 1;
-            
-            AppUI.showNotification(`Welcome to ${event.name}! Your profile is live.`, 'success');
-            
-            setTimeout(() => Router.navigateTo('connect'), 1000);
-        }
-        
-        AppState.checkInFlow.active = false;
-        saveState();
-    },
-    
-    completePrivateCheckIn() {
-        console.log('👤 Completing private check-in');
-        
-        const event = AppState.events.find(e => e.id === AppState.checkInFlow.eventId);
-        if (event) {
-            AppState.currentEvent = event;
-            
-            AppState.analytics.eventViews.total++;
-            const today = new Date().toISOString().split('T')[0];
-            AppState.analytics.eventViews.byDate[today] = (AppState.analytics.eventViews.byDate[today] || 0) + 1;
-            
-            AppUI.showNotification(`Welcome to ${event.name}! You're browsing privately.`, 'success');
-            
-            setTimeout(() => Router.navigateTo('connect'), 1000);
-        }
-        
-        AppState.checkInFlow.active = false;
-        saveState();
-    },
-    
-    closeCamera() {
-        AppUI.closeCamera();
     }
 };
 
@@ -9503,7 +10096,7 @@ const Tickets = {
         const list = document.getElementById('activeTicketsList');
         if (!list) return;
         
-        const activeTickets = AppState.tickets.filter(t => t.status === 'active');
+        const activeTickets = AppState.data.tickets.filter(t => t.status === 'active');
         
         if (activeTickets.length === 0) {
             list.innerHTML = `
@@ -9580,7 +10173,7 @@ const Tickets = {
     purchaseTicket(eventId) {
         console.log('💳 Purchasing ticket for event:', eventId);
         
-        const event = AppState.events.find(e => e.id === eventId);
+        const event = AppState.data.events.find(e => e.id === eventId);
         if (!event) return;
         
         // Show purchase modal
@@ -9647,7 +10240,7 @@ const Tickets = {
         if (!modal) return;
         
         const eventId = parseInt(modal.querySelector('.btn-primary').getAttribute('onclick').match(/\d+/)[0]);
-        const event = AppState.events.find(e => e.id === eventId);
+        const event = AppState.data.events.find(e => e.id === eventId);
         
         if (event) {
             const total = event.price * quantity;
@@ -9658,7 +10251,7 @@ const Tickets = {
     
     completePurchase(eventId) {
         const quantity = parseInt(document.getElementById('purchaseQuantity')?.value || 1);
-        const event = AppState.events.find(e => e.id === eventId);
+        const event = AppState.data.events.find(e => e.id === eventId);
         if (!event) return;
         
         const ticket = {
@@ -9673,7 +10266,7 @@ const Tickets = {
             quantity: quantity
         };
         
-        AppState.tickets.push(ticket);
+        AppState.data.tickets.push(ticket);
         event.attendees += quantity;
         
         saveState();
@@ -9693,7 +10286,7 @@ const Tickets = {
     }
 };
 
-// ===== SWIPE SYSTEM =====
+// ===== SWIPE SYSTEM (updated for new data structure) =====
 const Swipe = {
     left() {
         console.log('👈 Swipe left');
@@ -9703,7 +10296,12 @@ const Swipe = {
             return;
         }
         
-        const availableProfiles = getAvailableProfiles();
+        const event = AppState.currentEvent;
+        if (!event || !event.connectionProfiles) return;
+        
+        const availableProfiles = event.connectionProfiles.filter(p => 
+            p.userId !== AppState.currentUser?.id && p.isPublic === true
+        );
         
         if (availableProfiles.length === 0) return;
         
@@ -9711,10 +10309,8 @@ const Swipe = {
         AppState.swipeHistory.push({ profile, action: 'reject' });
         AppState.swipeCount++;
         
-        // Track analytics for swipe
-        AppState.analytics.profileViews.total++;
-        const today = new Date().toISOString().split('T')[0];
-        AppState.analytics.profileViews.byDate[today] = (AppState.analytics.profileViews.byDate[today] || 0) + 1;
+        // Remove from available profiles for this session
+        event.connectionProfiles = event.connectionProfiles.filter(p => p.id !== profile.id);
         
         AppUI.showNotification(`Passed on ${profile.name}`);
         saveState();
@@ -9730,7 +10326,12 @@ const Swipe = {
             return;
         }
         
-        const availableProfiles = getAvailableProfiles();
+        const event = AppState.currentEvent;
+        if (!event || !event.connectionProfiles) return;
+        
+        const availableProfiles = event.connectionProfiles.filter(p => 
+            p.userId !== AppState.currentUser?.id && p.isPublic === true
+        );
         
         if (availableProfiles.length === 0) return;
         
@@ -9738,30 +10339,24 @@ const Swipe = {
         AppState.swipeHistory.push({ profile, action: 'like' });
         AppState.swipeCount++;
         
-        // Track analytics for swipe
-        AppState.analytics.profileViews.total++;
-        const today = new Date().toISOString().split('T')[0];
-        AppState.analytics.profileViews.byDate[today] = (AppState.analytics.profileViews.byDate[today] || 0) + 1;
+        // Remove from available profiles
+        event.connectionProfiles = event.connectionProfiles.filter(p => p.id !== profile.id);
         
+        // Check for match (simulated)
         if (Math.random() < 0.4) {
             const match = {
                 id: Date.now(),
                 userId: AppState.currentUser?.id,
                 matchId: profile.id,
                 timestamp: new Date().toISOString(),
-                eventId: AppState.currentEvent?.id,
+                eventId: event.id,
                 lastMessage: 'You matched! Say hi!',
                 lastMessageTime: 'Just now',
                 unread: true
             };
-            AppState.matches.push(match);
+            AppState.data.matches.push(match);
             AppState.lastMatch = profile;
             
-            // Track analytics for match
-            AppState.analytics.matches.total++;
-            AppState.analytics.matches.byDate[today] = (AppState.analytics.matches.byDate[today] || 0) + 1;
-            
-            setTimeout(() => AppUI.showMatchModal(), 400);
             AppUI.showNotification(`It's a match with ${profile.name}! 💫`, 'success');
         } else {
             AppUI.showNotification(`Liked ${profile.name} ❤️`);
@@ -9779,9 +10374,18 @@ const Swipe = {
             return;
         }
         
-        AppState.swipeHistory.pop();
+        const lastSwipe = AppState.swipeHistory.pop();
         AppState.swipeCount = Math.max(0, AppState.swipeCount - 1);
         AppState.rewindCount--;
+        
+        // Add profile back to connection pool
+        if (lastSwipe && AppState.currentEvent) {
+            if (!AppState.currentEvent.connectionProfiles) {
+                AppState.currentEvent.connectionProfiles = [];
+            }
+            AppState.currentEvent.connectionProfiles.unshift(lastSwipe.profile);
+        }
+        
         AppUI.showNotification('Rewinded last swipe', 'info');
         
         Router.renderPage();
@@ -9797,21 +10401,13 @@ const Swipe = {
     }
 };
 
-function getAvailableProfiles() {
-    return MOCK_PROFILES.filter(p => 
-        !AppState.swipeHistory.some(s => s.profile.id === p.id) && 
-        p.isPublic === true &&
-        p.eventId === AppState.currentEvent?.id
-    );
-}
-
 // ===== CHAT =====
 const Chat = {
     open(matchId) {
         console.log('💬 Opening chat for match:', matchId);
         
-        const match = AppState.matches.find(m => m.matchId === matchId);
-        const profile = MOCK_PROFILES.find(p => p.id === matchId);
+        const match = AppState.data.matches.find(m => m.matchId === matchId);
+        const profile = AppState.data.profiles.find(p => p.id === matchId);
         
         if (!match || !profile) return;
         
@@ -9829,7 +10425,7 @@ const Chat = {
             <button class="back-btn" onclick="Chat.close()">
                 <i class="fas fa-arrow-left"></i>
             </button>
-            <div class="chat-avatar" style="background: ${profile.cardColor};" 
+            <div class="chat-avatar" style="background: ${profile.cardColor || '#8B5CF6'};" 
                  onclick="Chat.viewProfile(${matchId})"></div>
             <div class="flex-1" onclick="Chat.viewProfile(${matchId})" style="cursor: pointer;">
                 <h4>${profile.name}</h4>
@@ -9896,7 +10492,7 @@ const Chat = {
         AppState.chatMessages[chatId].push(message);
         
         // Update match
-        const match = AppState.matches.find(m => m.id === AppState.currentMatch.id);
+        const match = AppState.data.matches.find(m => m.id === AppState.currentMatch.id);
         if (match) {
             match.lastMessage = message.text;
             match.lastMessageTime = 'Just now';
@@ -9980,7 +10576,7 @@ const Chat = {
     },
     
     viewProfile(matchId) {
-        const profile = MOCK_PROFILES.find(p => p.id === matchId);
+        const profile = AppState.data.profiles.find(p => p.id === matchId);
         if (!profile) return;
         
         const modal = document.createElement('div');
@@ -9993,7 +10589,7 @@ const Chat = {
                 
                 <div class="text-center mb-6">
                     <div class="w-32 h-32 rounded-full mx-auto mb-4" 
-                         style="background: ${profile.cardColor};"></div>
+                         style="background: ${profile.cardColor || '#8B5CF6'};"></div>
                     <h2>${profile.name}, ${profile.age}</h2>
                     <p class="text-gray-400">${profile.location}</p>
                 </div>
@@ -10031,7 +10627,7 @@ const Chat = {
                 <h2 class="mb-4">Share Event</h2>
                 
                 <div class="space-y-3" style="max-height: 400px; overflow-y: auto;">
-                    ${AppState.events.map(event => `
+                    ${AppState.data.events.map(event => `
                         <div class="card cursor-pointer hover:border-primary transition" 
                              onclick="Chat.sendEventCard(${matchId}, ${event.id}); this.closest('.modal-backdrop').remove();">
                             <div class="flex items-center gap-3">
@@ -10052,7 +10648,7 @@ const Chat = {
     },
     
     sendEventCard(matchId, eventId) {
-        const event = AppState.events.find(e => e.id === eventId);
+        const event = AppState.data.events.find(e => e.id === eventId);
         if (!event) return;
         
         const chatId = `${AppState.currentUser?.id}_${matchId}`;
@@ -10083,7 +10679,7 @@ const Chat = {
     
     unmatch(matchId) {
         if (confirm('Are you sure you want to unmatch? This cannot be undone.')) {
-            AppState.matches = AppState.matches.filter(m => m.matchId !== matchId);
+            AppState.data.matches = AppState.data.matches.filter(m => m.matchId !== matchId);
             
             // Delete chat history
             const chatId = `${AppState.currentUser?.id}_${matchId}`;
