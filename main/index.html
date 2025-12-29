@@ -5440,22 +5440,29 @@ input:checked + .slider:before {
             </div>
             
             <div class="wizard-step" id="wizardStep2">
-                <h2 class="mb-4">Location & Map</h2>
-                <div class="form-group">
-                    <label class="form-label">Location</label>
-                    <div class="location-search">
-                        <input type="text" class="form-control" id="eventLocation" placeholder="Search or click map">
-                        <div class="search-results" id="locationResults"></div>
-                    </div>
-                </div>
-                <div class="map-preview" id="mapPreview" style="height: 200px;">
-                    <p>Click map to place event pin</p>
-                </div>
-                <div class="wizard-navigation">
-                    <button class="btn btn-outline" onclick="Events.prevWizardStep()">Back</button>
-                    <button class="btn btn-primary" onclick="Events.nextWizardStep()">Next</button>
-                </div>
-            </div>
+    <h2 class="mb-4">Location & Map</h2>
+    <div class="form-group">
+        <label class="form-label">Location</label>
+        <div class="location-search">
+            <input type="text" class="form-control" id="eventLocation" 
+                   placeholder="Search or click map"
+                   oninput="Events.searchLocation(this.value)">
+            <div class="search-results" id="locationResults"></div>
+        </div>
+    </div>
+    
+    <!-- Fixed: Use consistent ID and add proper styling -->
+    <div id="wizardMap" 
+         style="height: 250px; width: 100%; border-radius: var(--radius-lg); 
+                overflow: hidden; margin: 16px 0; background: var(--bg-tertiary);">
+        <!-- Map will be inserted here by Mapbox -->
+    </div>
+    
+    <div class="wizard-navigation">
+        <button class="btn btn-outline" onclick="Events.prevWizardStep()">Back</button>
+        <button class="btn btn-primary" onclick="Events.nextWizardStep()">Next</button>
+    </div>
+</div>
             
             <div class="wizard-step" id="wizardStep3">
                 <h2 class="mb-4">Geofencing Setup</h2>
@@ -8191,11 +8198,20 @@ const Events = {
     },
     
     // ===== STEP 2: INTERACTIVE MAP WITH LIVE GEOFENCE =====
-    initWizardMap() {
+       initWizardMap() {
         console.log('🗺️ Initializing wizard map');
         
         if (!mapboxgl || !MAPBOX_TOKEN) {
             console.error('❌ Mapbox not loaded');
+            AppUI.showNotification('Map failed to load. Check connection.', 'error');
+            return;
+        }
+        
+        // Check if container exists
+        const container = document.getElementById('wizardMap');
+        if (!container) {
+            console.error('❌ Map container not found');
+            setTimeout(() => this.initWizardMap(), 500); // Retry
             return;
         }
         
@@ -8203,14 +8219,20 @@ const Events = {
             // Remove old map if exists
             if (AppState.wizardMap) {
                 AppState.wizardMap.remove();
+                AppState.wizardMap = null;
             }
             
             mapboxgl.accessToken = MAPBOX_TOKEN;
+            
+            // Simple initialization with Windhoek center
             AppState.wizardMap = new mapboxgl.Map({
-                container: 'wizardMapContainer',
-                style: 'mapbox://styles/mapbox/streets-v12',
+                container: 'wizardMap',
+                style: AppState.userProfile.theme === 'light' 
+                    ? 'mapbox://styles/mapbox/streets-v12' 
+                    : 'mapbox://styles/mapbox/dark-v11',
                 center: [17.0658, -22.5609], // Windhoek
-                zoom: 13
+                zoom: 14,
+                attributionControl: false
             });
             
             AppState.wizardMap.addControl(new mapboxgl.NavigationControl());
